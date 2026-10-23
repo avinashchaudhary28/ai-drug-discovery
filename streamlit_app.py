@@ -12,10 +12,21 @@ def load_core():
 core = load_core()
 
 EXAMPLES = {
-    "Imatinib (cancer)": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1",
-    "Paracetamol": "CC(=O)Nc1ccc(O)cc1",
-    "Aspirin": "CC(=O)Oc1ccccc1C(=O)O",
-    "Caffeine": "Cn1cnc2c1c(=O)n(C)c(=O)n2C",
+    # cancer / kinase inhibitors
+    "Imatinib — cancer (ABL1/KIT)": "Cc1ccc(NC(=O)c2ccc(CN3CCN(C)CC3)cc2)cc1Nc1nccc(-c2cccnc2)n1",
+    "Gefitinib — cancer (EGFR)": "COc1cc2ncnc(Nc3ccc(F)c(Cl)c3)c2cc1OCCCN1CCOCC1",
+    "Erlotinib — cancer (EGFR)": "C#Cc1cccc(Nc2ncnc3cc(OCCOC)c(OCCOC)cc23)c1",
+    "Sorafenib — cancer (multi-kinase)": "CNC(=O)c1cc(Oc2ccc(NC(=O)Nc3ccc(Cl)c(C(F)(F)F)c3)cc2)ccn1",
+    # aam dawaein
+    "Paracetamol — dard / bukhar": "CC(=O)Nc1ccc(O)cc1",
+    "Aspirin — dard / khoon patla": "CC(=O)Oc1ccccc1C(=O)O",
+    "Ibuprofen — dard / sujan": "CC(C)Cc1ccc(C(C)C(=O)O)cc1",
+    "Metformin — diabetes": "CN(C)C(=N)NC(=N)N",
+    "Amoxicillin — antibiotic": "CC1(C)SC2C(NC(=O)C(N)c3ccc(O)cc3)C(=O)N2C1C(=O)O",
+    # dimaag tak pahunchne wali (BBB dekhne ke liye)
+    "Caffeine — dimaag": "Cn1cnc2c1c(=O)n(C)c(=O)n2C",
+    "Diazepam — dimaag": "CN1c2ccc(Cl)cc2C(c2ccccc2)=NCC1=O",
+    "Nicotine — dimaag": "CN1CCCC1c1cccnc1",
 }
 
 st.title("💊 AI Drug Discovery")
@@ -23,6 +34,9 @@ st.markdown("Molecule ka **SMILES** daalo → ~670 proteins pe binding, **22 ADM
 
 ex = st.selectbox("Example chuno (ya neeche apna SMILES daalo)", list(EXAMPLES))
 smiles = st.text_area("SMILES", value=EXAMPLES[ex], height=80)
+st.caption("💡 Koi bhi molecule daal sakte ho — ye sirf examples hain. "
+           "Kisi dawa ka SMILES lene ke liye PubChem pe uska naam search karo aur "
+           "**Canonical SMILES** copy kar lo.")
 choices = core.CHOICES
 prot = st.selectbox("Target protein", choices, index=choices.index(core.default_choice()))
 
