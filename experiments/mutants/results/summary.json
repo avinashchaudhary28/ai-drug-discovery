@@ -1,0 +1,274 @@
+{
+  "finished_utc": "2026-10-25T14:30:08Z",
+  "total_minutes": 154.7,
+  "n_seeds": 5,
+  "esm": "facebook/esm2_t33_650M_UR50D",
+  "unique_seqs_before": 379,
+  "unique_seqs_after": 421,
+  "sequences_changed": 47,
+  "mutation_status": {
+    "wt": 367,
+    "skip": 28,
+    "ok-shifted": 18,
+    "ok": 29
+  },
+  "contradictions": [
+    {
+      "tag": "WT",
+      "groups": 546,
+      "rows": 2894,
+      "pct_rows": 9.63,
+      "mean_std": 0.5566,
+      "mean_range": 1.1203
+    },
+    {
+      "tag": "MUT",
+      "groups": 515,
+      "rows": 1241,
+      "pct_rows": 4.13,
+      "mean_std": 0.5154,
+      "mean_range": 0.7771
+    }
+  ],
+  "summary": [
+    {
+      "split": "random",
+      "metric": "CI",
+      "WT": 0.8862,
+      "MUT": 0.8871,
+      "delta": 0.0009,
+      "jeete": "4/5",
+      "t": 2.29
+    },
+    {
+      "split": "random",
+      "metric": "CI (sirf mutant proteins)",
+      "WT": 0.9216,
+      "MUT": 0.9385,
+      "delta": 0.0169,
+      "jeete": "5/5",
+      "t": 12.83
+    },
+    {
+      "split": "cold-target",
+      "metric": "CI",
+      "WT": 0.8483,
+      "MUT": 0.8491,
+      "delta": 0.0008,
+      "jeete": "4/5",
+      "t": 2.19
+    },
+    {
+      "split": "cold-target",
+      "metric": "CI (sirf mutant proteins)",
+      "WT": 0.9178,
+      "MUT": 0.9249,
+      "delta": 0.0071,
+      "jeete": "5/5",
+      "t": 3.08
+    }
+  ],
+  "verdict": "SUDHAAR ASLI HAI - mutant proteins pe CI +0.0169 (t=12.83), 5/5 seeds. Asli mutant sequences dena faydemand hai.",
+  "per_seed": [
+    {
+      "seed": 0,
+      "split": "random",
+      "arm": "WT",
+      "CI": 0.8835174237710018,
+      "MSE": 0.26335111260414124,
+      "Pearson": 0.8237993717193604,
+      "CI_mutants": 0.915774288624999,
+      "MSE_mutants": 0.34094002842903137
+    },
+    {
+      "seed": 0,
+      "split": "random",
+      "arm": "MUT",
+      "CI": 0.8844706059107842,
+      "MSE": 0.24730131030082703,
+      "Pearson": 0.8365643620491028,
+      "CI_mutants": 0.9343178654472778,
+      "MSE_mutants": 0.17446309328079224
+    },
+    {
+      "seed": 0,
+      "split": "cold-target",
+      "arm": "WT",
+      "CI": 0.8564394241200973,
+      "MSE": 0.3556630313396454,
+      "Pearson": 0.7729675769805908,
+      "CI_mutants": 0.907835872480438,
+      "MSE_mutants": 0.36303380131721497
+    },
+    {
+      "seed": 0,
+      "split": "cold-target",
+      "arm": "MUT",
+      "CI": 0.8568388505768038,
+      "MSE": 0.3415835499763489,
+      "Pearson": 0.7834310531616211,
+      "CI_mutants": 0.9198274670279537,
+      "MSE_mutants": 0.25499749183654785
+    },
+    {
+      "seed": 1,
+      "split": "random",
+      "arm": "WT",
+      "CI": 0.8910277715744902,
+      "MSE": 0.2614980638027191,
+      "Pearson": 0.8296467065811157,
+      "CI_mutants": 0.9259459141940363,
+      "MSE_mutants": 0.31075266003608704
+    },
+    {
+      "seed": 1,
+      "split": "random",
+      "arm": "MUT",
+      "CI": 0.8929101428758616,
+      "MSE": 0.24658755958080292,
+      "Pearson": 0.841560423374176,
+      "CI_mutants": 0.9390268079388506,
+      "MSE_mutants": 0.15969039499759674
+    },
+    {
+      "seed": 1,
+      "split": "cold-target",
+      "arm": "WT",
+      "CI": 0.8454669948804079,
+      "MSE": 0.34382137656211853,
+      "Pearson": 0.7493732571601868,
+      "CI_mutants": 0.942596449589499,
+      "MSE_mutants": 0.21696068346500397
+    },
+    {
+      "seed": 1,
+      "split": "cold-target",
+      "arm": "MUT",
+      "CI": 0.8470759487388779,
+      "MSE": 0.34011170268058777,
+      "Pearson": 0.7529296875,
+      "CI_mutants": 0.9434077644038652,
+      "MSE_mutants": 0.2003142088651657
+    },
+    {
+      "seed": 2,
+      "split": "random",
+      "arm": "WT",
+      "CI": 0.8880304608720527,
+      "MSE": 0.257315456867218,
+      "Pearson": 0.8284850716590881,
+      "CI_mutants": 0.9236325815321925,
+      "MSE_mutants": 0.32289209961891174
+    },
+    {
+      "seed": 2,
+      "split": "random",
+      "arm": "MUT",
+      "CI": 0.8879380418735437,
+      "MSE": 0.24372823536396027,
+      "Pearson": 0.8391820192337036,
+      "CI_mutants": 0.9432515992990155,
+      "MSE_mutants": 0.19140087068080902
+    },
+    {
+      "seed": 2,
+      "split": "cold-target",
+      "arm": "WT",
+      "CI": 0.8566862620032213,
+      "MSE": 0.3439706563949585,
+      "Pearson": 0.7714112401008606,
+      "CI_mutants": 0.929458161502009,
+      "MSE_mutants": 0.25632014870643616
+    },
+    {
+      "seed": 2,
+      "split": "cold-target",
+      "arm": "MUT",
+      "CI": 0.858328042369979,
+      "MSE": 0.334749698638916,
+      "Pearson": 0.7786736488342285,
+      "CI_mutants": 0.9424820040921476,
+      "MSE_mutants": 0.13694079220294952
+    },
+    {
+      "seed": 3,
+      "split": "random",
+      "arm": "WT",
+      "CI": 0.8840087176370267,
+      "MSE": 0.2647753357887268,
+      "Pearson": 0.8262144327163696,
+      "CI_mutants": 0.9266050576888283,
+      "MSE_mutants": 0.2577001452445984
+    },
+    {
+      "seed": 3,
+      "split": "random",
+      "arm": "MUT",
+      "CI": 0.8841357681645631,
+      "MSE": 0.25431856513023376,
+      "Pearson": 0.834440290927887,
+      "CI_mutants": 0.9410307441789258,
+      "MSE_mutants": 0.16122600436210632
+    },
+    {
+      "seed": 3,
+      "split": "cold-target",
+      "arm": "WT",
+      "CI": 0.83316310531517,
+      "MSE": 0.419044554233551,
+      "Pearson": 0.736099898815155,
+      "CI_mutants": 0.9218500526548221,
+      "MSE_mutants": 0.26929429173469543
+    },
+    {
+      "seed": 3,
+      "split": "cold-target",
+      "arm": "MUT",
+      "CI": 0.8339938015568321,
+      "MSE": 0.4172159433364868,
+      "Pearson": 0.7369107604026794,
+      "CI_mutants": 0.9265550157964466,
+      "MSE_mutants": 0.21852128207683563
+    },
+    {
+      "seed": 4,
+      "split": "random",
+      "arm": "WT",
+      "CI": 0.8844635883822035,
+      "MSE": 0.2644670307636261,
+      "Pearson": 0.8146830201148987,
+      "CI_mutants": 0.9160865114898072,
+      "MSE_mutants": 0.35742679238319397
+    },
+    {
+      "seed": 4,
+      "split": "random",
+      "arm": "MUT",
+      "CI": 0.8859359834818471,
+      "MSE": 0.2517063021659851,
+      "Pearson": 0.8252455592155457,
+      "CI_mutants": 0.9349757389653314,
+      "MSE_mutants": 0.20392966270446777
+    },
+    {
+      "seed": 4,
+      "split": "cold-target",
+      "arm": "WT",
+      "CI": 0.8494997647219314,
+      "MSE": 0.35366085171699524,
+      "Pearson": 0.7599899172782898,
+      "CI_mutants": 0.8872742945286272,
+      "MSE_mutants": 0.47414466738700867
+    },
+    {
+      "seed": 4,
+      "split": "cold-target",
+      "arm": "MUT",
+      "CI": 0.8491491491386772,
+      "MSE": 0.3517472445964813,
+      "Pearson": 0.7615620493888855,
+      "CI_mutants": 0.8924689229652482,
+      "MSE_mutants": 0.3865164816379547
+    }
+  ]
+}

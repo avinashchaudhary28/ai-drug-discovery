@@ -1,0 +1,150 @@
+
+======================================================================
+[  0.0 min] 1. Davis dataset
+======================================================================
+   downloaded davis_ligands_can.txt
+   downloaded davis_proteins.txt
+   downloaded davis_Y
+   68 dawaiyan x 442 proteins = 30,056 jode
+
+======================================================================
+[  0.0 min] 2. Naam se mutation parse karke asli sequence banate hain
+======================================================================
+   status: {'wt': 367, 'skip': 28, 'ok-shifted': 18, 'ok': 29}
+   sequences badli: 47
+   unique sequences: 379 -> 421
+     skip     ABL1(E255K)                        kuch nahi laga: E255K
+     skip     ABL1(Q252H)                        kuch nahi laga: Q252H
+     skip     ABL1(Q252H)p                       kuch nahi laga: Q252H
+     skip     FGFR3(G697C)                       kuch nahi laga: G697C
+     skip     FLT3(ITD)                          'ITD' se sequence nahi banaya ja sakta
+     skip     JAK1(JH1domain-catalytic)          'JH1domain-catalytic' se sequence nahi banaya ja sakta
+     skip     JAK1(JH2domain-pseudokinase)       'JH2domain-pseudokinase' se sequence nahi banaya ja sakta
+     skip     JAK2(JH1domain-catalytic)          'JH1domain-catalytic' se sequence nahi banaya ja sakta
+     skip     JAK3(JH1domain-catalytic)          'JH1domain-catalytic' se sequence nahi banaya ja sakta
+     skip     PFCDPK1(Pfalciparum)               kuch nahi laga: Pfalciparum
+     skip     PFPK5(Pfalciparum)                 kuch nahi laga: Pfalciparum
+     skip     PKNB(Mtuberculosis)                kuch nahi laga: Mtuberculosis
+     skip     RET(M918T)                         kuch nahi laga: M918T
+     skip     RET(V804L)                         kuch nahi laga: V804L
+     skip     RET(V804M)                         kuch nahi laga: V804M
+     skip     RPS6KA4(KinDom.1-N-terminal)       kuch nahi laga: KinDom.1+N+terminal
+     skip     RPS6KA4(KinDom.2-C-terminal)       kuch nahi laga: KinDom.2+C+terminal
+     skip     RPS6KA5(KinDom.1-N-terminal)       kuch nahi laga: KinDom.1+N+terminal
+     skip     RPS6KA5(KinDom.2-C-terminal)       kuch nahi laga: KinDom.2+C+terminal
+     skip     RSK1(KinDom.1-N-terminal)          kuch nahi laga: KinDom.1+N+terminal
+     skip     RSK1(KinDom.2-C-terminal)          kuch nahi laga: KinDom.2+C+terminal
+     skip     RSK2(KinDom.1-N-terminal)          kuch nahi laga: KinDom.1+N+terminal
+     skip     RSK3(KinDom.1-N-terminal)          kuch nahi laga: KinDom.1+N+terminal
+     skip     RSK3(KinDom.2-C-terminal)          kuch nahi laga: KinDom.2+C+terminal
+     skip     RSK4(KinDom.1-N-terminal)          kuch nahi laga: KinDom.1+N+terminal
+     skip     RSK4(KinDom.2-C-terminal)          kuch nahi laga: KinDom.2+C+terminal
+     skip     TYK2(JH1domain-catalytic)          'JH1domain-catalytic' se sequence nahi banaya ja sakta
+     skip     TYK2(JH2domain-pseudokinase)       'JH2domain-pseudokinase' se sequence nahi banaya ja sakta
+
+======================================================================
+[  0.0 min] 3. Contradictory labels naapte hain (ek hi input, alag jawab)
+======================================================================
+   WT   : 546 aise (dawa, sequence) jode jinke 2+ alag jawab hain · 2,894 rows (9.6%) · andar ka std 0.557 · average range 1.120 pKd
+   MUT  : 515 aise (dawa, sequence) jode jinke 2+ alag jawab hain · 1,241 rows (4.1%) · andar ka std 0.515 · average range 0.777 pKd
+
+======================================================================
+[  0.0 min] 4. ESM-2 embeddings (dono taraf ke liye ek hi tareeke se)
+======================================================================
+   422 unique sequences embed karni hain (facebook/esm2_t33_650M_UR50D)
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/534 [00:00<?, ?it/s]Loading weights: 100%|██████████| 534/534 [00:00<00:00, 20176.73it/s]
+[transformers] [1mEsmModel LOAD REPORT[0m from: facebook/esm2_t33_650M_UR50D
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.bias              | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+pooler.dense.weight       | MISSING    | 
+pooler.dense.bias         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+   422 nayi embeddings banani hain
+   ESM 25/422  (4.8 min beeta · ~76 min baaki)
+   ESM 50/422  (9.9 min beeta · ~74 min baaki)
+   ESM 75/422  (16.7 min beeta · ~77 min baaki)
+   ESM 100/422  (21.3 min beeta · ~69 min baaki)
+   ESM 125/422  (25.6 min beeta · ~61 min baaki)
+   ESM 150/422  (31.0 min beeta · ~56 min baaki)
+   ESM 175/422  (36.3 min beeta · ~51 min baaki)
+   ESM 200/422  (41.3 min beeta · ~46 min baaki)
+   ESM 225/422  (49.0 min beeta · ~43 min baaki)
+   ESM 250/422  (53.6 min beeta · ~37 min baaki)
+   ESM 275/422  (58.5 min beeta · ~31 min baaki)
+   ESM 300/422  (65.3 min beeta · ~27 min baaki)
+   ESM 325/422  (71.6 min beeta · ~21 min baaki)
+   ESM 350/422  (76.3 min beeta · ~16 min baaki)
+   ESM 375/422  (81.4 min beeta · ~10 min baaki)
+   ESM 400/422  (86.4 min beeta · ~5 min baaki)
+   ESM 422/422  (92.5 min beeta · ~0 min baaki)
+   ESM WT (442, 1280) · MUT (442, 1280)
+   47 proteins ki embedding badli
+
+======================================================================
+[ 92.8 min] 5. Molecule features
+======================================================================
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 19063.38it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
+Key                        | Status     | 
+---------------------------+------------+-
+regression.dense.weight    | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
+regression.dense.bias      | UNEXPECTED | 
+norm_std                   | UNEXPECTED | 
+regression.out_proj.weight | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
+pooler.dense.weight        | MISSING    | 
+pooler.dense.bias          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+   bana: drug feats (68, 1625)
+
+======================================================================
+[ 92.9 min] 6. Training - 5 seeds x 2 splits x WT/MUT
+======================================================================
+   47 proteins jinki sequence sudhri - unke paire alag se bhi naapenge
+   seed 0 random       WT   CI=0.8835 MSE=0.2634 Pearson=0.8238  [mutants CI=0.9158]
+   seed 0 random       MUT  CI=0.8845 MSE=0.2473 Pearson=0.8366  [mutants CI=0.9343]
+   seed 0 cold-target  WT   CI=0.8564 MSE=0.3557 Pearson=0.7730  [mutants CI=0.9078]
+   seed 0 cold-target  MUT  CI=0.8568 MSE=0.3416 Pearson=0.7834  [mutants CI=0.9198]
+   seed 1 random       WT   CI=0.8910 MSE=0.2615 Pearson=0.8296  [mutants CI=0.9259]
+   seed 1 random       MUT  CI=0.8929 MSE=0.2466 Pearson=0.8416  [mutants CI=0.9390]
+   seed 1 cold-target  WT   CI=0.8455 MSE=0.3438 Pearson=0.7494  [mutants CI=0.9426]
+   seed 1 cold-target  MUT  CI=0.8471 MSE=0.3401 Pearson=0.7529  [mutants CI=0.9434]
+   seed 2 random       WT   CI=0.8880 MSE=0.2573 Pearson=0.8285  [mutants CI=0.9236]
+   seed 2 random       MUT  CI=0.8879 MSE=0.2437 Pearson=0.8392  [mutants CI=0.9433]
+   seed 2 cold-target  WT   CI=0.8567 MSE=0.3440 Pearson=0.7714  [mutants CI=0.9295]
+   seed 2 cold-target  MUT  CI=0.8583 MSE=0.3347 Pearson=0.7787  [mutants CI=0.9425]
+   seed 3 random       WT   CI=0.8840 MSE=0.2648 Pearson=0.8262  [mutants CI=0.9266]
+   seed 3 random       MUT  CI=0.8841 MSE=0.2543 Pearson=0.8344  [mutants CI=0.9410]
+   seed 3 cold-target  WT   CI=0.8332 MSE=0.4190 Pearson=0.7361  [mutants CI=0.9219]
+   seed 3 cold-target  MUT  CI=0.8340 MSE=0.4172 Pearson=0.7369  [mutants CI=0.9266]
+   seed 4 random       WT   CI=0.8845 MSE=0.2645 Pearson=0.8147  [mutants CI=0.9161]
+   seed 4 random       MUT  CI=0.8859 MSE=0.2517 Pearson=0.8252  [mutants CI=0.9350]
+   seed 4 cold-target  WT   CI=0.8495 MSE=0.3537 Pearson=0.7600  [mutants CI=0.8873]
+   seed 4 cold-target  MUT  CI=0.8491 MSE=0.3517 Pearson=0.7616  [mutants CI=0.8925]
+
+======================================================================
+[154.7 min] 7. NATEEJA
+======================================================================
+      split                    metric     WT    MUT  delta jeete     t
+     random                        CI 0.8862 0.8871 0.0009   4/5  2.29
+     random CI (sirf mutant proteins) 0.9216 0.9385 0.0169   5/5 12.83
+cold-target                        CI 0.8483 0.8491 0.0008   4/5  2.19
+cold-target CI (sirf mutant proteins) 0.9178 0.9249 0.0071   5/5  3.08
+
+   >>> SUDHAAR ASLI HAI - mutant proteins pe CI +0.0169 (t=12.83), 5/5 seeds. Asli mutant sequences dena faydemand hai.
+
+   Files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/mutants/results/RESULT.md, summary.json, per_seed.csv, mutation_report.csv
+   Total: 154.7 min

@@ -1,0 +1,443 @@
+name,status,detail,changed,len_before,len_after
+AAK1,wt,koi bracket nahi,0,961,961
+ABL1(E255K),skip,kuch nahi laga: E255K,0,1167,1167
+ABL1(F317I),ok-shifted,F317I (khiska: F317I@+3),1,1167,1167
+ABL1(F317I)p,ok-shifted,F317I (khiska: F317I@+3),1,1167,1167
+ABL1(F317L),ok-shifted,F317L (khiska: F317L@+3),1,1167,1167
+ABL1(F317L)p,ok-shifted,F317L (khiska: F317L@+3),1,1167,1167
+ABL1(H396P),ok-shifted,H396P (khiska: H396P@+2),1,1167,1167
+ABL1(H396P)p,ok-shifted,H396P (khiska: H396P@+2),1,1167,1167
+ABL1(M351T),ok-shifted,M351T (khiska: M351T@+4),1,1167,1167
+ABL1(Q252H),skip,kuch nahi laga: Q252H,0,1167,1167
+ABL1(Q252H)p,skip,kuch nahi laga: Q252H,0,1167,1167
+ABL1(T315I),ok-shifted,T315I (khiska: T315I@-1),1,1167,1167
+ABL1(T315I)p,ok-shifted,T315I (khiska: T315I@-1),1,1167,1167
+ABL1(Y253F),ok-shifted,Y253F (khiska: Y253F@-1),1,1167,1167
+ABL1,wt,koi bracket nahi,0,1167,1167
+ABL1p,wt,koi bracket nahi,0,1167,1167
+ABL2,wt,koi bracket nahi,0,1167,1167
+ACVR1,wt,koi bracket nahi,0,509,509
+ACVR1B,wt,koi bracket nahi,0,505,505
+ACVR2A,wt,koi bracket nahi,0,513,513
+ACVR2B,wt,koi bracket nahi,0,512,512
+ACVRL1,wt,koi bracket nahi,0,503,503
+ADCK3,wt,koi bracket nahi,0,647,647
+ADCK4,wt,koi bracket nahi,0,544,544
+AKT1,wt,koi bracket nahi,0,480,480
+AKT2,wt,koi bracket nahi,0,481,481
+AKT3,wt,koi bracket nahi,0,479,479
+ALK,wt,koi bracket nahi,0,1620,1620
+AMPK-alpha1,wt,koi bracket nahi,0,559,559
+AMPK-alpha2,wt,koi bracket nahi,0,552,552
+ANKK1,wt,koi bracket nahi,0,765,765
+ARK5,wt,koi bracket nahi,0,661,661
+ASK1,wt,koi bracket nahi,0,1374,1374
+ASK2,wt,koi bracket nahi,0,1288,1288
+AURKA,wt,koi bracket nahi,0,403,403
+AURKB,wt,koi bracket nahi,0,344,344
+AURKC,wt,koi bracket nahi,0,309,309
+AXL,wt,koi bracket nahi,0,894,894
+BIKE,wt,koi bracket nahi,0,1161,1161
+BLK,wt,koi bracket nahi,0,599,599
+BMPR1A,wt,koi bracket nahi,0,532,532
+BMPR1B,wt,koi bracket nahi,0,502,502
+BMPR2,wt,koi bracket nahi,0,1038,1038
+BMX,wt,koi bracket nahi,0,675,675
+BRAF,wt,koi bracket nahi,0,766,766
+BRAF(V600E),ok,V600E,1,766,766
+BRK,wt,koi bracket nahi,0,451,451
+BRSK1,wt,koi bracket nahi,0,778,778
+BRSK2,wt,koi bracket nahi,0,736,736
+BTK,wt,koi bracket nahi,0,483,483
+CAMK1,wt,koi bracket nahi,0,370,370
+CAMK1D,wt,koi bracket nahi,0,385,385
+CAMK1G,wt,koi bracket nahi,0,476,476
+CAMK2A,wt,koi bracket nahi,0,478,478
+CAMK2B,wt,koi bracket nahi,0,666,666
+CAMK2D,wt,koi bracket nahi,0,499,499
+CAMK2G,wt,koi bracket nahi,0,558,558
+CAMK4,wt,koi bracket nahi,0,473,473
+CAMKK1,wt,koi bracket nahi,0,505,505
+CAMKK2,wt,koi bracket nahi,0,588,588
+CASK,wt,koi bracket nahi,0,926,926
+CDC2L1,wt,koi bracket nahi,0,542,542
+CDC2L2,wt,koi bracket nahi,0,475,475
+CDC2L5,wt,koi bracket nahi,0,324,324
+CDK11,wt,koi bracket nahi,0,502,502
+CDK2,wt,koi bracket nahi,0,298,298
+CDK3,wt,koi bracket nahi,0,305,305
+CDK4-cyclinD1,wt,koi bracket nahi,0,303,303
+CDK4-cyclinD3,wt,koi bracket nahi,0,303,303
+CDK5,wt,koi bracket nahi,0,292,292
+CDK7,wt,koi bracket nahi,0,346,346
+CDK8,wt,koi bracket nahi,0,464,464
+CDK9,wt,koi bracket nahi,0,372,372
+CDKL1,wt,koi bracket nahi,0,357,357
+CDKL2,wt,koi bracket nahi,0,493,493
+CDKL3,wt,koi bracket nahi,0,592,592
+CDKL5,wt,koi bracket nahi,0,1030,1030
+CHEK1,wt,koi bracket nahi,0,476,476
+CHEK2,wt,koi bracket nahi,0,543,543
+CIT,wt,koi bracket nahi,0,2027,2027
+CLK1,wt,koi bracket nahi,0,484,484
+CLK2,wt,koi bracket nahi,0,499,499
+CLK3,wt,koi bracket nahi,0,638,638
+CLK4,wt,koi bracket nahi,0,481,481
+CSF1R,wt,koi bracket nahi,0,972,972
+CSK,wt,koi bracket nahi,0,450,450
+CSNK1A1,wt,koi bracket nahi,0,337,337
+CSNK1A1L,wt,koi bracket nahi,0,337,337
+CSNK1D,wt,koi bracket nahi,0,415,415
+CSNK1E,wt,koi bracket nahi,0,416,416
+CSNK1G1,wt,koi bracket nahi,0,422,422
+CSNK1G2,wt,koi bracket nahi,0,415,415
+CSNK1G3,wt,koi bracket nahi,0,447,447
+CSNK2A1,wt,koi bracket nahi,0,391,391
+CSNK2A2,wt,koi bracket nahi,0,350,350
+CTK,wt,koi bracket nahi,0,507,507
+DAPK1,wt,koi bracket nahi,0,1430,1430
+DAPK2,wt,koi bracket nahi,0,370,370
+DAPK3,wt,koi bracket nahi,0,454,454
+DCAMKL1,wt,koi bracket nahi,0,740,740
+DCAMKL2,wt,koi bracket nahi,0,766,766
+DCAMKL3,wt,koi bracket nahi,0,648,648
+DDR1,wt,koi bracket nahi,0,913,913
+DDR2,wt,koi bracket nahi,0,855,855
+DLK,wt,koi bracket nahi,0,859,859
+DMPK,wt,koi bracket nahi,0,629,629
+DMPK2,wt,koi bracket nahi,0,1551,1551
+DRAK1,wt,koi bracket nahi,0,414,414
+DRAK2,wt,koi bracket nahi,0,372,372
+DYRK1A,wt,koi bracket nahi,0,763,763
+DYRK1B,wt,koi bracket nahi,0,629,629
+DYRK2,wt,koi bracket nahi,0,601,601
+EGFR,wt,koi bracket nahi,0,1210,1210
+EGFR(E746A750del),ok,E746A750del,1,1210,1205
+EGFR(G719C),ok,G719C,1,1210,1210
+EGFR(G719S),ok,G719S,1,1210,1210
+EGFR(L747E749del),ok,L747E749del,1,1210,1207
+EGFR(L747S752del),ok,L747S752del,1,1210,1204
+EGFR(L747T751del),ok,L747T751del,1,1210,1205
+EGFR(L858R),ok,L858R,1,1210,1210
+EGFR(L858RT790M),ok,L858R+T790M,1,1210,1210
+EGFR(L861Q),ok,L861Q,1,1210,1210
+EGFR(S752I759del),ok,S752I759del,1,1210,1202
+EGFR(T790M),ok,T790M,1,1210,1210
+EIF2AK1,wt,koi bracket nahi,0,630,630
+EPHA1,wt,koi bracket nahi,0,976,976
+EPHA2,wt,koi bracket nahi,0,976,976
+EPHA3,wt,koi bracket nahi,0,983,983
+EPHA4,wt,koi bracket nahi,0,986,986
+EPHA5,wt,koi bracket nahi,0,1017,1017
+EPHA6,wt,koi bracket nahi,0,547,547
+EPHA7,wt,koi bracket nahi,0,998,998
+EPHA8,wt,koi bracket nahi,0,1005,1005
+EPHB1,wt,koi bracket nahi,0,984,984
+EPHB2,wt,koi bracket nahi,0,482,482
+EPHB3,wt,koi bracket nahi,0,998,998
+EPHB4,wt,koi bracket nahi,0,935,935
+EPHB6,wt,koi bracket nahi,0,1021,1021
+ERBB2,wt,koi bracket nahi,0,1255,1255
+ERBB3,wt,koi bracket nahi,0,1342,1342
+ERBB4,wt,koi bracket nahi,0,1308,1308
+ERK1,wt,koi bracket nahi,0,379,379
+ERK2,wt,koi bracket nahi,0,360,360
+ERK3,wt,koi bracket nahi,0,721,721
+ERK4,wt,koi bracket nahi,0,587,587
+ERK5,wt,koi bracket nahi,0,816,816
+ERK8,wt,koi bracket nahi,0,544,544
+ERN1,wt,koi bracket nahi,0,977,977
+FAK,wt,koi bracket nahi,0,1074,1074
+FER,wt,koi bracket nahi,0,822,822
+FES,wt,koi bracket nahi,0,822,822
+FGFR1,wt,koi bracket nahi,0,822,822
+FGFR2,wt,koi bracket nahi,0,821,821
+FGFR3,wt,koi bracket nahi,0,480,480
+FGFR3(G697C),skip,kuch nahi laga: G697C,0,480,480
+FGFR4,wt,koi bracket nahi,0,802,802
+FGR,wt,koi bracket nahi,0,529,529
+FLT1,wt,koi bracket nahi,0,1338,1338
+FLT3,wt,koi bracket nahi,0,993,993
+FLT3(D835H),ok,D835H,1,993,993
+FLT3(D835Y),ok,D835Y,1,993,993
+FLT3(ITD),skip,'ITD' se sequence nahi banaya ja sakta,0,993,993
+FLT3(K663Q),ok,K663Q,1,993,993
+FLT3(N841I),ok,N841I,1,993,993
+FLT3(R834Q),ok,R834Q,1,993,993
+FLT4,wt,koi bracket nahi,0,1363,1363
+FRK,wt,koi bracket nahi,0,505,505
+FYN,wt,koi bracket nahi,0,537,537
+GAK,wt,koi bracket nahi,0,1311,1311
+GCN2(KinDom2S808G),ok,S808G,1,1649,1649
+GRK1,wt,koi bracket nahi,0,563,563
+GRK4,wt,koi bracket nahi,0,578,578
+GRK7,wt,koi bracket nahi,0,553,553
+GSK3A,wt,koi bracket nahi,0,483,483
+GSK3B,wt,koi bracket nahi,0,420,420
+HCK,wt,koi bracket nahi,0,526,526
+HIPK1,wt,koi bracket nahi,0,1210,1210
+HIPK2,wt,koi bracket nahi,0,1198,1198
+HIPK3,wt,koi bracket nahi,0,1215,1215
+HIPK4,wt,koi bracket nahi,0,616,616
+HPK1,wt,koi bracket nahi,0,833,833
+HUNK,wt,koi bracket nahi,0,714,714
+ICK,wt,koi bracket nahi,0,632,632
+IGF1R,wt,koi bracket nahi,0,1367,1367
+IKK-alpha,wt,koi bracket nahi,0,745,745
+IKK-beta,wt,koi bracket nahi,0,756,756
+IKK-epsilon,wt,koi bracket nahi,0,716,716
+INSR,wt,koi bracket nahi,0,1382,1382
+INSRR,wt,koi bracket nahi,0,1297,1297
+IRAK1,wt,koi bracket nahi,0,712,712
+IRAK3,wt,koi bracket nahi,0,596,596
+IRAK4,wt,koi bracket nahi,0,460,460
+ITK,wt,koi bracket nahi,0,620,620
+JAK1(JH1domain-catalytic),skip,'JH1domain-catalytic' se sequence nahi banaya ja sakta,0,1154,1154
+JAK1(JH2domain-pseudokinase),skip,'JH2domain-pseudokinase' se sequence nahi banaya ja sakta,0,1154,1154
+JAK2(JH1domain-catalytic),skip,'JH1domain-catalytic' se sequence nahi banaya ja sakta,0,1132,1132
+JAK3(JH1domain-catalytic),skip,'JH1domain-catalytic' se sequence nahi banaya ja sakta,0,1124,1124
+JNK1,wt,koi bracket nahi,0,427,427
+JNK2,wt,koi bracket nahi,0,424,424
+JNK3,wt,koi bracket nahi,0,464,464
+KIT,wt,koi bracket nahi,0,976,976
+KIT(A829P),ok,A829P,1,976,976
+KIT(D816H),ok,D816H,1,976,976
+KIT(D816V),ok,D816V,1,976,976
+KIT(L576P),ok,L576P,1,976,976
+KIT(V559D),ok,V559D,1,976,976
+KIT(V559D-T670I),ok,V559D+T670I,1,976,976
+KIT(V559D-V654A),ok,V559D+V654A,1,976,976
+LATS1,wt,koi bracket nahi,0,1130,1130
+LATS2,wt,koi bracket nahi,0,1088,1088
+LCK,wt,koi bracket nahi,0,509,509
+LIMK1,wt,koi bracket nahi,0,647,647
+LIMK2,wt,koi bracket nahi,0,638,638
+LKB1,wt,koi bracket nahi,0,433,433
+LOK,wt,koi bracket nahi,0,968,968
+LRRK2,wt,koi bracket nahi,0,2527,2527
+LRRK2(G2019S),ok,G2019S,1,2527,2527
+LTK,wt,koi bracket nahi,0,864,864
+LYN,wt,koi bracket nahi,0,582,582
+LZK,wt,koi bracket nahi,0,966,966
+MAK,wt,koi bracket nahi,0,623,623
+MAP3K1,wt,koi bracket nahi,0,1512,1512
+MAP3K15,wt,koi bracket nahi,0,1313,1313
+MAP3K2,wt,koi bracket nahi,0,619,619
+MAP3K3,wt,koi bracket nahi,0,626,626
+MAP3K4,wt,koi bracket nahi,0,1608,1608
+MAP4K2,wt,koi bracket nahi,0,820,820
+MAP4K3,wt,koi bracket nahi,0,894,894
+MAP4K4,wt,koi bracket nahi,0,1273,1273
+MAP4K5,wt,koi bracket nahi,0,846,846
+MAPKAPK2,wt,koi bracket nahi,0,400,400
+MAPKAPK5,wt,koi bracket nahi,0,473,473
+MARK1,wt,koi bracket nahi,0,795,795
+MARK2,wt,koi bracket nahi,0,788,788
+MARK3,wt,koi bracket nahi,0,753,753
+MARK4,wt,koi bracket nahi,0,752,752
+MAST1,wt,koi bracket nahi,0,1570,1570
+MEK1,wt,koi bracket nahi,0,393,393
+MEK2,wt,koi bracket nahi,0,400,400
+MEK3,wt,koi bracket nahi,0,347,347
+MEK4,wt,koi bracket nahi,0,399,399
+MEK5,wt,koi bracket nahi,0,448,448
+MEK6,wt,koi bracket nahi,0,334,334
+MELK,wt,koi bracket nahi,0,651,651
+MERTK,wt,koi bracket nahi,0,999,999
+MET,wt,koi bracket nahi,0,1390,1390
+MET(M1250T),ok,M1250T,1,1390,1390
+MET(Y1235D),ok,Y1235D,1,1390,1390
+MINK,wt,koi bracket nahi,0,1332,1332
+MKK7,wt,koi bracket nahi,0,419,419
+MKNK1,wt,koi bracket nahi,0,465,465
+MKNK2,wt,koi bracket nahi,0,465,465
+MLCK,wt,koi bracket nahi,0,819,819
+MLK1,wt,koi bracket nahi,0,373,373
+MLK2,wt,koi bracket nahi,0,954,954
+MLK3,wt,koi bracket nahi,0,847,847
+MRCKA,wt,koi bracket nahi,0,1732,1732
+MRCKB,wt,koi bracket nahi,0,1711,1711
+MST1,wt,koi bracket nahi,0,487,487
+MST1R,wt,koi bracket nahi,0,1400,1400
+MST2,wt,koi bracket nahi,0,491,491
+MST3,wt,koi bracket nahi,0,443,443
+MST4,wt,koi bracket nahi,0,416,416
+MTOR,wt,koi bracket nahi,0,2549,2549
+MUSK,wt,koi bracket nahi,0,869,869
+MYLK,wt,koi bracket nahi,0,1914,1914
+MYLK2,wt,koi bracket nahi,0,596,596
+MYLK4,wt,koi bracket nahi,0,388,388
+MYO3A,wt,koi bracket nahi,0,1616,1616
+MYO3B,wt,koi bracket nahi,0,1341,1341
+NDR1,wt,koi bracket nahi,0,465,465
+NDR2,wt,koi bracket nahi,0,464,464
+NEK1,wt,koi bracket nahi,0,1258,1258
+NEK11,wt,koi bracket nahi,0,645,645
+NEK2,wt,koi bracket nahi,0,445,445
+NEK3,wt,koi bracket nahi,0,506,506
+NEK4,wt,koi bracket nahi,0,451,451
+NEK5,wt,koi bracket nahi,0,708,708
+NEK6,wt,koi bracket nahi,0,313,313
+NEK7,wt,koi bracket nahi,0,302,302
+NEK9,wt,koi bracket nahi,0,979,979
+NIM1,wt,koi bracket nahi,0,436,436
+NLK,wt,koi bracket nahi,0,527,527
+OSR1,wt,koi bracket nahi,0,527,527
+p38-alpha,wt,koi bracket nahi,0,360,360
+p38-beta,wt,koi bracket nahi,0,364,364
+p38-delta,wt,koi bracket nahi,0,365,365
+p38-gamma,wt,koi bracket nahi,0,367,367
+PAK1,wt,koi bracket nahi,0,545,545
+PAK2,wt,koi bracket nahi,0,524,524
+PAK3,wt,koi bracket nahi,0,559,559
+PAK4,wt,koi bracket nahi,0,591,591
+PAK6,wt,koi bracket nahi,0,681,681
+PAK7,wt,koi bracket nahi,0,719,719
+PCTK1,wt,koi bracket nahi,0,448,448
+PCTK2,wt,koi bracket nahi,0,523,523
+PCTK3,wt,koi bracket nahi,0,436,436
+PDGFRA,wt,koi bracket nahi,0,1089,1089
+PDGFRB,wt,koi bracket nahi,0,777,777
+PDPK1,wt,koi bracket nahi,0,556,556
+PFCDPK1(Pfalciparum),skip,kuch nahi laga: Pfalciparum,0,524,524
+PFPK5(Pfalciparum),skip,kuch nahi laga: Pfalciparum,0,288,288
+PFTAIRE2,wt,koi bracket nahi,0,435,435
+PFTK1,wt,koi bracket nahi,0,469,469
+PHKG1,wt,koi bracket nahi,0,387,387
+PHKG2,wt,koi bracket nahi,0,406,406
+PIK3C2B,wt,koi bracket nahi,0,1634,1634
+PIK3C2G,wt,koi bracket nahi,0,1445,1445
+PIK3CA,wt,koi bracket nahi,0,1069,1069
+PIK3CA(C420R),ok-shifted,C420R (khiska: C420R@+1),1,1069,1069
+PIK3CA(E542K),ok-shifted,E542K (khiska: E542K@+1),1,1069,1069
+PIK3CA(E545A),ok-shifted,E545A (khiska: E545A@+1),1,1069,1069
+PIK3CA(E545K),ok-shifted,E545K (khiska: E545K@+1),1,1069,1069
+PIK3CA(H1047L),ok-shifted,H1047L (khiska: H1047L@+1),1,1069,1069
+PIK3CA(H1047Y),ok-shifted,H1047Y (khiska: H1047Y@+1),1,1069,1069
+PIK3CA(I800L),ok,I800L,1,1069,1069
+PIK3CA(M1043I),ok-shifted,M1043I (khiska: M1043I@+1),1,1069,1069
+PIK3CA(Q546K),ok-shifted,Q546K (khiska: Q546K@+1),1,1069,1069
+PIK3CB,wt,koi bracket nahi,0,1070,1070
+PIK3CD,wt,koi bracket nahi,0,1044,1044
+PIK3CG,wt,koi bracket nahi,0,1102,1102
+PIK4CB,wt,koi bracket nahi,0,816,816
+PIM1,wt,koi bracket nahi,0,404,404
+PIM2,wt,koi bracket nahi,0,311,311
+PIM3,wt,koi bracket nahi,0,326,326
+PIP5K1A,wt,koi bracket nahi,0,562,562
+PIP5K1C,wt,koi bracket nahi,0,668,668
+PIP5K2B,wt,koi bracket nahi,0,416,416
+PIP5K2C,wt,koi bracket nahi,0,421,421
+PKAC-alpha,wt,koi bracket nahi,0,351,351
+PKAC-beta,wt,koi bracket nahi,0,351,351
+PKMYT1,wt,koi bracket nahi,0,499,499
+PKN1,wt,koi bracket nahi,0,942,942
+PKN2,wt,koi bracket nahi,0,984,984
+PKNB(Mtuberculosis),skip,kuch nahi laga: Mtuberculosis,0,626,626
+PLK1,wt,koi bracket nahi,0,603,603
+PLK2,wt,koi bracket nahi,0,685,685
+PLK3,wt,koi bracket nahi,0,646,646
+PLK4,wt,koi bracket nahi,0,970,970
+PRKCD,wt,koi bracket nahi,0,676,676
+PRKCE,wt,koi bracket nahi,0,737,737
+PRKCH,wt,koi bracket nahi,0,683,683
+PRKCI,wt,koi bracket nahi,0,596,596
+PRKCQ,wt,koi bracket nahi,0,706,706
+PRKD1,wt,koi bracket nahi,0,912,912
+PRKD2,wt,koi bracket nahi,0,878,878
+PRKD3,wt,koi bracket nahi,0,890,890
+PRKG1,wt,koi bracket nahi,0,671,671
+PRKG2,wt,koi bracket nahi,0,762,762
+PRKR,wt,koi bracket nahi,0,513,513
+PRKX,wt,koi bracket nahi,0,358,358
+PRP4,wt,koi bracket nahi,0,1007,1007
+PYK2,wt,koi bracket nahi,0,1009,1009
+QSK,wt,koi bracket nahi,0,1263,1263
+RAF1,wt,koi bracket nahi,0,648,648
+RET,wt,koi bracket nahi,0,458,458
+RET(M918T),skip,kuch nahi laga: M918T,0,458,458
+RET(V804L),skip,kuch nahi laga: V804L,0,458,458
+RET(V804M),skip,kuch nahi laga: V804M,0,458,458
+RIOK1,wt,koi bracket nahi,0,568,568
+RIOK2,wt,koi bracket nahi,0,552,552
+RIOK3,wt,koi bracket nahi,0,519,519
+RIPK1,wt,koi bracket nahi,0,671,671
+RIPK2,wt,koi bracket nahi,0,540,540
+RIPK4,wt,koi bracket nahi,0,784,784
+RIPK5,wt,koi bracket nahi,0,929,929
+ROCK1,wt,koi bracket nahi,0,1354,1354
+ROCK2,wt,koi bracket nahi,0,703,703
+ROS1,wt,koi bracket nahi,0,2347,2347
+RPS6KA4(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,772,772
+RPS6KA4(KinDom.2-C-terminal),skip,kuch nahi laga: KinDom.2+C+terminal,0,772,772
+RPS6KA5(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,802,802
+RPS6KA5(KinDom.2-C-terminal),skip,kuch nahi laga: KinDom.2+C+terminal,0,802,802
+RSK1(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,735,735
+RSK1(KinDom.2-C-terminal),skip,kuch nahi laga: KinDom.2+C+terminal,0,735,735
+RSK2(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,740,740
+RSK3(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,733,733
+RSK3(KinDom.2-C-terminal),skip,kuch nahi laga: KinDom.2+C+terminal,0,733,733
+RSK4(KinDom.1-N-terminal),skip,kuch nahi laga: KinDom.1+N+terminal,0,745,745
+RSK4(KinDom.2-C-terminal),skip,kuch nahi laga: KinDom.2+C+terminal,0,745,745
+S6K1,wt,koi bracket nahi,0,525,525
+SBK1,wt,koi bracket nahi,0,424,424
+SgK110,wt,koi bracket nahi,0,359,359
+SGK3,wt,koi bracket nahi,0,496,496
+SIK,wt,koi bracket nahi,0,783,783
+SIK2,wt,koi bracket nahi,0,926,926
+SLK,wt,koi bracket nahi,0,1235,1235
+SNARK,wt,koi bracket nahi,0,628,628
+SNRK,wt,koi bracket nahi,0,765,765
+SRC,wt,koi bracket nahi,0,536,536
+SRMS,wt,koi bracket nahi,0,488,488
+SRPK1,wt,koi bracket nahi,0,655,655
+SRPK2,wt,koi bracket nahi,0,688,688
+SRPK3,wt,koi bracket nahi,0,567,567
+STK16,wt,koi bracket nahi,0,305,305
+STK33,wt,koi bracket nahi,0,514,514
+STK35,wt,koi bracket nahi,0,534,534
+STK36,wt,koi bracket nahi,0,1315,1315
+STK39,wt,koi bracket nahi,0,545,545
+SYK,wt,koi bracket nahi,0,635,635
+TAK1,wt,koi bracket nahi,0,606,606
+TAOK1,wt,koi bracket nahi,0,1001,1001
+TAOK2,wt,koi bracket nahi,0,1235,1235
+TAOK3,wt,koi bracket nahi,0,898,898
+TBK1,wt,koi bracket nahi,0,729,729
+TEC,wt,koi bracket nahi,0,631,631
+TESK1,wt,koi bracket nahi,0,244,244
+TGFBR1,wt,koi bracket nahi,0,503,503
+TGFBR2,wt,koi bracket nahi,0,567,567
+TIE1,wt,koi bracket nahi,0,1138,1138
+TIE2,wt,koi bracket nahi,0,1157,1157
+TLK1,wt,koi bracket nahi,0,766,766
+TLK2,wt,koi bracket nahi,0,772,772
+TNIK,wt,koi bracket nahi,0,1360,1360
+TNK1,wt,koi bracket nahi,0,666,666
+TNK2,wt,koi bracket nahi,0,1038,1038
+TNNI3K,wt,koi bracket nahi,0,835,835
+TRKA,wt,koi bracket nahi,0,790,790
+TRKB,wt,koi bracket nahi,0,477,477
+TRKC,wt,koi bracket nahi,0,839,839
+TRPM6,wt,koi bracket nahi,0,2022,2022
+TSSK1B,wt,koi bracket nahi,0,367,367
+TTK,wt,koi bracket nahi,0,857,857
+TXK,wt,koi bracket nahi,0,527,527
+TYK2(JH1domain-catalytic),skip,'JH1domain-catalytic' se sequence nahi banaya ja sakta,0,1187,1187
+TYK2(JH2domain-pseudokinase),skip,'JH2domain-pseudokinase' se sequence nahi banaya ja sakta,0,1187,1187
+TYRO3,wt,koi bracket nahi,0,890,890
+ULK1,wt,koi bracket nahi,0,1050,1050
+ULK2,wt,koi bracket nahi,0,1036,1036
+ULK3,wt,koi bracket nahi,0,472,472
+VEGFR2,wt,koi bracket nahi,0,1356,1356
+VRK2,wt,koi bracket nahi,0,508,508
+WEE1,wt,koi bracket nahi,0,646,646
+WEE2,wt,koi bracket nahi,0,567,567
+YANK1,wt,koi bracket nahi,0,396,396
+YANK2,wt,koi bracket nahi,0,414,414
+YANK3,wt,koi bracket nahi,0,486,486
+YES,wt,koi bracket nahi,0,543,543
+YSK1,wt,koi bracket nahi,0,426,426
+YSK4,wt,koi bracket nahi,0,1328,1328
+ZAK,wt,koi bracket nahi,0,800,800
+ZAP70,wt,koi bracket nahi,0,619,619

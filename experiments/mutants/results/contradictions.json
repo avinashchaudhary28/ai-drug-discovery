@@ -1,0 +1,18 @@
+[
+  {
+    "tag": "WT",
+    "groups": 546,
+    "rows": 2894,
+    "pct_rows": 9.63,
+    "mean_std": 0.5566,
+    "mean_range": 1.1203
+  },
+  {
+    "tag": "MUT",
+    "groups": 515,
+    "rows": 1241,
+    "pct_rows": 4.13,
+    "mean_std": 0.5154,
+    "mean_range": 0.7771
+  }
+]
