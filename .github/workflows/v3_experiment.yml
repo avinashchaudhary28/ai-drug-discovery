@@ -11,6 +11,10 @@ on:
         description: "XGBoost trees (kam = tez)"
         required: false
         default: "400"
+      n_seeds:
+        description: "Kitne seeds pe dohraana hai"
+        required: false
+        default: "5"
 
 permissions:
   contents: write
@@ -55,6 +59,7 @@ jobs:
         env:
           MAX_TOTAL_PAIRS: ${{ inputs.max_total_pairs }}
           N_TREES: ${{ inputs.n_trees }}
+          N_SEEDS: ${{ inputs.n_seeds }}
           TOKENIZERS_PARALLELISM: "false"
         run: |
           set -o pipefail

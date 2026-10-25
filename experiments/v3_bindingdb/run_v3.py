@@ -33,6 +33,7 @@ os.makedirs(OUT, exist_ok=True)
 
 MAX_TOTAL_PAIRS = int(os.environ.get("MAX_TOTAL_PAIRS", 120000))
 N_TREES = int(os.environ.get("N_TREES", 400))
+N_SEEDS = int(os.environ.get("N_SEEDS", 5))
 SEED = 0
 rng = np.random.default_rng(SEED)
 
@@ -200,22 +201,15 @@ bdb = (bdb.groupby(["smiles", "p"], as_index=False)
 info(f"dedupe ke baad: {len(bdb):,} unique jode")
 
 
-step("5. Test split - dono models ke liye bilkul ek jaisa")
-# Cold-drug: test ki dawaiyan training me kabhi nahi aayengi (na Davis se, na BindingDB se).
-# Yahi v2 ki sabse kamzor jagah thi (CI 0.675).
-from sklearn.model_selection import GroupShuffleSplit
-
-gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=SEED)
-tr_idx, te_idx = next(gss.split(davis_pairs, groups=davis_pairs.d))
-train_pairs = davis_pairs.iloc[tr_idx].reset_index(drop=True)
-test_pairs = davis_pairs.iloc[te_idx].reset_index(drop=True)
-TEST_DRUG_IDS = sorted(set(test_pairs.d) - set(train_pairs.d))
-info(f"train {len(train_pairs):,} jode / test {len(test_pairs):,} jode")
-info(f"test ki dawaiyan: {len(TEST_DRUG_IDS)} (training me ek bhi nahi)")
-
-# leakage band karo: test dawaiyon ke SMILES BindingDB se bhi hatao
+step("5. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)")
+# Features seed se aazad hain, isliye ek hi baar banate hain aur sab seeds me reuse.
 from rdkit import Chem, RDLogger
+from rdkit.Chem import Descriptors, rdFingerprintGenerator
+
 RDLogger.DisableLog("rdApp.*")
+fp1024 = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
+DESC = Descriptors._descList
+info(f"RDKit {len(DESC)} descriptors")
 
 
 def canon(s):
@@ -223,34 +217,9 @@ def canon(s):
     return Chem.MolToSmiles(m) if m is not None else None
 
 
-DAVIS_CANON = [canon(s) for s in DAVIS_SMILES]   # 68 dawaiyan, ek hi baar
-test_canon = {DAVIS_CANON[d] for d in TEST_DRUG_IDS if DAVIS_CANON[d]}
-info(f"{len(test_canon)} test SMILES canonical form me")
-
+DAVIS_CANON = [canon(s) for s in DAVIS_SMILES]
 bdb["canon"] = [canon(s) for s in bdb.smiles]
-before = len(bdb)
-bdb = bdb[bdb.canon.notna() & ~bdb.canon.isin(test_canon)].reset_index(drop=True)
-info(f"leakage hatane se {before - len(bdb):,} BindingDB rows gaye -> {len(bdb):,} bache")
-
-# Davis train pairs bhi BindingDB me ho sakte hain - unko BindingDB side se hatao
-davis_train_keys = set(zip([DAVIS_CANON[d] for d in train_pairs.d], train_pairs.p))
-mask = [(c, p) not in davis_train_keys for c, p in zip(bdb.canon, bdb.p)]
-dup = len(bdb) - sum(mask)
-bdb = bdb[mask].reset_index(drop=True)
-info(f"Davis ke saath duplicate {dup:,} jode hataye -> BindingDB se {len(bdb):,} naye jode")
-
-budget = MAX_TOTAL_PAIRS - len(train_pairs)
-if len(bdb) > budget:
-    bdb = bdb.sample(budget, random_state=SEED).reset_index(drop=True)
-    info(f"memory ke liye {budget:,} jode tak seemit kiya")
-
-
-step("6. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)")
-from rdkit.Chem import Descriptors, rdFingerprintGenerator
-
-fp1024 = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
-DESC = Descriptors._descList
-info(f"RDKit {len(DESC)} descriptors")
+bdb = bdb[bdb.canon.notna()].reset_index(drop=True)
 
 ALL_SMILES = list(dict.fromkeys([str(s) for s in DAVIS_SMILES] + list(bdb.smiles)))
 info(f"{len(ALL_SMILES):,} unique molecules ke features banenge")
@@ -302,8 +271,10 @@ def cached_npy(name, fn):
     p = os.path.join(WORK, name + ".npy")
     if os.path.exists(p):
         a = np.load(p)
-        info(f"cache: {name} {a.shape}")
-        return a
+        if len(a) == len(ALL_SMILES):
+            info(f"cache: {name} {a.shape}")
+            return a
+        info(f"cache {name} purana hai ({len(a)} vs {len(ALL_SMILES)}) - dobara banega")
     t0 = time.time()
     a = fn()
     np.save(p, a)
@@ -318,35 +289,14 @@ del RD, CB
 SMI2ROW = {s: k for k, s in enumerate(ALL_SMILES)}
 info(f"DRUG_X {DRUG_X.shape} ({DRUG_X.nbytes/1e9:.2f} GB)")
 
-
-step("7. Training matrices banate hain")
-
-
-def build_xy(drug_rows, prot_idx, y):
-    X = np.hstack([DRUG_X[drug_rows], ESM[prot_idx]]).astype(np.float32)
-    return X, np.asarray(y, dtype=np.float32)
+davis_rows_all = np.array([SMI2ROW[str(s)] for s in DAVIS_SMILES])
+bdb_rows_all = np.array([SMI2ROW[str(s)] for s in bdb.smiles])
 
 
-davis_rows = np.array([SMI2ROW[str(DAVIS_SMILES[d])] for d in davis_pairs.d])
-tr_rows = davis_rows[tr_idx]
-te_rows = davis_rows[te_idx]
-
-X_test, y_test = build_xy(te_rows, test_pairs.p.values, test_pairs.y.values)
-X_a, y_a = build_xy(tr_rows, train_pairs.p.values, train_pairs.y.values)
-info(f"A (Davis sirf)   : {X_a.shape}")
-
-bdb_rows = np.array([SMI2ROW[str(s)] for s in bdb.smiles])
-X_b_extra, y_b_extra = build_xy(bdb_rows, bdb.p.values, bdb.pK.values)
-X_b = np.vstack([X_a, X_b_extra])
-y_b = np.concatenate([y_a, y_b_extra])
-del X_b_extra
-info(f"B (Davis+BindingDB): {X_b.shape}  (+{len(y_b)-len(y_a):,} jode = "
-     f"{len(y_b)/max(len(y_a),1):.1f}x data)")
-info(f"test             : {X_test.shape}")
-
-
-step("8. Dono models train karte hain (bilkul same settings)")
+step("6. Tools: CI aur training")
 import xgboost as xgb
+from scipy.stats import pearsonr
+from sklearn.model_selection import GroupShuffleSplit
 
 
 def concordance_index(y_true, y_pred, chunk=2000):
@@ -361,76 +311,138 @@ def concordance_index(y_true, y_pred, chunk=2000):
     return num / den if den else float("nan")
 
 
-def train_eval(tag, X, y):
-    t0 = time.time()
-    # CPU pe chalana hai, isliye v2 se halka: 400 trees, max_bin 128.
-    # Dono models me BILKUL yahi settings hain, to muqabla jaayaz rehta hai.
+def build_xy(drug_rows, prot_idx, y):
+    X = np.hstack([DRUG_X[drug_rows], ESM[prot_idx]]).astype(np.float32)
+    return X, np.asarray(y, dtype=np.float32)
+
+
+def fit_predict(X, y, X_test):
+    # CPU pe chalana hai, isliye v2 se halka. Dono models me BILKUL yahi settings.
     m = xgb.XGBRegressor(n_estimators=N_TREES, max_depth=8, learning_rate=0.08,
                          subsample=0.8, colsample_bytree=0.5, tree_method="hist",
-                         max_bin=128, n_jobs=os.cpu_count(), random_state=SEED)
+                         max_bin=128, n_jobs=os.cpu_count(), random_state=0)
     m.fit(X, y)
-    p = m.predict(X_test)
-    from scipy.stats import pearsonr
-    r = {
-        "model": tag,
-        "n_train": int(len(y)),
-        "CI": float(concordance_index(y_test, p)),
-        "MSE": float(np.mean((y_test - p) ** 2)),
-        "Pearson": float(pearsonr(y_test, p)[0]),
-        "minutes": round((time.time() - t0) / 60, 1),
-    }
-    print(f"   {tag:22s} CI={r['CI']:.4f}  MSE={r['MSE']:.4f}  "
-          f"Pearson={r['Pearson']:.4f}  ({r['minutes']} min)", flush=True)
-    return r
+    return m.predict(X_test)
 
 
-rows = [train_eval("A: Davis sirf", X_a, y_a)]
-del X_a
-rows.append(train_eval("B: Davis+BindingDB", X_b, y_b))
-del X_b
+def metrics(y_test, p):
+    return {"CI": float(concordance_index(y_test, p)),
+            "MSE": float(np.mean((y_test - p) ** 2)),
+            "Pearson": float(pearsonr(y_test, p)[0])}
 
 
-step("9. NATEEJA")
-res = pd.DataFrame(rows)
-ci_a, ci_b = res.CI[0], res.CI[1]
-delta = ci_b - ci_a
-res_tbl = res[["model", "n_train", "CI", "MSE", "Pearson"]].round(4)
-print(res_tbl.to_string(index=False), flush=True)
-print(f"\n   Davis cold-drug test set, {len(y_test):,} jode, {len(TEST_DRUG_IDS)} nayi dawaiyan")
-print(f"   CI me farak: {delta:+.4f}", flush=True)
-if delta > 0.01:
-    verdict = "DATA se faida hua - BindingDB jodne se model behtar hua."
-elif delta < -0.01:
-    verdict = "DATA se nuksan hua - zyada data ne model kharab kiya."
+step(f"7. {N_SEEDS} seeds pe chalate hain (ek split ka result tukka ho sakta hai)")
+rows = []
+for seed in range(N_SEEDS):
+    t_seed = time.time()
+    print(f"\n--- seed {seed} " + "-" * 50, flush=True)
+    gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=seed)
+    tr_idx, te_idx = next(gss.split(davis_pairs, groups=davis_pairs.d))
+    train_pairs = davis_pairs.iloc[tr_idx]
+    test_pairs = davis_pairs.iloc[te_idx]
+    test_drugs = sorted(set(test_pairs.d) - set(train_pairs.d))
+    test_canon = {DAVIS_CANON[d] for d in test_drugs if DAVIS_CANON[d]}
+
+    # leakage: test dawaiyan BindingDB se bhi hatao
+    keep = ~bdb.canon.isin(test_canon)
+    # Davis train ke saath duplicate jode bhi hatao
+    dtk = set(zip([DAVIS_CANON[d] for d in train_pairs.d], train_pairs.p))
+    keep &= np.array([(c, p) not in dtk for c, p in zip(bdb.canon, bdb.p)])
+    sub = bdb[keep]
+    budget = MAX_TOTAL_PAIRS - len(train_pairs)
+    if len(sub) > budget:
+        sub = sub.sample(budget, random_state=seed)
+    info(f"test: {len(test_pairs):,} jode / {len(test_drugs)} nayi dawaiyan · "
+         f"BindingDB se jude: {len(sub):,}")
+
+    X_test, y_test = build_xy(davis_rows_all[test_pairs.d.values],
+                              test_pairs.p.values, test_pairs.y.values)
+    X_a, y_a = build_xy(davis_rows_all[train_pairs.d.values],
+                        train_pairs.p.values, train_pairs.y.values)
+
+    r = metrics(y_test, fit_predict(X_a, y_a, X_test))
+    r.update(seed=seed, model="A", n_train=int(len(y_a)))
+    rows.append(r)
+    print(f"   A (Davis sirf)     n={len(y_a):,}  CI={r['CI']:.4f} "
+          f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
+
+    X_extra, y_extra = build_xy(bdb_rows_all[sub.index.values], sub.p.values, sub.pK.values)
+    X_b = np.vstack([X_a, X_extra]); y_b = np.concatenate([y_a, y_extra])
+    del X_a, X_extra
+    r = metrics(y_test, fit_predict(X_b, y_b, X_test))
+    r.update(seed=seed, model="B", n_train=int(len(y_b)))
+    rows.append(r)
+    print(f"   B (Davis+BindingDB) n={len(y_b):,}  CI={r['CI']:.4f} "
+          f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
+    del X_b, X_test
+    print(f"   seed {seed} done ({(time.time()-t_seed)/60:.1f} min)", flush=True)
+
+    # har seed ke baad save - run adhoora toote to bhi kaam na jaye
+    pd.DataFrame(rows).to_csv(os.path.join(OUT, "per_seed.csv"), index=False)
+
+
+step("8. NATEEJA")
+df = pd.DataFrame(rows)
+agg = (df.groupby("model")[["CI", "MSE", "Pearson"]]
+         .agg(["mean", "std"]).round(4))
+print(agg.to_string(), flush=True)
+
+piv = df.pivot(index="seed", columns="model", values="CI")
+piv["farak (B-A)"] = (piv["B"] - piv["A"]).round(4)
+print("\n   Har seed ka CI:")
+print(piv.round(4).to_string(), flush=True)
+
+d = piv["farak (B-A)"]
+wins = int((d > 0).sum())
+mean_d, std_d = float(d.mean()), float(d.std())
+print(f"\n   B jeeta {wins}/{N_SEEDS} seeds me · CI farak {mean_d:+.4f} (±{std_d:.4f})", flush=True)
+
+if wins == N_SEEDS and mean_d > 0.005:
+    verdict = (f"DATA se faida hua - B ne saare {N_SEEDS} seeds jeete "
+               f"(CI {mean_d:+.4f}). Zyada data lane ka raasta sahi hai.")
+elif wins >= N_SEEDS - 1 and mean_d > abs(std_d):
+    verdict = (f"DATA se faida lagta hai - B {wins}/{N_SEEDS} seeds me jeeta "
+               f"(CI {mean_d:+.4f} ±{std_d:.4f}), par farak chhota hai.")
+elif abs(mean_d) <= max(std_d, 0.005):
+    verdict = ("DATA se koi pakka farak nahi - shor ke andar hai. Bottleneck data "
+               "nahi, protein representation hai (pocket-aware raasta).")
 else:
-    verdict = ("DATA se koi farak nahi - bottleneck data nahi, "
-               "protein representation hai (pocket-aware wala raasta).")
+    verdict = (f"DATA se nuksan hua - B {wins}/{N_SEEDS} seeds jeeta, "
+               f"CI farak {mean_d:+.4f}.")
 print(f"\n   >>> {verdict}", flush=True)
 
 summary = {
     "finished_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "total_minutes": round((time.time() - T_START) / 60, 1),
-    "test_set": "Davis cold-drug (GroupShuffleSplit on drug, seed 0, 20%)",
-    "test_pairs": int(len(y_test)),
-    "test_drugs": len(TEST_DRUG_IDS),
+    "design": "Model/features/hyperparameters dono me same; sirf training data badla.",
+    "test_set": "Davis cold-drug (GroupShuffleSplit on drug, 20%), per seed",
+    "n_seeds": N_SEEDS,
     "bindingdb_proteins_matched": int(bdb.p.nunique()),
-    "bindingdb_pairs_added": int(len(y_b) - len(y_a)),
-    "delta_CI": round(float(delta), 4),
+    "mean_delta_CI": round(mean_d, 4),
+    "std_delta_CI": round(std_d, 4),
+    "B_wins": wins,
     "verdict": verdict,
-    "results": rows,
+    "per_model": json.loads(df.groupby("model")[["CI", "MSE", "Pearson"]].mean().to_json()),
+    "per_seed": rows,
 }
 json.dump(summary, open(os.path.join(OUT, "summary.json"), "w"), indent=2)
-res.to_csv(os.path.join(OUT, "results.csv"), index=False)
+df.to_csv(os.path.join(OUT, "per_seed.csv"), index=False)
 
 with open(os.path.join(OUT, "RESULT.md"), "w") as f:
     f.write("# v3 experiment: kya zyada data se binding model behtar hota hai?\n\n")
-    f.write(f"- Test set: **Davis cold-drug** ({len(y_test):,} jode, "
-            f"{len(TEST_DRUG_IDS)} nayi dawaiyan jo training me nahi thi)\n")
-    f.write(f"- BindingDB se jude jode: **{len(y_b)-len(y_a):,}** "
-            f"({bdb.p.nunique()} proteins pe)\n")
-    f.write(f"- Model, features, hyperparameters: **dono me same** (sirf data badla)\n\n")
-    f.write(res_tbl.to_markdown(index=False))
-    f.write(f"\n\n**CI farak: {delta:+.4f}**\n\n**{verdict}**\n")
+    f.write("**Design:** model, features, hyperparameters dono taraf bilkul same. "
+            "Sirf training data badla.\n\n")
+    f.write("- A = Davis train pairs\n- B = Davis train pairs + BindingDB (Kd+Ki)\n")
+    f.write(f"- Test: Davis **cold-drug** split, {N_SEEDS} seeds\n")
+    f.write(f"- BindingDB se match hue proteins: {bdb.p.nunique()}\n")
+    f.write("- Leakage hataya: test dawaiyon ke canonical SMILES, aur Davis ke "
+            "saath duplicate jode\n\n")
+    f.write("## Average (± std)\n\n")
+    f.write(agg.to_markdown())
+    f.write("\n\n## Har seed ka CI\n\n")
+    f.write(piv.round(4).to_markdown())
+    f.write(f"\n\n**B jeeta {wins}/{N_SEEDS} seeds me · CI farak {mean_d:+.4f} "
+            f"(±{std_d:.4f})**\n\n**{verdict}**\n")
 
-print(f"\n   Files: {OUT}/summary.json, results.csv, RESULT.md")
-print(f"   Total time: {(time.time()-T_START)/60:.1f} min", flush=True)
+print(f"\n   Files: {OUT}/RESULT.md, summary.json, per_seed.csv")
+print(f"   Total: {(time.time()-T_START)/60:.1f} min", flush=True)
