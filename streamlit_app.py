@@ -105,27 +105,45 @@ with tab_rep:
                        f"{meta.get('n_targets', '?')} targets · "
                        f"model: binding v2 · banaya gaya {meta.get('built_utc', '?')[:10]}")
 
+        # Agar ChEMBL ka known-drug lookup theek nahi chala to 'known' column
+        # jhootha hai - sab kuch 'naya' dikhega, jo sabse bada bharam hai.
+        # Aise me column dikhana hi nahi chahiye.
+        known_ok = bool(meta.get("known_lookup_ok", True))
+        if not known_ok:
+            st.error("**'Pehle se jaani?' column is baar bharose layak nahi** — "
+                     f"ChEMBL se sirf {meta.get('known_genes_resolved', '?')} targets "
+                     "ke known drugs mil paaye. Isliye wo column chhupa diya hai. "
+                     "Iska matlab **ye nahi** ki ye dawaiyan nayi hain — bas hum "
+                     "bata nahi sakte kaun si pehle se jaani-pehchani hai.")
+
         targets = sorted(rep.target.unique())
         pref = [t for t in ("EGFR", "ALK", "ABL1", "KIT", "BRAF") if t in targets]
         tgt = st.selectbox("Target protein", targets,
                            index=targets.index(pref[0]) if pref else 0)
-        hide_known = st.checkbox(
-            "Sirf wo dawaiyan dikhao jo is target ke liye pehle se jaani nahi hain",
-            value=False,
-            help="Jaani-pehchani dawaiyan top pe aana model ke sahi hone ka suboot "
-                 "hai. Unhe hata ke dekho to jo bachta hai wo 'naya' candidate hai — "
-                 "par wo galat bhi ho sakta hai.")
 
-        sub = rep[rep.target == tgt].sort_values("rank")
-        n_known = int(sub.known_for_target.sum())
-        if hide_known:
-            sub = sub[~sub.known_for_target]
+        hide_known = False
+        if known_ok:
+            hide_known = st.checkbox(
+                "Sirf wo dawaiyan dikhao jo is target ke liye pehle se jaani nahi hain",
+                value=False,
+                help="Jaani-pehchani dawaiyan top pe aana model ke sahi hone ka "
+                     "suboot hai. Unhe hata ke dekho to jo bachta hai wo 'naya' "
+                     "candidate hai — par wo galat bhi ho sakta hai.")
+
+        full = rep[rep.target == tgt].sort_values("rank")
+        sub = full[~full.known_for_target] if hide_known else full
 
         c1, c2 = st.columns(2)
-        c1.metric("Top list me jaani-pehchani", f"{n_known} / {len(rep[rep.target==tgt])}")
+        if known_ok:
+            c1.metric("Top list me jaani-pehchani",
+                      f"{int(full.known_for_target.sum())} / {len(full)}")
+        else:
+            c1.metric("Top list me dawaiyan", f"{len(full)}")
         c2.metric("Sabse zyada pKd", f"{sub.pKd.max():.2f}" if len(sub) else "—")
 
-        show = sub[["rank", "drug", "pKd", "max_phase", "known_for_target"]].rename(
+        cols = ["rank", "drug", "pKd", "max_phase"] + (
+            ["known_for_target"] if known_ok else [])
+        show = sub[cols].rename(
             columns={"rank": "#", "drug": "Dawa", "max_phase": "Phase",
                      "known_for_target": "Pehle se jaani?"})
         st.dataframe(show, hide_index=True, use_container_width=True)

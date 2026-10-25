@@ -132,6 +132,50 @@ GENES = sorted({n.split("(")[0].replace("-nonphosphorylated", "")
                    .replace("-phosphorylated", "").strip() for n in names})
 info(f"{len(GENES)} alag gene naam Davis me")
 
+def chembl_target_id(gene):
+    """
+    Gene symbol -> ChEMBL target id.
+
+    Full-text search + GENE_SYMBOL synonym pe match. Pehle maine
+    `pref_name__icontains=EGFR` try kiya tha - wo fail hota hai, kyunki ChEMBL
+    ka pref_name "Epidermal growth factor receptor erbB1" jaisa hota hai; gene
+    symbol sirf component synonyms me milta hai. Usi galti se 381 me se sirf
+    23 genes resolve hue the aur poori table 'novel' dikhne lagi thi.
+    """
+    try:
+        res = get_json(f"{API}/target/search.json?q={urllib.parse.quote(gene)}"
+                       f"&limit=25").get("targets", [])
+    except Exception:
+        return None
+    for t_ in res:
+        if t_.get("target_type") != "SINGLE PROTEIN":
+            continue
+        if t_.get("organism") != "Homo sapiens":
+            continue
+        syms = {str(s.get("component_synonym", "")).upper()
+                for c in (t_.get("target_components") or [])
+                for s in (c.get("target_component_synonyms") or [])
+                if s.get("syn_type") == "GENE_SYMBOL"}
+        if gene.upper() in syms:
+            return t_.get("target_chembl_id")
+    return None
+
+
+def mechanism_drugs(target_id):
+    out, off = set(), 0
+    while True:
+        p = get_json(f"{API}/mechanism.json?target_chembl_id={target_id}"
+                     f"&limit=1000&offset={off}")
+        got = p.get("mechanisms", [])
+        if not got:
+            break
+        for m in got:
+            if m.get("molecule_chembl_id"):
+                out.add(m["molecule_chembl_id"])
+        off += 1000
+    return out
+
+
 KNOWN_F = os.path.join(WORK, "known_drugs.json")
 if os.path.exists(KNOWN_F):
     KNOWN = json.load(open(KNOWN_F))
@@ -140,39 +184,32 @@ else:
     KNOWN = {}
     for k, g in enumerate(GENES):
         try:
-            s = get_json(f"{API}/target.json?pref_name__icontains={urllib.parse.quote(g)}"
-                         f"&target_type=SINGLE%20PROTEIN&limit=5")
-            tid = None
-            for t_ in s.get("targets", []):
-                for c in (t_.get("target_components") or []):
-                    for syn in (c.get("target_component_synonyms") or []):
-                        if str(syn.get("component_synonym", "")).upper() == g.upper():
-                            tid = t_.get("target_chembl_id")
-                if tid:
-                    break
-            ids = set()
-            if tid:
-                off = 0
-                while True:
-                    p = get_json(f"{API}/mechanism.json?target_chembl_id={tid}"
-                                 f"&limit=1000&offset={off}")
-                    got = p.get("mechanisms", [])
-                    if not got:
-                        break
-                    for m in got:
-                        if m.get("molecule_chembl_id"):
-                            ids.add(m["molecule_chembl_id"])
-                    off += 1000
-            KNOWN[g] = sorted(ids)
+            tid = chembl_target_id(g)
+            KNOWN[g] = sorted(mechanism_drugs(tid)) if tid else []
         except Exception as e:
             info(f"  {g}: {type(e).__name__} - khaali chhoda")
             KNOWN[g] = []
         if (k + 1) % 25 == 0:
-            print(f"   {k+1}/{len(GENES)} genes", flush=True)
+            print(f"   {k+1}/{len(GENES)} genes · ab tak "
+                  f"{sum(1 for v in KNOWN.values() if v)} resolve hue", flush=True)
             json.dump(KNOWN, open(KNOWN_F, "w"))
     json.dump(KNOWN, open(KNOWN_F, "w"))
-info(f"known drugs mile: {sum(1 for v in KNOWN.values() if v)} targets pe, "
+
+n_res = sum(1 for v in KNOWN.values() if v)
+cover = 100 * n_res / max(len(GENES), 1)
+info(f"known drugs mile: {n_res}/{len(GENES)} genes ({cover:.0f}%), "
      f"total {sum(len(v) for v in KNOWN.values()):,} entries")
+for g in ("EGFR", "ABL1", "ALK", "KIT", "BRAF", "SRC"):
+    if g in KNOWN:
+        info(f"  {g:7s} {len(KNOWN[g]):4d} known dawaein")
+
+# Agar lookup toot gaya to poori table 'novel' dikhegi - yahi wo bharam hai jo
+# pichhli baar bana tha. Isliye chup-chaap aage nahi badhte.
+KNOWN_OK = cover >= 40
+if not KNOWN_OK:
+    print(f"\n   !! known-drug lookup bharose layak nahi ({cover:.0f}% genes). "
+          f"Table banegi par 'known' column par bharosa na karein - app usko "
+          f"chhupa degi.", flush=True)
 
 
 # ------------------------------------------------------------ 4. features
@@ -285,6 +322,8 @@ meta = {
     "min_phase": MIN_PHASE,
     "known_in_top": kn_tot,
     "known_pct": round(100 * kn_tot / len(tbl), 1),
+    "known_lookup_ok": bool(KNOWN_OK),
+    "known_genes_resolved": f"{n_res}/{len(GENES)}",
     "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
     "caveat": ("Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' "
                "sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."),
