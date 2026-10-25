@@ -22,9 +22,84 @@
    12,785 molecules (phase 1+)
 
 ======================================================================
-[  2.3 min] 2. Salt forms jodte hain (Erlotinib + Erlotinib HCl = ek dawa)
+[  2.4 min] 2. Salt forms jodte hain (Erlotinib + Erlotinib HCl = ek dawa)
+======================================================================
+   2,000/12,785
+   4,000/12,785
+   6,000/12,785
+   8,000/12,785
+   10,000/12,785
+   12,000/12,785
+   12,785 entries -> 10,465 alag-alag dawaiyan
+
+======================================================================
+[  2.6 min] 3. Har target ke liye pehle se jaani dawaiyan (ChEMBL mechanism)
+======================================================================
+   381 alag gene naam Davis me
+   25/381 genes
+   50/381 genes
+   75/381 genes
+   100/381 genes
+   125/381 genes
+   150/381 genes
+   175/381 genes
+   200/381 genes
+   225/381 genes
+   250/381 genes
+   275/381 genes
+   300/381 genes
+   325/381 genes
+   350/381 genes
+   375/381 genes
+   known drugs mile: 23 targets pe, total 254 entries
+
+======================================================================
+[  8.1 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
+======================================================================
+   RDKit 2,000/10,465
+   RDKit 4,000/10,465
+   RDKit 6,000/10,465
+   RDKit 8,000/10,465
+   RDKit 10,000/10,465
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 21660.15it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
+Key                        | Status     | 
+---------------------------+------------+-
+regression.out_proj.weight | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
+regression.dense.bias      | UNEXPECTED | 
+norm_std                   | UNEXPECTED | 
+regression.dense.weight    | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
+pooler.dense.weight        | MISSING    | 
+pooler.dense.bias          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+   ChemBERTa 0/10,465
+   ChemBERTa 2,560/10,465
+   ChemBERTa 5,120/10,465
+   ChemBERTa 7,680/10,465
+   ChemBERTa 10,240/10,465
+   bana: (10465, 1625)
+
+======================================================================
+[ 14.6 min] 5. v2 model se saare targets pe scoring
 ======================================================================
 Traceback (most recent call last):
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/repurposing/build_table.py", line 90, in <module>
-    from rdkit import Chem, RDLogger, inchi
-ImportError: cannot import name 'inchi' from 'rdkit' (/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/rdkit/__init__.py)
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/repurposing/build_table.py", line 241, in <module>
+    model = xgb.XGBRegressor()
+            ^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/core.py", line 751, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/sklearn.py", line 2003, in __init__
+    super().__init__(objective=objective, **kwargs)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/core.py", line 751, in inner_f
+    return func(**kwargs)
+           ^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/sklearn.py", line 851, in __init__
+    raise ImportError(
+ImportError: sklearn needs to be installed in order to use this module
