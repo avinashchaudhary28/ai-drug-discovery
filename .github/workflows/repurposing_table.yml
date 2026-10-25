@@ -1,0 +1,78 @@
+name: Repurposing table banao
+
+on:
+  workflow_dispatch:
+    inputs:
+      top_n:
+        description: "Har target ke top kitne drugs"
+        required: false
+        default: "50"
+      min_phase:
+        description: "ChEMBL max_phase ki minimum (1 = trials me bhi)"
+        required: false
+        default: "1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: repurposing-table
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 240
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas rdkit xgboost
+          python -m pip install -q "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -q transformers
+          python -c "import rdkit,xgboost,torch;print('rdkit',rdkit.__version__,'xgb',xgboost.__version__)"
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: experiments/repurposing/work
+          key: rep-work-v1
+          restore-keys: rep-work-
+
+      - name: Table banao
+        env:
+          TOP_N: ${{ inputs.top_n }}
+          MIN_PHASE: ${{ inputs.min_phase }}
+          TOKENIZERS_PARALLELISM: "false"
+        run: |
+          set -o pipefail
+          python -u experiments/repurposing/build_table.py 2>&1 | tee rep.log
+
+      - name: Repo me commit karo
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if [ -f data/repurposing_top.csv ]; then
+            ls -lh data/
+            git add -f data/repurposing_top.csv data/repurposing_meta.json
+            if git diff --cached --quiet; then
+              echo "kuch naya nahi"
+            else
+              git commit -m "repurposing table (run ${{ github.run_number }})"
+              for i in 1 2 3; do
+                git pull --rebase --autostash origin ${{ github.ref_name }} || true
+                git push origin HEAD:${{ github.ref_name }} && break
+                sleep 10
+              done
+            fi
+          else
+            echo "::warning::table nahi bani - log dekho"
+            tail -40 rep.log || true
+          fi

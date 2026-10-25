@@ -1,12 +1,30 @@
+import os
+
+import pandas as pd
 import streamlit as st
 
 st.set_page_config(page_title="AI Drug Discovery", page_icon="💊", layout="centered")
+
+DATA = os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
 
 
 @st.cache_resource(show_spinner="Models load ho rahe hain (pehli baar ~1 minute)...")
 def load_core():
     import core
     return core
+
+
+@st.cache_data(show_spinner=False)
+def load_repurposing():
+    """Precomputed repurposing table. Nahi mili to (None, None)."""
+    import json
+    p = os.path.join(DATA, "repurposing_top.csv")
+    m = os.path.join(DATA, "repurposing_meta.json")
+    if not os.path.exists(p):
+        return None, None
+    df = pd.read_csv(p)
+    meta = json.load(open(m)) if os.path.exists(m) else {}
+    return df, meta
 
 
 core = load_core()
@@ -30,36 +48,101 @@ EXAMPLES = {
 }
 
 st.title("💊 AI Drug Discovery")
-st.markdown("Molecule ka **SMILES** daalo → ~670 proteins pe binding, **22 ADMET properties**, 12 toxicity tests aur solubility.")
 
-ex = st.selectbox("Example chuno (ya neeche apna SMILES daalo)", list(EXAMPLES))
-smiles = st.text_area("SMILES", value=EXAMPLES[ex], height=80)
-st.caption("💡 Koi bhi molecule daal sakte ho — ye sirf examples hain. "
-           "Kisi dawa ka SMILES lene ke liye PubChem pe uska naam search karo aur "
-           "**Canonical SMILES** copy kar lo.")
-choices = core.CHOICES
-prot = st.selectbox("Target protein", choices, index=choices.index(core.default_choice()))
+tab_mol, tab_rep = st.tabs(["🔬 Molecule analyze", "♻️ Repurposing"])
 
-if st.button("Analyze 🔬", type="primary", use_container_width=True):
-    with st.spinner("Analyze ho raha hai..."):
-        summary, img, top10, tox, admet = core.analyze(smiles, prot)
-    st.markdown(summary, unsafe_allow_html=True)
-    if top10 is not None:
-        if img is not None:
-            st.image(img, caption="Molecule", use_container_width=True)
+# ----------------------------------------------------------------- molecule
+with tab_mol:
+    st.markdown("Molecule ka **SMILES** daalo → ~670 proteins pe binding, "
+                "**22 ADMET properties**, 12 toxicity tests aur solubility.")
 
-        if admet is not None:
-            st.subheader("ADMET report card (22 properties)")
-            st.caption("A = absorption · D = distribution · M = metabolism (liver) · E = excretion · T = toxicity")
-            for group in admet["Group"].unique():
-                with st.expander(group, expanded=group.startswith("T")):
-                    st.dataframe(admet[admet.Group == group][["Property", "Value", "Note"]],
-                                 hide_index=True, use_container_width=True)
+    ex = st.selectbox("Example chuno (ya neeche apna SMILES daalo)", list(EXAMPLES))
+    smiles = st.text_area("SMILES", value=EXAMPLES[ex], height=80)
+    st.caption("💡 Koi bhi molecule daal sakte ho — ye sirf examples hain. "
+               "Kisi dawa ka SMILES lene ke liye PubChem pe uska naam search karo aur "
+               "**Canonical SMILES** copy kar lo.")
 
-        st.subheader("Ye molecule sabse zyada kin proteins se chipkega (Top 10)")
-        st.dataframe(top10, hide_index=True, use_container_width=True)
-        with st.expander("Toxicity risk — Tox21 (12 tests)"):
-            st.dataframe(tox, hide_index=True, use_container_width=True)
+    choices = core.CHOICES
+    prot = st.selectbox("Target protein", choices,
+                        index=choices.index(core.default_choice()))
 
-st.caption("Models: Binding v2 (ESM-2 + ChemBERTa, Davis + KIBA) · ADMET v2 (TDC, 22 properties) · Tox21 · ESOL. "
+    if st.button("Analyze 🔬", type="primary", use_container_width=True):
+        with st.spinner("Analyze ho raha hai..."):
+            summary, img, top10, tox, admet = core.analyze(smiles, prot)
+        st.markdown(summary, unsafe_allow_html=True)
+        if top10 is not None:
+            if img is not None:
+                st.image(img, caption="Molecule", use_container_width=True)
+
+            if admet is not None:
+                st.subheader("ADMET report card (22 properties)")
+                st.caption("A = absorption · D = distribution · "
+                           "M = metabolism (liver) · E = excretion · T = toxicity")
+                for group in admet["Group"].unique():
+                    with st.expander(group, expanded=group.startswith("T")):
+                        st.dataframe(
+                            admet[admet.Group == group][["Property", "Value", "Note"]],
+                            hide_index=True, use_container_width=True)
+
+            st.subheader("Ye molecule sabse zyada kin proteins se chipkega (Top 10)")
+            st.dataframe(top10, hide_index=True, use_container_width=True)
+            with st.expander("Toxicity risk — Tox21 (12 tests)"):
+                st.dataframe(tox, hide_index=True, use_container_width=True)
+
+# -------------------------------------------------------------- repurposing
+with tab_rep:
+    st.markdown("Ulta sawaal: **ek target chuno → maujooda dawaiyon me se kaun si "
+                "us par kaam kar sakti hai.** Ye wo dawaiyan hain jo insaan pe "
+                "pehle se test ho chuki hain (ChEMBL phase 1–4).")
+
+    rep, meta = load_repurposing()
+    if rep is None:
+        st.info("Repurposing table abhi is app me nahi hai. Ye alag se banti hai "
+                "(`experiments/repurposing/build_table.py`) aur `data/` me aati hai.")
+    else:
+        if meta:
+            st.caption(f"{meta.get('n_drugs', '?'):,} dawaiyan × "
+                       f"{meta.get('n_targets', '?')} targets · "
+                       f"model: binding v2 · banaya gaya {meta.get('built_utc', '?')[:10]}")
+
+        targets = sorted(rep.target.unique())
+        pref = [t for t in ("EGFR", "ALK", "ABL1", "KIT", "BRAF") if t in targets]
+        tgt = st.selectbox("Target protein", targets,
+                           index=targets.index(pref[0]) if pref else 0)
+        hide_known = st.checkbox(
+            "Sirf wo dawaiyan dikhao jo is target ke liye pehle se jaani nahi hain",
+            value=False,
+            help="Jaani-pehchani dawaiyan top pe aana model ke sahi hone ka suboot "
+                 "hai. Unhe hata ke dekho to jo bachta hai wo 'naya' candidate hai — "
+                 "par wo galat bhi ho sakta hai.")
+
+        sub = rep[rep.target == tgt].sort_values("rank")
+        n_known = int(sub.known_for_target.sum())
+        if hide_known:
+            sub = sub[~sub.known_for_target]
+
+        c1, c2 = st.columns(2)
+        c1.metric("Top list me jaani-pehchani", f"{n_known} / {len(rep[rep.target==tgt])}")
+        c2.metric("Sabse zyada pKd", f"{sub.pKd.max():.2f}" if len(sub) else "—")
+
+        show = sub[["rank", "drug", "pKd", "max_phase", "known_for_target"]].rename(
+            columns={"rank": "#", "drug": "Dawa", "max_phase": "Phase",
+                     "known_for_target": "Pehle se jaani?"})
+        st.dataframe(show, hide_index=True, use_container_width=True)
+
+        with st.expander("SMILES dekhne ke liye"):
+            st.dataframe(sub[["drug", "smiles"]].rename(
+                columns={"drug": "Dawa", "smiles": "SMILES"}),
+                hide_index=True, use_container_width=True)
+
+        st.warning(
+            "**Isko theek se padho.** Ye computer ka andaza hai, lab ka nateeja nahi. "
+            "Jo dawaiyan top pe aati hain unme se bahut si us target ke liye **pehle "
+            "se jaani-pehchani** hain — wo model ke sahi hone ka suboot hain, nayi "
+            "khoj nahi. Aur jo 'nayi' lagti hain, unme se kai asal me chhupe hue "
+            "usi tarah ke inhibitor hote hain ya galat andaza. Kisi bhi candidate ka "
+            "matlab lab me test hone ke baad hi banta hai.")
+
+st.caption("Models: Binding v2 (ESM-2 + ChemBERTa, Davis + KIBA) · "
+           "ADMET v2 (TDC, 22 properties) · Tox21 · ESOL. "
            "Sirf research ke liye — medical salah nahi.")
