@@ -1,0 +1,29 @@
+{
+  "finished_utc": "2026-10-25T08:42:29Z",
+  "total_minutes": 9.8,
+  "test_set": "Davis cold-drug (GroupShuffleSplit on drug, seed 0, 20%)",
+  "test_pairs": 6188,
+  "test_drugs": 14,
+  "bindingdb_proteins_matched": 351,
+  "bindingdb_pairs_added": 33982,
+  "delta_CI": 0.0195,
+  "verdict": "DATA se faida hua - BindingDB jodne se model behtar hua.",
+  "results": [
+    {
+      "model": "A: Davis sirf",
+      "n_train": 23868,
+      "CI": 0.7322018368708676,
+      "MSE": 0.6910755634307861,
+      "Pearson": 0.530051589012146,
+      "minutes": 3.0
+    },
+    {
+      "model": "B: Davis+BindingDB",
+      "n_train": 57850,
+      "CI": 0.7517332735450609,
+      "MSE": 0.5864559412002563,
+      "Pearson": 0.6117892861366272,
+      "minutes": 4.6
+    }
+  ]
+}

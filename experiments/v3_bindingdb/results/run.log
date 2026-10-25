@@ -47,29 +47,53 @@
    RDKit 217 descriptors
    12,678 unique molecules ke features banenge
    cache: rdkit_feats (12678, 1241)
-[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.5.1+cpu
-[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
    ChemBERTa: DeepChem/ChemBERTa-77M-MTR
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Traceback (most recent call last):
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 315, in <module>
-    CB = cached_npy("chemberta", lambda: chemberta(ALL_SMILES))
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 308, in cached_npy
-    a = fn()
-        ^^^^
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 315, in <lambda>
-    CB = cached_npy("chemberta", lambda: chemberta(ALL_SMILES))
-                                         ^^^^^^^^^^^^^^^^^^^^^
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 287, in chemberta
-    mdl = AutoModel.from_pretrained(name).eval()
-          ^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2424, in __getattribute__
-    requires_backends(cls, cls._backends)
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2410, in requires_backends
-    raise ImportError("".join(failed))
-ImportError: 
-AutoModel requires the PyTorch library but it was not found in your environment. Check out the instructions on the
-installation page: https://pytorch.org/get-started/locally/ and follow the ones that match your environment.
-Please note that you may need to restart your runtime after installation.
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 21191.43it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
+Key                        | Status     | 
+---------------------------+------------+-
+regression.dense.bias      | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
+regression.dense.weight    | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
+norm_std                   | UNEXPECTED | 
+regression.out_proj.weight | UNEXPECTED | 
+pooler.dense.weight        | MISSING    | 
+pooler.dense.bias          | MISSING    | 
 
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+   ChemBERTa 0/12,678
+   ChemBERTa 6,400/12,678
+   bana: chemberta (12678, 384) (1.9 min)
+   DRUG_X (12678, 1625) (0.08 GB)
+
+======================================================================
+[  2.2 min] 7. Training matrices banate hain
+======================================================================
+   A (Davis sirf)   : (23868, 2905)
+   B (Davis+BindingDB): (57850, 2905)  (+33,982 jode = 2.4x data)
+   test             : (6188, 2905)
+
+======================================================================
+[  2.2 min] 8. Dono models train karte hain (bilkul same settings)
+======================================================================
+   A: Davis sirf          CI=0.7322  MSE=0.6911  Pearson=0.5301  (3.0 min)
+   B: Davis+BindingDB     CI=0.7517  MSE=0.5865  Pearson=0.6118  (4.6 min)
+
+======================================================================
+[  9.8 min] 9. NATEEJA
+======================================================================
+             model  n_train     CI    MSE  Pearson
+     A: Davis sirf    23868 0.7322 0.6911   0.5301
+B: Davis+BindingDB    57850 0.7517 0.5865   0.6118
+
+   Davis cold-drug test set, 6,188 jode, 14 nayi dawaiyan
+   CI me farak: +0.0195
+
+   >>> DATA se faida hua - BindingDB jodne se model behtar hua.
+
+   Files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/results/summary.json, results.csv, RESULT.md
+   Total time: 9.8 min
