@@ -105,21 +105,29 @@ with tab_rep:
                        f"{meta.get('n_targets', '?')} targets · "
                        f"model: binding v2 · banaya gaya {meta.get('built_utc', '?')[:10]}")
 
-        # Agar ChEMBL ka known-drug lookup theek nahi chala to 'known' column
-        # jhootha hai - sab kuch 'naya' dikhega, jo sabse bada bharam hai.
-        # Aise me column dikhana hi nahi chahiye.
-        known_ok = bool(meta.get("known_lookup_ok", True))
-        if not known_ok:
-            st.error("**'Pehle se jaani?' column is baar bharose layak nahi** — "
-                     f"ChEMBL se sirf {meta.get('known_genes_resolved', '?')} targets "
-                     "ke known drugs mil paaye. Isliye wo column chhupa diya hai. "
-                     "Iska matlab **ye nahi** ki ye dawaiyan nayi hain — bas hum "
-                     "bata nahi sakte kaun si pehle se jaani-pehchani hai.")
+        # 'Pehle se jaani?' column sirf un targets pe dikhata hai jinka
+        # known-drug list ChEMBL se mila. Baaki pe chhupa dete hain - warna
+        # har dawa 'nayi' dikhegi, jo sabse bada bharam hai.
+        resolved = set(meta.get("resolved_genes") or [])
+
+        def gene_of(name):
+            return (name.split("(")[0].replace("-nonphosphorylated", "")
+                        .replace("-phosphorylated", "").strip())
 
         targets = sorted(rep.target.unique())
         pref = [t for t in ("EGFR", "ALK", "ABL1", "KIT", "BRAF") if t in targets]
         tgt = st.selectbox("Target protein", targets,
                            index=targets.index(pref[0]) if pref else 0)
+
+        known_ok = (not resolved) or (gene_of(tgt) in resolved)
+        if resolved and not known_ok:
+            st.warning(
+                f"**Is target ({gene_of(tgt)}) ke liye hum nahi bata sakte ki kaun si "
+                "dawa pehle se jaani-pehchani hai** — ChEMBL se iska known-drug list "
+                "nahi mila. Isliye wo column chhupa diya hai. Iska matlab **ye nahi** "
+                "ki neeche ki dawaiyan nayi hain — bas hum farak nahi kar sakte. "
+                f"({meta.get('known_genes_resolved', '?')} targets ka list mila hai; "
+                "EGFR, KIT, ABL1, BRAF, ALK jaise bade targets me se hai.)")
 
         hide_known = False
         if known_ok:

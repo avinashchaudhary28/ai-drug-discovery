@@ -336,6 +336,12 @@ meta = {
     "known_pct": round(100 * kn_tot / len(tbl), 1),
     "known_lookup_ok": bool(KNOWN_OK),
     "known_genes_resolved": f"{n_res}/{len(GENES)}",
+    # Poore column ko chhupana zyada sakhti hai: coverage 24% hai par bade
+    # kinases theek resolve hue (EGFR 76, KIT 34, ABL1 18 known dawaein).
+    # Isliye app ko per-target batate hain ki kis target ka known-list hai.
+    # Jis gene pe ek bhi known dawa nahi mili use conservative tareeke se
+    # "pata nahi" maanenge - "koi known nahi" keh dena jhooth hoga.
+    "resolved_genes": sorted(g for g, v in KNOWN.items() if v),
     "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
     "caveat": ("Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' "
                "sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."),
