@@ -1,0 +1,75 @@
+
+======================================================================
+[  0.0 min] 1. Davis dataset (DeepDTA) laate hain
+======================================================================
+   cache: davis_ligands_can.txt
+   cache: davis_proteins.txt
+   cache: davis_Y
+   68 dawaiyan x 442 proteins = 30,056 jode
+
+======================================================================
+[  0.0 min] 2. Repo se Davis ki ESM-2 650M embeddings
+======================================================================
+   ESM matrix (442, 1280) - 442 protein naam
+
+======================================================================
+[  0.0 min] 3. BindingDB (Kd + Ki) laate hain
+======================================================================
+   cache: bindingdb_Kd.tab
+   Kd: separator TAB
+   Kd: 66,434 raw rows
+   cache: bindingdb_Ki.tab
+   Ki: separator COMMA
+   Ki: 410,286 raw rows
+   saaf karne ke baad: 476,293 rows, 3,742 unique proteins
+
+======================================================================
+[  0.0 min] 4. BindingDB ke proteins ko Davis se match karte hain
+======================================================================
+   3,742 unique BindingDB sequences ko match kar rahe hain...
+   exact match: 343
+   containment ke baad total: 359 / 3,742 sequences matched
+   istemaal layak BindingDB rows: 64,639 (351 Davis proteins pe, 12,650 molecules)
+   dedupe ke baad: 47,258 unique jode
+
+======================================================================
+[  0.1 min] 5. Test split - dono models ke liye bilkul ek jaisa
+======================================================================
+   train 23,868 jode / test 6,188 jode
+   test ki dawaiyan: 14 (training me ek bhi nahi)
+   14 test SMILES canonical form me
+   leakage hatane se 2,797 BindingDB rows gaye -> 44,461 bache
+   Davis ke saath duplicate 10,479 jode hataye -> BindingDB se 33,982 naye jode
+
+======================================================================
+[  0.3 min] 6. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)
+======================================================================
+   RDKit 217 descriptors
+   12,678 unique molecules ke features banenge
+   cache: rdkit_feats (12678, 1241)
+[transformers] Disabling PyTorch because PyTorch >= 2.6 is required but found 2.5.1+cpu
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+   ChemBERTa: DeepChem/ChemBERTa-77M-MTR
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Traceback (most recent call last):
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 315, in <module>
+    CB = cached_npy("chemberta", lambda: chemberta(ALL_SMILES))
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 308, in cached_npy
+    a = fn()
+        ^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 315, in <lambda>
+    CB = cached_npy("chemberta", lambda: chemberta(ALL_SMILES))
+                                         ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/run_v3.py", line 287, in chemberta
+    mdl = AutoModel.from_pretrained(name).eval()
+          ^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2424, in __getattribute__
+    requires_backends(cls, cls._backends)
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/transformers/utils/import_utils.py", line 2410, in requires_backends
+    raise ImportError("".join(failed))
+ImportError: 
+AutoModel requires the PyTorch library but it was not found in your environment. Check out the instructions on the
+installation page: https://pytorch.org/get-started/locally/ and follow the ones that match your environment.
+Please note that you may need to restart your runtime after installation.
+
