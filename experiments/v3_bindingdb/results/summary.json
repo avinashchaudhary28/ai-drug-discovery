@@ -1,9 +1,9 @@
 {
-  "finished_utc": "2026-10-25T11:21:51Z",
-  "total_minutes": 111.3,
+  "finished_utc": "2026-10-25T21:13:41Z",
+  "total_minutes": 287.4,
   "design": "Model/features/hyperparameters sab variants me same; sirf training data badla. Baseline A = sirf Davis.",
   "test_set": "Davis cold-drug (GroupShuffleSplit on drug, 20%), per seed",
-  "n_seeds": 5,
+  "n_seeds": 12,
   "bindingdb_proteins_matched": 351,
   "assay_counts": {
     "Kd": 30214,
@@ -13,38 +13,38 @@
     {
       "variant": "B  all assays",
       "baseline": "A  Davis sirf",
-      "seeds": 5,
+      "seeds": 12,
       "jeete": 2,
-      "CI_farak": -0.0014,
-      "std": 0.0564
+      "CI_farak": -0.0177,
+      "std": 0.0484
     },
     {
       "variant": "B2 sirf Kd",
       "baseline": "A  Davis sirf",
-      "seeds": 5,
-      "jeete": 3,
-      "CI_farak": 0.0153,
-      "std": 0.0479
+      "seeds": 12,
+      "jeete": 8,
+      "CI_farak": 0.0178,
+      "std": 0.0441
     },
     {
       "variant": "B3 all + assay",
       "baseline": "A  Davis sirf + assay",
-      "seeds": 5,
-      "jeete": 3,
-      "CI_farak": 0.0107,
-      "std": 0.0391
+      "seeds": 12,
+      "jeete": 6,
+      "CI_farak": -0.0009,
+      "std": 0.0359
     },
     {
       "variant": "B4 Kd + assay",
       "baseline": "A  Davis sirf + assay",
-      "seeds": 5,
-      "jeete": 3,
-      "CI_farak": 0.0184,
-      "std": 0.0584
+      "seeds": 12,
+      "jeete": 8,
+      "CI_farak": 0.0142,
+      "std": 0.0419
     }
   ],
   "best_variant": null,
-  "verdict": "KISI BHI tarah ke data se pakka faida nahi. Sabse achha variant 'B4 Kd + assay' bhi sirf 3/5 seeds jeeta (CI +0.0184 \u00b10.0584) - farak shor ke andar hai. Matlab mila-jula assay data wajah nahi thi; bottleneck PROTEIN REPRESENTATION hai (pocket-aware raasta).",
+  "verdict": "KISI BHI tarah ke data se pakka faida nahi. Sabse achha variant 'B2 sirf Kd' bhi sirf 8/12 seeds jeeta (CI +0.0178 \u00b10.0441) - farak shor ke andar hai. Matlab mila-jula assay data wajah nahi thi; bottleneck PROTEIN REPRESENTATION hai (pocket-aware raasta).",
   "per_seed": [
     {
       "CI": 0.7322018368708676,
@@ -283,6 +283,342 @@
       "MSE": 0.6803625822067261,
       "Pearson": 0.6432786583900452,
       "seed": 4,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7334934389345613,
+      "MSE": 0.7341480851173401,
+      "Pearson": 0.40383481979370117,
+      "seed": 5,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6133097931922875,
+      "MSE": 1.1880701780319214,
+      "Pearson": 0.21804307401180267,
+      "seed": 5,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.6672217319270154,
+      "MSE": 0.8037835359573364,
+      "Pearson": 0.39351239800453186,
+      "seed": 5,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7217268515643536,
+      "MSE": 0.7394744753837585,
+      "Pearson": 0.3889777362346649,
+      "seed": 5,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6478234077414362,
+      "MSE": 0.9097722768783569,
+      "Pearson": 0.31147608160972595,
+      "seed": 5,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.6761794552110353,
+      "MSE": 0.8229740858078003,
+      "Pearson": 0.3732559084892273,
+      "seed": 5,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7082746640232791,
+      "MSE": 0.635650634765625,
+      "Pearson": 0.41571900248527527,
+      "seed": 6,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6678001035907862,
+      "MSE": 0.8101614713668823,
+      "Pearson": 0.36663174629211426,
+      "seed": 6,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7331542813342979,
+      "MSE": 0.6071979999542236,
+      "Pearson": 0.4834073781967163,
+      "seed": 6,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.6965767233457764,
+      "MSE": 0.6956535577774048,
+      "Pearson": 0.36188414692878723,
+      "seed": 6,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7058058647387476,
+      "MSE": 0.6581752896308899,
+      "Pearson": 0.4289339780807495,
+      "seed": 6,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7305978577678959,
+      "MSE": 0.6070467233657837,
+      "Pearson": 0.4889642000198364,
+      "seed": 6,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7234507435717598,
+      "MSE": 0.5359634160995483,
+      "Pearson": 0.42807891964912415,
+      "seed": 7,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7176505551876603,
+      "MSE": 0.5811219811439514,
+      "Pearson": 0.41472098231315613,
+      "seed": 7,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7146213752318964,
+      "MSE": 0.6270926594734192,
+      "Pearson": 0.4072082042694092,
+      "seed": 7,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7159555178569805,
+      "MSE": 0.5390554666519165,
+      "Pearson": 0.41893115639686584,
+      "seed": 7,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6946542690256402,
+      "MSE": 0.6081931591033936,
+      "Pearson": 0.38172009587287903,
+      "seed": 7,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.723948555896723,
+      "MSE": 0.6210007667541504,
+      "Pearson": 0.4195553958415985,
+      "seed": 7,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7212347716404572,
+      "MSE": 0.6107456088066101,
+      "Pearson": 0.3749121427536011,
+      "seed": 8,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7201601074298564,
+      "MSE": 0.6460152864456177,
+      "Pearson": 0.409320592880249,
+      "seed": 8,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7870830927848733,
+      "MSE": 0.5956274271011353,
+      "Pearson": 0.5357652306556702,
+      "seed": 8,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7296183848496384,
+      "MSE": 0.5573002696037292,
+      "Pearson": 0.3986244797706604,
+      "seed": 8,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7144065809995901,
+      "MSE": 0.6286095380783081,
+      "Pearson": 0.3935337960720062,
+      "seed": 8,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7727355705795927,
+      "MSE": 0.640633225440979,
+      "Pearson": 0.5005625486373901,
+      "seed": 8,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7402108642880553,
+      "MSE": 0.7427954077720642,
+      "Pearson": 0.4844154417514801,
+      "seed": 9,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7142772608732371,
+      "MSE": 0.7046125531196594,
+      "Pearson": 0.5190995931625366,
+      "seed": 9,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7746851850334975,
+      "MSE": 0.601146399974823,
+      "Pearson": 0.6222400665283203,
+      "seed": 9,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7367888059010818,
+      "MSE": 0.7645527124404907,
+      "Pearson": 0.4754098057746887,
+      "seed": 9,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7300436888765991,
+      "MSE": 0.696744441986084,
+      "Pearson": 0.5421520471572876,
+      "seed": 9,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.75122535139262,
+      "MSE": 0.6602696776390076,
+      "Pearson": 0.5859866738319397,
+      "seed": 9,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.6949836184618352,
+      "MSE": 0.7357693910598755,
+      "Pearson": 0.3779253363609314,
+      "seed": 10,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6902734238828805,
+      "MSE": 0.7672783732414246,
+      "Pearson": 0.35608169436454773,
+      "seed": 10,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7248588762513889,
+      "MSE": 0.6879557967185974,
+      "Pearson": 0.4764275550842285,
+      "seed": 10,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.6812335853435122,
+      "MSE": 0.7705913186073303,
+      "Pearson": 0.354523628950119,
+      "seed": 10,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7146699435366082,
+      "MSE": 0.6633680462837219,
+      "Pearson": 0.4655008614063263,
+      "seed": 10,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7126827449220308,
+      "MSE": 0.7284016609191895,
+      "Pearson": 0.42297518253326416,
+      "seed": 10,
+      "model": "B4 Kd + assay",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.6969643037971047,
+      "MSE": 0.6637782454490662,
+      "Pearson": 0.46027272939682007,
+      "seed": 11,
+      "model": "A  Davis sirf",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6899185706293365,
+      "MSE": 0.6463252902030945,
+      "Pearson": 0.4987963140010834,
+      "seed": 11,
+      "model": "B  all assays",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7545144078258952,
+      "MSE": 0.5241960287094116,
+      "Pearson": 0.6194072365760803,
+      "seed": 11,
+      "model": "B2 sirf Kd",
+      "n_train": 40809
+    },
+    {
+      "CI": 0.7086625154499092,
+      "MSE": 0.6715784668922424,
+      "Pearson": 0.46199831366539,
+      "seed": 11,
+      "model": "A  Davis sirf + assay",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.718459203262274,
+      "MSE": 0.5837785005569458,
+      "Pearson": 0.5467850565910339,
+      "seed": 11,
+      "model": "B3 all + assay",
+      "n_train": 58060
+    },
+    {
+      "CI": 0.7018428303443759,
+      "MSE": 0.6074795722961426,
+      "Pearson": 0.552882730960846,
+      "seed": 11,
       "model": "B4 Kd + assay",
       "n_train": 40809
     }

@@ -47,11 +47,166 @@
 ======================================================================
 
 ======================================================================
-[  0.2 min] 7. 20 seeds pe chalate hain (ek split ka result tukka ho sakta hai)
+[  0.3 min] 7. 12 seeds pe chalate hain (ek split ka result tukka ho sakta hai)
 ======================================================================
+   waqt ka budget: 300 min · uske baad naya seed shuru nahi karenge
 
 --- seed 0 --------------------------------------------------
    test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
    A  Davis sirf      n=23,868  CI=0.7322 MSE=0.6911 Pearson=0.5301
    B  all assays      n=58,060  CI=0.7893 MSE=0.5445 Pearson=0.6470
    B2 sirf Kd         n=40,809  CI=0.7752 MSE=0.5466 Pearson=0.6590
+   A  Davis sirf + assay n=23,868  CI=0.7342 MSE=0.7142 Pearson=0.5021
+   B3 all + assay     n=58,060  CI=0.7806 MSE=0.5609 Pearson=0.6332
+   B4 Kd + assay      n=40,809  CI=0.7753 MSE=0.5557 Pearson=0.6533
+   seed 0 done (23.5 min)
+
+--- seed 1 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7994 MSE=0.4931 Pearson=0.5512
+   B  all assays      n=58,060  CI=0.7300 MSE=0.6311 Pearson=0.4873
+   B2 sirf Kd         n=40,809  CI=0.7714 MSE=0.5638 Pearson=0.5542
+   A  Davis sirf + assay n=23,868  CI=0.7785 MSE=0.5715 Pearson=0.5052
+   B3 all + assay     n=58,060  CI=0.7423 MSE=0.5254 Pearson=0.5366
+   B4 Kd + assay      n=40,809  CI=0.7270 MSE=0.6263 Pearson=0.4997
+   seed 1 done (23.6 min)
+
+--- seed 2 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7139 MSE=0.7523 Pearson=0.4805
+   B  all assays      n=58,060  CI=0.6771 MSE=0.7751 Pearson=0.4694
+   B2 sirf Kd         n=40,809  CI=0.6714 MSE=0.8198 Pearson=0.5005
+   A  Davis sirf + assay n=23,868  CI=0.7011 MSE=0.7488 Pearson=0.4932
+   B3 all + assay     n=58,060  CI=0.6890 MSE=0.7567 Pearson=0.4982
+   B4 Kd + assay      n=40,809  CI=0.6663 MSE=0.8571 Pearson=0.4913
+   seed 2 done (23.4 min)
+
+--- seed 3 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7789 MSE=0.5004 Pearson=0.6178
+   B  all assays      n=58,060  CI=0.7653 MSE=0.4993 Pearson=0.6382
+   B2 sirf Kd         n=40,809  CI=0.8151 MSE=0.4240 Pearson=0.7011
+   A  Davis sirf + assay n=23,868  CI=0.7560 MSE=0.5381 Pearson=0.5798
+   B3 all + assay     n=58,060  CI=0.7563 MSE=0.5050 Pearson=0.6219
+   B4 Kd + assay      n=40,809  CI=0.8117 MSE=0.4327 Pearson=0.7004
+   seed 3 done (23.8 min)
+
+--- seed 4 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.6942 MSE=0.9002 Pearson=0.4610
+   B  all assays      n=58,060  CI=0.7498 MSE=0.7437 Pearson=0.5952
+   B2 sirf Kd         n=40,809  CI=0.7620 MSE=0.7370 Pearson=0.5931
+   A  Davis sirf + assay n=23,868  CI=0.7069 MSE=0.8840 Pearson=0.4729
+   B3 all + assay     n=58,060  CI=0.7623 MSE=0.7275 Pearson=0.6083
+   B4 Kd + assay      n=40,809  CI=0.7885 MSE=0.6804 Pearson=0.6433
+   seed 4 done (23.5 min)
+
+--- seed 5 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7335 MSE=0.7341 Pearson=0.4038
+   B  all assays      n=58,060  CI=0.6133 MSE=1.1881 Pearson=0.2180
+   B2 sirf Kd         n=40,809  CI=0.6672 MSE=0.8038 Pearson=0.3935
+   A  Davis sirf + assay n=23,868  CI=0.7217 MSE=0.7395 Pearson=0.3890
+   B3 all + assay     n=58,060  CI=0.6478 MSE=0.9098 Pearson=0.3115
+   B4 Kd + assay      n=40,809  CI=0.6762 MSE=0.8230 Pearson=0.3733
+   seed 5 done (24.2 min)
+
+--- seed 6 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7083 MSE=0.6357 Pearson=0.4157
+   B  all assays      n=58,060  CI=0.6678 MSE=0.8102 Pearson=0.3666
+   B2 sirf Kd         n=40,809  CI=0.7332 MSE=0.6072 Pearson=0.4834
+   A  Davis sirf + assay n=23,868  CI=0.6966 MSE=0.6957 Pearson=0.3619
+   B3 all + assay     n=58,060  CI=0.7058 MSE=0.6582 Pearson=0.4289
+   B4 Kd + assay      n=40,809  CI=0.7306 MSE=0.6070 Pearson=0.4890
+   seed 6 done (24.4 min)
+
+--- seed 7 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7235 MSE=0.5360 Pearson=0.4281
+   B  all assays      n=58,060  CI=0.7177 MSE=0.5811 Pearson=0.4147
+   B2 sirf Kd         n=40,809  CI=0.7146 MSE=0.6271 Pearson=0.4072
+   A  Davis sirf + assay n=23,868  CI=0.7160 MSE=0.5391 Pearson=0.4189
+   B3 all + assay     n=58,060  CI=0.6947 MSE=0.6082 Pearson=0.3817
+   B4 Kd + assay      n=40,809  CI=0.7239 MSE=0.6210 Pearson=0.4196
+   seed 7 done (24.1 min)
+
+--- seed 8 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7212 MSE=0.6107 Pearson=0.3749
+   B  all assays      n=58,060  CI=0.7202 MSE=0.6460 Pearson=0.4093
+   B2 sirf Kd         n=40,809  CI=0.7871 MSE=0.5956 Pearson=0.5358
+   A  Davis sirf + assay n=23,868  CI=0.7296 MSE=0.5573 Pearson=0.3986
+   B3 all + assay     n=58,060  CI=0.7144 MSE=0.6286 Pearson=0.3935
+   B4 Kd + assay      n=40,809  CI=0.7727 MSE=0.6406 Pearson=0.5006
+   seed 8 done (24.7 min)
+
+--- seed 9 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.7402 MSE=0.7428 Pearson=0.4844
+   B  all assays      n=58,060  CI=0.7143 MSE=0.7046 Pearson=0.5191
+   B2 sirf Kd         n=40,809  CI=0.7747 MSE=0.6011 Pearson=0.6222
+   A  Davis sirf + assay n=23,868  CI=0.7368 MSE=0.7646 Pearson=0.4754
+   B3 all + assay     n=58,060  CI=0.7300 MSE=0.6967 Pearson=0.5422
+   B4 Kd + assay      n=40,809  CI=0.7512 MSE=0.6603 Pearson=0.5860
+   seed 9 done (24.2 min)
+
+--- seed 10 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.6950 MSE=0.7358 Pearson=0.3779
+   B  all assays      n=58,060  CI=0.6903 MSE=0.7673 Pearson=0.3561
+   B2 sirf Kd         n=40,809  CI=0.7249 MSE=0.6880 Pearson=0.4764
+   A  Davis sirf + assay n=23,868  CI=0.6812 MSE=0.7706 Pearson=0.3545
+   B3 all + assay     n=58,060  CI=0.7147 MSE=0.6634 Pearson=0.4655
+   B4 Kd + assay      n=40,809  CI=0.7127 MSE=0.7284 Pearson=0.4230
+   seed 10 done (23.9 min)
+
+--- seed 11 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 34,192
+   A  Davis sirf      n=23,868  CI=0.6970 MSE=0.6638 Pearson=0.4603
+   B  all assays      n=58,060  CI=0.6899 MSE=0.6463 Pearson=0.4988
+   B2 sirf Kd         n=40,809  CI=0.7545 MSE=0.5242 Pearson=0.6194
+   A  Davis sirf + assay n=23,868  CI=0.7087 MSE=0.6716 Pearson=0.4620
+   B3 all + assay     n=58,060  CI=0.7185 MSE=0.5838 Pearson=0.5468
+   B4 Kd + assay      n=40,809  CI=0.7018 MSE=0.6075 Pearson=0.5529
+   seed 11 done (24.0 min)
+
+======================================================================
+[287.4 min] 8. NATEEJA
+======================================================================
+                       CI_mean  CI_std  MSE_mean  MSE_std  Pearson_mean  Pearson_std  n_train
+model                                                                                        
+A  Davis sirf           0.7281  0.0327    0.6663   0.1193        0.4655       0.0732    23868
+A  Davis sirf + assay   0.7223  0.0269    0.6829   0.1102        0.4511       0.0674    23868
+B  all assays           0.7104  0.0472    0.7114   0.1784        0.4683       0.1253    58060
+B2 sirf Kd              0.7459  0.0452    0.6282   0.1162        0.5455       0.0971    40809
+B3 all + assay          0.7214  0.0362    0.6520   0.1122        0.4974       0.1030    58060
+B4 Kd + assay           0.7365  0.0447    0.6533   0.1133        0.5277       0.1017    40809
+
+   Har seed ka CI:
+model  A  Davis sirf  A  Davis sirf + assay  B  all assays  B2 sirf Kd  B3 all + assay  B4 Kd + assay
+seed                                                                                                 
+0             0.7322                 0.7342         0.7893      0.7752          0.7806         0.7753
+1             0.7994                 0.7785         0.7300      0.7714          0.7423         0.7270
+2             0.7139                 0.7011         0.6771      0.6714          0.6890         0.6663
+3             0.7789                 0.7560         0.7653      0.8151          0.7563         0.8117
+4             0.6942                 0.7069         0.7498      0.7620          0.7623         0.7885
+5             0.7335                 0.7217         0.6133      0.6672          0.6478         0.6762
+6             0.7083                 0.6966         0.6678      0.7332          0.7058         0.7306
+7             0.7235                 0.7160         0.7177      0.7146          0.6947         0.7239
+8             0.7212                 0.7296         0.7202      0.7871          0.7144         0.7727
+9             0.7402                 0.7368         0.7143      0.7747          0.7300         0.7512
+10            0.6950                 0.6812         0.6903      0.7249          0.7147         0.7127
+11            0.6970                 0.7087         0.6899      0.7545          0.7185         0.7018
+
+   Baseline se tulna (CI_farak me + = data se faida):
+       variant              baseline  seeds  jeete  CI_farak    std
+ B  all assays         A  Davis sirf     12      2   -0.0177 0.0484
+    B2 sirf Kd         A  Davis sirf     12      8    0.0178 0.0441
+B3 all + assay A  Davis sirf + assay     12      6   -0.0009 0.0359
+ B4 Kd + assay A  Davis sirf + assay     12      8    0.0142 0.0419
+
+   >>> KISI BHI tarah ke data se pakka faida nahi. Sabse achha variant 'B2 sirf Kd' bhi sirf 8/12 seeds jeeta (CI +0.0178 ±0.0441) - farak shor ke andar hai. Matlab mila-jula assay data wajah nahi thi; bottleneck PROTEIN REPRESENTATION hai (pocket-aware raasta).
+
+   Files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/results/RESULT.md, summary.json, per_seed.csv
+   Total: 287.4 min
