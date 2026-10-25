@@ -22,7 +22,7 @@
    12,785 molecules (phase 1+)
 
 ======================================================================
-[  2.4 min] 2. Salt forms jodte hain (Erlotinib + Erlotinib HCl = ek dawa)
+[  1.9 min] 2. Salt forms jodte hain (Erlotinib + Erlotinib HCl = ek dawa)
 ======================================================================
    2,000/12,785
    4,000/12,785
@@ -33,7 +33,7 @@
    12,785 entries -> 10,465 alag-alag dawaiyan
 
 ======================================================================
-[  2.6 min] 3. Har target ke liye pehle se jaani dawaiyan (ChEMBL mechanism)
+[  2.1 min] 3. Har target ke liye pehle se jaani dawaiyan (ChEMBL mechanism)
 ======================================================================
    381 alag gene naam Davis me
    25/381 genes
@@ -54,7 +54,7 @@
    known drugs mile: 23 targets pe, total 254 entries
 
 ======================================================================
-[  8.1 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
+[  5.7 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
 ======================================================================
    RDKit 2,000/10,465
    RDKit 4,000/10,465
@@ -62,16 +62,16 @@
    RDKit 8,000/10,465
    RDKit 10,000/10,465
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 21660.15it/s]
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 10417.46it/s]
 [transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
 Key                        | Status     | 
 ---------------------------+------------+-
 regression.out_proj.weight | UNEXPECTED | 
-regression.out_proj.bias   | UNEXPECTED | 
 regression.dense.bias      | UNEXPECTED | 
-norm_std                   | UNEXPECTED | 
-regression.dense.weight    | UNEXPECTED | 
 norm_mean                  | UNEXPECTED | 
+regression.dense.weight    | UNEXPECTED | 
+norm_std                   | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
 pooler.dense.weight        | MISSING    | 
 pooler.dense.bias          | MISSING    | 
 
@@ -86,20 +86,18 @@ Notes:
    bana: (10465, 1625)
 
 ======================================================================
-[ 14.6 min] 5. v2 model se saare targets pe scoring
+[ 12.2 min] 5. v2 model se saare targets pe scoring
 ======================================================================
-Traceback (most recent call last):
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/repurposing/build_table.py", line 241, in <module>
-    model = xgb.XGBRegressor()
-            ^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/core.py", line 751, in inner_f
-    return func(**kwargs)
-           ^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/sklearn.py", line 2003, in __init__
-    super().__init__(objective=objective, **kwargs)
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/core.py", line 751, in inner_f
-    return func(**kwargs)
-           ^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/xgboost/sklearn.py", line 851, in __init__
-    raise ImportError(
-ImportError: sklearn needs to be installed in order to use this module
+   model ready · 2905 features · 442 targets · 10,465 dawaiyan
+   50/442 targets
+   100/442 targets
+   150/442 targets
+   200/442 targets
+   250/442 targets
+   300/442 targets
+   350/442 targets
+   400/442 targets
+   22,100 rows likhe -> data/repurposing_top.csv (5.7 MB)
+
+   top 50 me se 0.0% pehle se jaani-pehchani dawaiyan hain
+   Total: 14.5 min
