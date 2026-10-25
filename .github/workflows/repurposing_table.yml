@@ -93,23 +93,9 @@ jobs:
         run: |
           mkdir -p experiments/repurposing/results
           tail -c 200000 rep.log > experiments/repurposing/results/run.log || true
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -f experiments/repurposing/results/run.log
-          if [ -f data/repurposing_top.csv ]; then
-            ls -lh data/
-            git add -f data/repurposing_top.csv data/repurposing_meta.json
-          else
+          if [ ! -f data/repurposing_top.csv ]; then
             echo "::warning::table nahi bani - committed log dekho"
-            tail -40 rep.log || true
           fi
-          if git diff --cached --quiet; then
-            echo "kuch naya nahi"
-          else
-            git commit -m "repurposing: run ${{ github.run_number }}"
-            for i in 1 2 3; do
-              git pull --rebase --autostash origin ${{ github.ref_name }} || true
-              git push origin HEAD:${{ github.ref_name }} && break
-              sleep 10
-            done
-          fi
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "repurposing: run ${{ github.run_number }}" \
+            experiments/repurposing/results data
