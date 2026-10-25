@@ -33,7 +33,9 @@ jobs:
       - name: Install
         run: |
           python -m pip install -q --upgrade pip
-          python -m pip install -q "numpy<2.3" pandas rdkit xgboost
+          # scikit-learn zaroori hai: xgboost.XGBRegressor() uske bina ImportError
+          # deta hai, aur wo import pe nahi, INSTANTIATE karne pe pata chalta hai.
+          python -m pip install -q "numpy<2.3" pandas scikit-learn rdkit xgboost
           python -m pip install -q "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -q transformers
           python -c "import rdkit,xgboost,torch;print('rdkit',rdkit.__version__,'xgb',xgboost.__version__)"
@@ -49,6 +51,17 @@ jobs:
           import gzip, shutil, json, urllib.parse, urllib.request
           import numpy as np, pandas as pd, xgboost as xgb, torch
           from transformers import AutoTokenizer, AutoModel
+          # Sirf import karna kaafi nahi - XGBRegressor() banane PE sklearn maangta
+          # hai. Isliye yahan asli object banate hain aur asli model load karte hain.
+          import gzip as _g, shutil as _s, tempfile, os
+          _ = xgb.XGBRegressor(n_estimators=2)
+          with _g.open("models/binding_davis.ubj.gz", "rb") as f:
+              tmp = os.path.join(tempfile.mkdtemp(), "m.ubj")
+              with open(tmp, "wb") as o:
+                  _s.copyfileobj(f, o)
+          _m = xgb.XGBRegressor(); _m.load_model(tmp)
+          print("v2 model loaded · features:", _m.get_booster().num_features())
+
           m = Chem.MolFromSmiles("CC(=O)Oc1ccccc1C(=O)O")
           assert m is not None
           print("InChIKey:", inchi.MolToInchiKey(m)[:14])
