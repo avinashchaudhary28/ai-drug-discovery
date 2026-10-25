@@ -195,10 +195,13 @@ info(f"istemaal layak BindingDB rows: {len(bdb):,} "
 if bdb.p.nunique() < 20:
     print("\n!! Bahut kam proteins match hue - experiment ka matlab nahi banega.", flush=True)
 
-# ek hi (molecule, protein) ke kai measurements -> median
-bdb = (bdb.groupby(["smiles", "p"], as_index=False)
+# ek hi (molecule, protein, assay) ke kai measurements -> median
+# assay ko rakhte hain: Kd aur Ki mila-jula data shor badha sakta hai, ye test karna hai
+bdb = (bdb.groupby(["smiles", "p", "assay"], as_index=False)
           .agg(pK=("pK", "median"), n=("pK", "size")))
 info(f"dedupe ke baad: {len(bdb):,} unique jode")
+info("assay ke hisaab se: " + ", ".join(
+    f"{k}={v:,}" for k, v in bdb.assay.value_counts().items()))
 
 
 step("5. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)")
@@ -311,9 +314,24 @@ def concordance_index(y_true, y_pred, chunk=2000):
     return num / den if den else float("nan")
 
 
-def build_xy(drug_rows, prot_idx, y):
-    X = np.hstack([DRUG_X[drug_rows], ESM[prot_idx]]).astype(np.float32)
+def build_xy(drug_rows, prot_idx, y, is_ki=None, with_assay=False):
+    parts = [DRUG_X[drug_rows], ESM[prot_idx]]
+    if with_assay:
+        # 1 extra column: 0 = Kd jaisa saaf naap (Davis bhi Kd hai), 1 = Ki
+        col = np.zeros((len(drug_rows), 1), np.float32) if is_ki is None \
+            else np.asarray(is_ki, np.float32).reshape(-1, 1)
+        parts.append(col)
+    X = np.hstack(parts).astype(np.float32)
     return X, np.asarray(y, dtype=np.float32)
+
+
+# Kya-kya aazma rahe hain. Sab me model/features/settings same; sirf data badalta hai.
+VARIANTS = [
+    ("B  all assays",   None,   False),   # jo pehle chalaya tha
+    ("B2 sirf Kd",      "Kd",   False),   # ek hi tarah ka saaf naap
+    ("B3 all + assay",  None,   True),    # mila-jula, par model ko bata do kaunsa naap hai
+    ("B4 Kd + assay",   "Kd",   True),
+]
 
 
 def fit_predict(X, y, X_test):
@@ -355,26 +373,38 @@ for seed in range(N_SEEDS):
     info(f"test: {len(test_pairs):,} jode / {len(test_drugs)} nayi dawaiyan · "
          f"BindingDB se jude: {len(sub):,}")
 
-    X_test, y_test = build_xy(davis_rows_all[test_pairs.d.values],
-                              test_pairs.p.values, test_pairs.y.values)
-    X_a, y_a = build_xy(davis_rows_all[train_pairs.d.values],
-                        train_pairs.p.values, train_pairs.y.values)
+    for with_assay in (False, True):
+        tag_a = "A  Davis sirf" + (" + assay" if with_assay else "")
+        X_test, y_test = build_xy(davis_rows_all[test_pairs.d.values],
+                                  test_pairs.p.values, test_pairs.y.values,
+                                  None, with_assay)
+        X_a, y_a = build_xy(davis_rows_all[train_pairs.d.values],
+                            train_pairs.p.values, train_pairs.y.values,
+                            None, with_assay)
+        r = metrics(y_test, fit_predict(X_a, y_a, X_test))
+        r.update(seed=seed, model=tag_a, n_train=int(len(y_a)))
+        rows.append(r)
+        print(f"   {tag_a:18s} n={len(y_a):>6,}  CI={r['CI']:.4f} "
+              f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
 
-    r = metrics(y_test, fit_predict(X_a, y_a, X_test))
-    r.update(seed=seed, model="A", n_train=int(len(y_a)))
-    rows.append(r)
-    print(f"   A (Davis sirf)     n={len(y_a):,}  CI={r['CI']:.4f} "
-          f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
-
-    X_extra, y_extra = build_xy(bdb_rows_all[sub.index.values], sub.p.values, sub.pK.values)
-    X_b = np.vstack([X_a, X_extra]); y_b = np.concatenate([y_a, y_extra])
-    del X_a, X_extra
-    r = metrics(y_test, fit_predict(X_b, y_b, X_test))
-    r.update(seed=seed, model="B", n_train=int(len(y_b)))
-    rows.append(r)
-    print(f"   B (Davis+BindingDB) n={len(y_b):,}  CI={r['CI']:.4f} "
-          f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
-    del X_b, X_test
+        for tag, only_assay, wa in VARIANTS:
+            if wa != with_assay:
+                continue
+            s2 = sub if only_assay is None else sub[sub.assay == only_assay]
+            if len(s2) == 0:
+                print(f"   {tag}: koi jodi nahi - skip", flush=True)
+                continue
+            X_extra, y_extra = build_xy(bdb_rows_all[s2.index.values], s2.p.values,
+                                        s2.pK.values, (s2.assay == "Ki").values, wa)
+            X_b = np.vstack([X_a, X_extra]); y_b = np.concatenate([y_a, y_extra])
+            del X_extra
+            r = metrics(y_test, fit_predict(X_b, y_b, X_test))
+            r.update(seed=seed, model=tag, n_train=int(len(y_b)))
+            rows.append(r)
+            print(f"   {tag:18s} n={len(y_b):>6,}  CI={r['CI']:.4f} "
+                  f"MSE={r['MSE']:.4f} Pearson={r['Pearson']:.4f}", flush=True)
+            del X_b
+        del X_a, X_test
     print(f"   seed {seed} done ({(time.time()-t_seed)/60:.1f} min)", flush=True)
 
     # har seed ke baad save - run adhoora toote to bhi kaam na jaye
@@ -383,46 +413,70 @@ for seed in range(N_SEEDS):
 
 step("8. NATEEJA")
 df = pd.DataFrame(rows)
-agg = (df.groupby("model")[["CI", "MSE", "Pearson"]]
-         .agg(["mean", "std"]).round(4))
+BASE_PLAIN = "A  Davis sirf"
+BASE_ASSAY = "A  Davis sirf + assay"
+
+agg = (df.groupby("model")[["CI", "MSE", "Pearson"]].agg(["mean", "std"]).round(4))
+agg.columns = [f"{a}_{b}" for a, b in agg.columns]
+agg = agg.join(df.groupby("model")["n_train"].max().rename("n_train"))
 print(agg.to_string(), flush=True)
 
 piv = df.pivot(index="seed", columns="model", values="CI")
-piv["farak (B-A)"] = (piv["B"] - piv["A"]).round(4)
 print("\n   Har seed ka CI:")
 print(piv.round(4).to_string(), flush=True)
 
-d = piv["farak (B-A)"]
-wins = int((d > 0).sum())
-mean_d, std_d = float(d.mean()), float(d.std())
-print(f"\n   B jeeta {wins}/{N_SEEDS} seeds me · CI farak {mean_d:+.4f} (±{std_d:.4f})", flush=True)
+# Har variant ko apne sahi baseline se tolo
+comp = []
+for tag, only_assay, wa in VARIANTS:
+    base = BASE_ASSAY if wa else BASE_PLAIN
+    if tag not in piv.columns or base not in piv.columns:
+        continue
+    d = (piv[tag] - piv[base]).dropna()
+    if len(d) == 0:
+        continue
+    comp.append({
+        "variant": tag,
+        "baseline": base,
+        "seeds": len(d),
+        "jeete": int((d > 0).sum()),
+        "CI_farak": round(float(d.mean()), 4),
+        "std": round(float(d.std()), 4),
+    })
+cmp_df = pd.DataFrame(comp)
+print("\n   Baseline se tulna (CI_farak me + = data se faida):")
+print(cmp_df.to_string(index=False), flush=True)
 
-if wins == N_SEEDS and mean_d > 0.005:
-    verdict = (f"DATA se faida hua - B ne saare {N_SEEDS} seeds jeete "
-               f"(CI {mean_d:+.4f}). Zyada data lane ka raasta sahi hai.")
-elif wins >= N_SEEDS - 1 and mean_d > abs(std_d):
-    verdict = (f"DATA se faida lagta hai - B {wins}/{N_SEEDS} seeds me jeeta "
-               f"(CI {mean_d:+.4f} ±{std_d:.4f}), par farak chhota hai.")
-elif abs(mean_d) <= max(std_d, 0.005):
-    verdict = ("DATA se koi pakka farak nahi - shor ke andar hai. Bottleneck data "
-               "nahi, protein representation hai (pocket-aware raasta).")
-else:
-    verdict = (f"DATA se nuksan hua - B {wins}/{N_SEEDS} seeds jeeta, "
-               f"CI farak {mean_d:+.4f}.")
+# Sabse achha variant chuno, par sirf tab jab farak shor se bada ho
+best, verdict = None, None
+if len(cmp_df):
+    cand = cmp_df.sort_values("CI_farak", ascending=False).iloc[0]
+    solid = (cand.CI_farak > max(cand["std"], 0.005)
+             and cand.jeete >= max(4, cand.seeds - 1))
+    if solid:
+        best = cand.variant
+        verdict = (f"DATA se faida hua - '{cand.variant}' ne {cand.jeete}/{cand.seeds} "
+                   f"seeds jeete, CI {cand.CI_farak:+.4f} (±{cand['std']:.4f}). "
+                   f"Yahi tareeka aage badhane layak hai.")
+    else:
+        verdict = (f"KISI BHI tarah ke data se pakka faida nahi. Sabse achha variant "
+                   f"'{cand.variant}' bhi sirf {cand.jeete}/{cand.seeds} seeds jeeta "
+                   f"(CI {cand.CI_farak:+.4f} ±{cand['std']:.4f}) - farak shor ke andar hai. "
+                   f"Matlab mila-jula assay data wajah nahi thi; bottleneck PROTEIN "
+                   f"REPRESENTATION hai (pocket-aware raasta).")
 print(f"\n   >>> {verdict}", flush=True)
 
 summary = {
     "finished_utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
     "total_minutes": round((time.time() - T_START) / 60, 1),
-    "design": "Model/features/hyperparameters dono me same; sirf training data badla.",
+    "design": ("Model/features/hyperparameters sab variants me same; sirf training "
+               "data badla. Baseline A = sirf Davis."),
     "test_set": "Davis cold-drug (GroupShuffleSplit on drug, 20%), per seed",
     "n_seeds": N_SEEDS,
     "bindingdb_proteins_matched": int(bdb.p.nunique()),
-    "mean_delta_CI": round(mean_d, 4),
-    "std_delta_CI": round(std_d, 4),
-    "B_wins": wins,
+    "assay_counts": {str(k): int(v) for k, v in bdb.assay.value_counts().items()},
+    "comparisons": comp,
+    "best_variant": best,
     "verdict": verdict,
-    "per_model": json.loads(df.groupby("model")[["CI", "MSE", "Pearson"]].mean().to_json()),
     "per_seed": rows,
 }
 json.dump(summary, open(os.path.join(OUT, "summary.json"), "w"), indent=2)
@@ -430,19 +484,22 @@ df.to_csv(os.path.join(OUT, "per_seed.csv"), index=False)
 
 with open(os.path.join(OUT, "RESULT.md"), "w") as f:
     f.write("# v3 experiment: kya zyada data se binding model behtar hota hai?\n\n")
-    f.write("**Design:** model, features, hyperparameters dono taraf bilkul same. "
+    f.write("**Design:** model, features, hyperparameters sab variants me bilkul same. "
             "Sirf training data badla.\n\n")
-    f.write("- A = Davis train pairs\n- B = Davis train pairs + BindingDB (Kd+Ki)\n")
-    f.write(f"- Test: Davis **cold-drug** split, {N_SEEDS} seeds\n")
+    f.write(f"- Baseline **A** = sirf Davis train pairs\n")
+    f.write("- **B** = A + BindingDB (Kd+Ki) · **B2** = A + sirf Kd · "
+            "**B3/B4** = wahi, par model ko assay type bata ke\n")
+    f.write(f"- Test: Davis **cold-drug** split, {N_SEEDS} seeds (mean ± std)\n")
     f.write(f"- BindingDB se match hue proteins: {bdb.p.nunique()}\n")
     f.write("- Leakage hataya: test dawaiyon ke canonical SMILES, aur Davis ke "
             "saath duplicate jode\n\n")
-    f.write("## Average (± std)\n\n")
+    f.write("## Har variant, average\n\n")
     f.write(agg.to_markdown())
+    f.write("\n\n## Baseline se tulna\n\n")
+    f.write(cmp_df.to_markdown(index=False))
     f.write("\n\n## Har seed ka CI\n\n")
     f.write(piv.round(4).to_markdown())
-    f.write(f"\n\n**B jeeta {wins}/{N_SEEDS} seeds me · CI farak {mean_d:+.4f} "
-            f"(±{std_d:.4f})**\n\n**{verdict}**\n")
+    f.write(f"\n\n**{verdict}**\n")
 
 print(f"\n   Files: {OUT}/RESULT.md, summary.json, per_seed.csv")
 print(f"   Total: {(time.time()-T_START)/60:.1f} min", flush=True)
