@@ -49,38 +49,60 @@ check(st == "skip" and s == SEQ, "ITD skip, sequence nahi chhedi")
 s, st, _ = apply_mutations("X(E10Z)", SEQ)
 check(st == "skip" and s == SEQ, "Z amino acid nahi -> skip")
 
-print("\nsabse zaroori invariant: jo position badli, wahan PEHLE wahi amino acid")
-print("hona chahiye jo naam kehta hai. Warna hum random jagah mutate kar rahe hain.")
+print("\nper-gene offset (sabse zaroori hissa):")
+print("Ek gene me numbering ek hi tarah khiskti hai. Pehle har mutation apni alag")
+print("window me dhundhta tha, jisse ABL1 ko +3/+2/+4/-1 jaise alag offset mile -")
+print("yaani kuch mutations ittefaq se GALAT residue pe lag gaye the.")
+
+import numpy as np
+from mutate import gene_offset, build
+
+rng = np.random.default_rng(0)
+seq = "".join(rng.choice(list("ACDEFGHIKLMNPQRSTVWY"), 600))
+OFF = -19          # ABL1 jaisa: naam ki numbering sequence se 19 aage
 
 
-def changed_positions(a, b):
-    return [i for i in range(min(len(a), len(b))) if a[i] != b[i]]
+def put(pos, aa):
+    global seq
+    i = pos - 1 + OFF
+    seq = seq[:i] + aa + seq[i + 1:]
 
 
-for nm, frm, to in [("X(E10K)", "E", "K"), ("X(Q10K)", "Q", "K"),
-                    ("X(T71I)", "T", "I"), ("X(W10F)", "W", "F")]:
-    s, st, detail = apply_mutations(nm, SEQ)
-    if st == "skip":
-        check(s == SEQ, f"{nm}: skip hua, sequence nahi chhedi ({detail})")
-        continue
-    pos = changed_positions(SEQ, s)
-    ok = len(pos) == 1 and SEQ[pos[0]] == frm and s[pos[0]] == to
-    check(ok, f"{nm}: position {pos} pe '{frm}'->'{to}' ({st}, {detail})")
+MUTS = [(252, "Q", "H"), (253, "Y", "F"), (255, "E", "K"), (315, "T", "I"),
+        (317, "F", "I"), (351, "M", "T"), (396, "H", "P")]
+for pos, frm, _ in MUTS:
+    put(pos, frm)
 
-# window se bahar wala kuch nahi chhedna chahiye
-far = "E" + "A" * 200          # 'E' sirf position 1 pe
-s, st, detail = apply_mutations("X(E150K)", far)
-check(st == "skip" and s == far,
-      f"150 se 10 ke andar 'E' nahi -> skip ({st}, {detail})")
+off, n, tot = gene_offset(seq, [f"{f}{p}{t}" for p, f, t in MUTS])
+check(off == OFF and n == tot, f"gene ka ek offset mila: {off} (asli {OFF}), match {n}/{tot}")
 
-# sabse zaroori: mutation lagne ke baad sequence asal se ALAG honi chahiye
-s, _, _ = apply_mutations("ABL1(E10K)", SEQ)
-check(s != SEQ, "mutant sequence asal se alag hai (yahi poore experiment ki jaan hai)")
+names = {"ABL1": seq}
+for p, f, t in MUTS:
+    names[f"ABL1({f}{p}{t})"] = seq
+new, rows = build(names)
+n_ok = sum(1 for r in rows if r["status"] == "ok")
+check(n_ok == len(MUTS), f"saare {len(MUTS)} mutations lage (mile {n_ok})")
+check(len(set(new.values())) == len(MUTS) + 1,
+      f"har mutant ki apni sequence bani ({len(set(new.values()))} unique)")
+
+bad = True
+for p, f, t in MUTS:
+    a, b = seq, new[f"ABL1({f}{p}{t})"]
+    diff = [i for i in range(len(a)) if a[i] != b[i]]
+    if not (len(diff) == 1 and a[diff[0]] == f and b[diff[0]] == t):
+        bad = False
+check(bad, "har mutation ne theek ek position badli, aur wahan pehle sahi residue tha")
+
+far = {"XYZ": seq, "XYZ(W999A)": seq}
+_, rb = build(far)
+st = [r for r in rb if r["name"] == "XYZ(W999A)"][0]
+check(st["changed"] == 0 and st["status"] == "skip",
+      "offset pe match na ho to SKIP, paas ka residue chup-chaap nahi badla")
 
 print()
 if fails:
     print(f"{len(fails)} test fail hue:")
-    for f in fails:
-        print("  -", f)
+    for f_ in fails:
+        print("  -", f_)
     sys.exit(1)
-print("saare test pass ✓")
+print("saare test pass \u2713")
