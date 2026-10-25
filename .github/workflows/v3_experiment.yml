@@ -13,7 +13,7 @@ on:
         default: "400"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   run:
@@ -55,7 +55,9 @@ jobs:
           MAX_TOTAL_PAIRS: ${{ inputs.max_total_pairs }}
           N_TREES: ${{ inputs.n_trees }}
           TOKENIZERS_PARALLELISM: "false"
-        run: python -u experiments/v3_bindingdb/run_v3.py 2>&1 | tee run.log
+        run: |
+          set -o pipefail
+          python -u experiments/v3_bindingdb/run_v3.py 2>&1 | tee run.log
 
       - name: Nateeja dikhao
         if: always()
@@ -76,3 +78,21 @@ jobs:
             experiments/v3_bindingdb/results/
             run.log
           if-no-files-found: warn
+
+      # Artifacts/logs blob storage pe rehte hain jo har jagah se nahi khulte.
+      # Isliye nateeja aur log repo me hi commit kar dete hain.
+      - name: Nateeja repo me commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/v3_bindingdb/results
+          tail -c 200000 run.log > experiments/v3_bindingdb/results/run.log || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f experiments/v3_bindingdb/results/
+          if git diff --cached --quiet; then
+            echo "kuch naya nahi"
+          else
+            git commit -m "v3 experiment result (run ${{ github.run_number }})"
+            git pull --rebase --autostash origin ${{ github.ref_name }} || true
+            git push origin HEAD:${{ github.ref_name }}
+          fi
