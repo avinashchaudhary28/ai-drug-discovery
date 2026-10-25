@@ -14,6 +14,12 @@ def load_core():
     return core
 
 
+def _gene_of(name):
+    """Davis ka protein naam -> gene symbol (mutation/phospho suffix hata ke)."""
+    return (name.split("(")[0].replace("-nonphosphorylated", "")
+                .replace("-phosphorylated", "").strip())
+
+
 @st.cache_data(show_spinner=False)
 def load_repurposing():
     """Precomputed repurposing table. Nahi mili to (None, None)."""
@@ -49,7 +55,7 @@ EXAMPLES = {
 
 st.title("💊 AI Drug Discovery")
 
-tab_mol, tab_rep = st.tabs(["🔬 Molecule analyze", "♻️ Repurposing"])
+tab_mol, tab_rep = st.tabs(["🔬 Molecule analyze", "🩺 Repurposing — model ki jaanch"])
 
 # ----------------------------------------------------------------- molecule
 with tab_mol:
@@ -91,83 +97,112 @@ with tab_mol:
 
 # -------------------------------------------------------------- repurposing
 with tab_rep:
-    st.markdown("Ulta sawaal: **ek target chuno → maujooda dawaiyon me se kaun si "
-                "us par kaam kar sakti hai.** Ye wo dawaiyan hain jo insaan pe "
-                "pehle se test ho chuki hain (ChEMBL phase 1–4).")
-
     rep, meta = load_repurposing()
     if rep is None:
         st.info("Repurposing table abhi is app me nahi hai. Ye alag se banti hai "
                 "(`experiments/repurposing/build_table.py`) aur `data/` me aati hai.")
     else:
-        if meta:
-            st.caption(f"{meta.get('n_drugs', '?'):,} dawaiyan × "
-                       f"{meta.get('n_targets', '?')} targets · "
-                       f"model: binding v2 · banaya gaya {meta.get('built_utc', '?')[:10]}")
 
-        # 'Pehle se jaani?' column sirf un targets pe dikhata hai jinka
-        # known-drug list ChEMBL se mila. Baaki pe chhupa dete hain - warna
-        # har dawa 'nayi' dikhegi, jo sabse bada bharam hai.
+        @st.cache_data(show_spinner=False)
+        def rep_quality(df, resolved_tuple):
+            """Model kitna bharose layak hai, ye ginte hain - dikhane se pehle.
+            resolved tuple me leta hai: cache_data ko hashable argument chahiye,
+            aur return me function nahi de sakte (cache serialize nahi kar paata)."""
+            resolved = set(resolved_tuple)
+            d = df.copy()
+            d["gene"] = d.target.map(_gene_of)
+            sub = d[d.gene.isin(resolved)]
+            per = sub.groupby("target").known_for_target.sum()
+            hogging = d.drug.value_counts()
+            return {
+                "checkable": int(per.size),
+                "with_any_known": int((per > 0).sum()),
+                "zero_known": int((per == 0).sum()),
+                "per_target": per,
+                "top_hoggers": hogging.head(8),
+                "n_targets": int(d.target.nunique()),
+            }
+
         resolved = set(meta.get("resolved_genes") or [])
+        q = rep_quality(rep, tuple(sorted(resolved)))
+        gene_of = _gene_of
 
-        def gene_of(name):
-            return (name.split("(")[0].replace("-nonphosphorylated", "")
-                        .replace("-phosphorylated", "").strip())
+        st.markdown("Ulta sawaal: **ek target chuno → maujooda dawaiyon me se kaun si "
+                    "us par kaam kar sakti hai.** Par pehle ye dekhna zaroori hai ki "
+                    "model is kaam ke layak hai ya nahi — aur abhi **nahi hai.**")
+
+        st.error(
+            f"""**Ye list candidate dhoondhne ke layak NAHI hai. Kyun, ye naap ke bataya ja raha hai:**
+
+    - Jin **{q['checkable']}** targets ki jaanch ho sakti hai (jinki known-drug list ChEMBL se mili), unme se
+      **{q['zero_known']}** pe top-50 me **ek bhi** jaani-pehchani dawa nahi aayi — sirf **{q['with_any_known']}** pe aayi.
+    - Jo chale wo lagbhag sab **EGFR** ke roop hain — aur Davis me EGFR ke saare roop **ek hi sequence** share karte hain, to wo asal me ek hi protein hai.
+    - Sabse bada sabooot: **wahi kuch molecules {q['n_targets']} me se 250–290 targets ke top-50 me baithe hain.** Matlab model target dekh kar rank nahi kar raha — wo bas "bade aur ajeeb" molecules ko upar rakh deta hai, chahe target koi bhi ho.
+
+    Isliye ye tab ab **model ki jaanch** ke liye hai, dawa dhoondhne ke liye nahi.""")
+
+        with st.expander("Wahi molecules har target pe — khud dekh lo", expanded=False):
+            hog = q["top_hoggers"].rename("kitne targets ke top-50 me").to_frame()
+            hog["kul targets"] = q["n_targets"]
+            st.dataframe(hog, use_container_width=True)
+            st.caption("Agar model target ke hisaab se rank karta, to koi bhi molecule "
+                       "saare targets ke top-50 me nahi hota.")
+
+        st.divider()
+        st.subheader("Kisi ek target ki list dekhni ho")
 
         targets = sorted(rep.target.unique())
         pref = [t for t in ("EGFR", "ALK", "ABL1", "KIT", "BRAF") if t in targets]
         tgt = st.selectbox("Target protein", targets,
                            index=targets.index(pref[0]) if pref else 0)
 
-        known_ok = (not resolved) or (gene_of(tgt) in resolved)
-        if resolved and not known_ok:
-            st.warning(
-                f"**Is target ({gene_of(tgt)}) ke liye hum nahi bata sakte ki kaun si "
-                "dawa pehle se jaani-pehchani hai** — ChEMBL se iska known-drug list "
-                "nahi mila. Isliye wo column chhupa diya hai. Iska matlab **ye nahi** "
-                "ki neeche ki dawaiyan nayi hain — bas hum farak nahi kar sakte. "
-                f"({meta.get('known_genes_resolved', '?')} targets ka list mila hai; "
-                "EGFR, KIT, ABL1, BRAF, ALK jaise bade targets me se hai.)")
-
-        hide_known = False
-        if known_ok:
-            hide_known = st.checkbox(
-                "Sirf wo dawaiyan dikhao jo is target ke liye pehle se jaani nahi hain",
-                value=False,
-                help="Jaani-pehchani dawaiyan top pe aana model ke sahi hone ka "
-                     "suboot hai. Unhe hata ke dekho to jo bachta hai wo 'naya' "
-                     "candidate hai — par wo galat bhi ho sakta hai.")
-
         full = rep[rep.target == tgt].sort_values("rank")
-        sub = full[~full.known_for_target] if hide_known else full
+        checkable = gene_of(tgt) in resolved
+        n_known = int(full.known_for_target.sum()) if checkable else None
 
-        c1, c2 = st.columns(2)
-        if known_ok:
-            c1.metric("Top list me jaani-pehchani",
-                      f"{int(full.known_for_target.sum())} / {len(full)}")
+        c1, c2, c3 = st.columns(3)
+        c1.metric("Dawaiyan", f"{len(full)}")
+        c2.metric("Sabse zyada pKd", f"{full.pKd.max():.2f}")
+        if checkable:
+            c3.metric("Top-50 me jaani-pehchani", f"{n_known}")
         else:
-            c1.metric("Top list me dawaiyan", f"{len(full)}")
-        c2.metric("Sabse zyada pKd", f"{sub.pKd.max():.2f}" if len(sub) else "—")
+            c3.metric("Jaanch ho sakti hai?", "Nahi")
+
+        if not checkable:
+            st.warning(
+                f"**{gene_of(tgt)} ki jaanch nahi ho sakti** — ChEMBL se iska known-drug "
+                "list nahi mila, to hum bata nahi sakte ki neeche koi dawa pehle se "
+                f"jaani-pehchani hai ya nahi. ({meta.get('known_genes_resolved', '?')} "
+                "targets ka list mila hai.) Iska matlab **ye nahi** ki ye dawaiyan nayi hain.")
+        elif n_known == 0:
+            st.warning(
+                f"**Is target pe model fail hua hai.** {gene_of(tgt)} ki jaani-pehchani "
+                "dawaiyan ChEMBL me maujood hain, par model ne unme se ek bhi ko top-50 "
+                "me nahi rakha. Jab model jaani-pehchani dawa hi nahi dhoondh pata, to "
+                "uski 'nayi' dawaiyon par bharosa karne ki koi wajah nahi hai.")
+        else:
+            st.success(
+                f"**Is target pe model thoda kaam kar raha hai** — {n_known} jaani-pehchani "
+                "dawaiyan top-50 me aayi. Ye model ke sahi hone ka suboot hai, **nayi khoj "
+                "nahi**. Jo baaki hain unme se kai chhupe hue usi tarah ke inhibitor ya "
+                "galat andaza ho sakte hain.")
 
         cols = ["rank", "drug", "pKd", "max_phase"] + (
-            ["known_for_target"] if known_ok else [])
-        show = sub[cols].rename(
-            columns={"rank": "#", "drug": "Dawa", "max_phase": "Phase",
-                     "known_for_target": "Pehle se jaani?"})
-        st.dataframe(show, hide_index=True, use_container_width=True)
+            ["known_for_target"] if checkable else [])
+        st.dataframe(
+            full[cols].rename(columns={"rank": "#", "drug": "Dawa", "max_phase": "Phase",
+                                       "known_for_target": "Pehle se jaani?"}),
+            hide_index=True, use_container_width=True)
 
         with st.expander("SMILES dekhne ke liye"):
-            st.dataframe(sub[["drug", "smiles"]].rename(
+            st.dataframe(full[["drug", "smiles"]].rename(
                 columns={"drug": "Dawa", "smiles": "SMILES"}),
                 hide_index=True, use_container_width=True)
 
-        st.warning(
-            "**Isko theek se padho.** Ye computer ka andaza hai, lab ka nateeja nahi. "
-            "Jo dawaiyan top pe aati hain unme se bahut si us target ke liye **pehle "
-            "se jaani-pehchani** hain — wo model ke sahi hone ka suboot hain, nayi "
-            "khoj nahi. Aur jo 'nayi' lagti hain, unme se kai asal me chhupe hue "
-            "usi tarah ke inhibitor hote hain ya galat andaza. Kisi bhi candidate ka "
-            "matlab lab me test hone ke baad hi banta hai.")
+        if meta:
+            st.caption(f"{meta.get('n_drugs', '?'):,} dawaiyan × {meta.get('n_targets', '?')} "
+                       f"targets · model: binding v2 · banaya {meta.get('built_utc', '?')[:10]}"
+                       " · Ye computer ka andaza hai, lab ka nateeja nahi.")
 
 st.caption("Models: Binding v2 (ESM-2 + ChemBERTa, Davis + KIBA) · "
            "ADMET v2 (TDC, 22 properties) · Tox21 · ESOL. "
