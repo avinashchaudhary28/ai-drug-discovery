@@ -60,6 +60,7 @@ jobs:
           MAX_TOTAL_PAIRS: ${{ inputs.max_total_pairs }}
           N_TREES: ${{ inputs.n_trees }}
           N_SEEDS: ${{ inputs.n_seeds }}
+          BUDGET_MIN: "300"
           TOKENIZERS_PARALLELISM: "false"
         run: |
           set -o pipefail

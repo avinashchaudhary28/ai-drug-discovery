@@ -34,6 +34,7 @@ os.makedirs(OUT, exist_ok=True)
 MAX_TOTAL_PAIRS = int(os.environ.get("MAX_TOTAL_PAIRS", 120000))
 N_TREES = int(os.environ.get("N_TREES", 400))
 N_SEEDS = int(os.environ.get("N_SEEDS", 5))
+BUDGET_MIN = int(os.environ.get("BUDGET_MIN", 300))  # Actions limit 345
 SEED = 0
 rng = np.random.default_rng(SEED)
 
@@ -350,9 +351,22 @@ def metrics(y_test, p):
 
 
 step(f"7. {N_SEEDS} seeds pe chalate hain (ek split ka result tukka ho sakta hai)")
+# Actions ka job 345 min pe mar jata hai. Us se pehle rukna hai, warna poora run
+# zaaya - jitne seeds ho gaye unka nateeja bhi haath se nikal jata hai.
+info(f"waqt ka budget: {BUDGET_MIN} min · uske baad naya seed shuru nahi karenge")
 rows = []
+seeds_done = 0
 for seed in range(N_SEEDS):
+    el = (time.time() - T_START) / 60
+    if seed > 0:
+        per_seed = el / seed
+        if el + per_seed > BUDGET_MIN:
+            print(f"\n!! Waqt khatam: {el:.0f} min beete, har seed ~{per_seed:.0f} min. "
+                  f"{seed}/{N_SEEDS} seeds ke nateeje ke saath aage badh rahe hain.",
+                  flush=True)
+            break
     t_seed = time.time()
+    seeds_done = seed + 1
     print(f"\n--- seed {seed} " + "-" * 50, flush=True)
     gss = GroupShuffleSplit(n_splits=1, test_size=0.2, random_state=seed)
     tr_idx, te_idx = next(gss.split(davis_pairs, groups=davis_pairs.d))
@@ -471,7 +485,7 @@ summary = {
     "design": ("Model/features/hyperparameters sab variants me same; sirf training "
                "data badla. Baseline A = sirf Davis."),
     "test_set": "Davis cold-drug (GroupShuffleSplit on drug, 20%), per seed",
-    "n_seeds": N_SEEDS,
+    "n_seeds": seeds_done,
     "bindingdb_proteins_matched": int(bdb.p.nunique()),
     "assay_counts": {str(k): int(v) for k, v in bdb.assay.value_counts().items()},
     "comparisons": comp,
@@ -489,7 +503,7 @@ with open(os.path.join(OUT, "RESULT.md"), "w") as f:
     f.write(f"- Baseline **A** = sirf Davis train pairs\n")
     f.write("- **B** = A + BindingDB (Kd+Ki) · **B2** = A + sirf Kd · "
             "**B3/B4** = wahi, par model ko assay type bata ke\n")
-    f.write(f"- Test: Davis **cold-drug** split, {N_SEEDS} seeds (mean ± std)\n")
+    f.write(f"- Test: Davis **cold-drug** split, {seeds_done} seeds (mean ± std)\n")
     f.write(f"- BindingDB se match hue proteins: {bdb.p.nunique()}\n")
     f.write("- Leakage hataya: test dawaiyon ke canonical SMILES, aur Davis ke "
             "saath duplicate jode\n\n")
