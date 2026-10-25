@@ -177,10 +177,22 @@ def mechanism_drugs(target_id):
 
 
 KNOWN_F = os.path.join(WORK, "known_drugs.json")
+KNOWN = None
 if os.path.exists(KNOWN_F):
-    KNOWN = json.load(open(KNOWN_F))
-    info(f"cache: {len(KNOWN)} targets")
-else:
+    try:
+        c = json.load(open(KNOWN_F))
+        cov = 100 * sum(1 for v in c.values() if v) / max(len(c), 1)
+        if cov >= 40 and len(c) >= len(GENES) * 0.9:
+            KNOWN = c
+            info(f"cache: {len(c)} targets, {cov:.0f}% resolve hue")
+        else:
+            # Purana cache toote hue lookup se bana tha (381 me se 23 genes).
+            # Use chup-chaap use kar lena fix ko bekaar kar deta hai.
+            info(f"cache phenk rahe hain: sirf {cov:.0f}% genes resolve "
+                 f"({len(c)} entries) - dobara banega")
+    except Exception as e:
+        info(f"cache padha nahi gaya ({type(e).__name__}) - dobara banega")
+if KNOWN is None:
     KNOWN = {}
     for k, g in enumerate(GENES):
         try:
