@@ -37,8 +37,9 @@ jobs:
           python -m pip install -q --upgrade pip
           python -m pip install -q \
             "numpy<2.3" pandas scipy scikit-learn tabulate \
-            rdkit xgboost \
-            "torch==2.5.1+cpu" --extra-index-url https://download.pytorch.org/whl/cpu
+            rdkit xgboost
+          # transformers ko torch >= 2.6 chahiye, isliye version pin nahi karte
+          python -m pip install -q "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
           python -m pip install -q transformers
           python -c "import numpy,pandas,scipy,sklearn,rdkit,xgboost,torch,transformers as t;print('numpy',numpy.__version__);print('rdkit',rdkit.__version__);print('xgboost',xgboost.__version__);print('torch',torch.__version__);print('transformers',t.__version__)"
 
