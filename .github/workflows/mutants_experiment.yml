@@ -1,0 +1,98 @@
+name: Mutant sequences experiment
+
+on:
+  workflow_dispatch:
+    inputs:
+      n_seeds:
+        description: "Kitne seeds"
+        required: false
+        default: "5"
+      n_trees:
+        description: "XGBoost trees"
+        required: false
+        default: "400"
+      esm_name:
+        description: "ESM model (chhota = tez, par v2 se tulna nahi hogi)"
+        required: false
+        default: "facebook/esm2_t33_650M_UR50D"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: mutants-experiment
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Machine
+        run: |
+          echo "CPUs: $(nproc)"
+          free -g
+
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas scipy scikit-learn tabulate rdkit xgboost
+          python -m pip install -q "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -q transformers
+          python -c "import numpy,rdkit,xgboost,torch,transformers as t;print('rdkit',rdkit.__version__);print('torch',torch.__version__);print('transformers',t.__version__)"
+
+      - name: Parser ka test (pehle ye, warna 2 ghante zaaya)
+        run: python -u experiments/mutants/selftest.py
+
+      - name: Cache
+        uses: actions/cache@v4
+        with:
+          path: experiments/mutants/work
+          key: mut-work-${{ inputs.esm_name }}-v1
+          restore-keys: |
+            mut-work-${{ inputs.esm_name }}-
+
+      - name: Experiment
+        env:
+          N_SEEDS: ${{ inputs.n_seeds }}
+          N_TREES: ${{ inputs.n_trees }}
+          ESM_NAME: ${{ inputs.esm_name }}
+          TOKENIZERS_PARALLELISM: "false"
+        run: |
+          set -o pipefail
+          python -u experiments/mutants/run_mutants.py 2>&1 | tee mut.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Mutant sequences experiment" >> $GITHUB_STEP_SUMMARY
+          if [ -f experiments/mutants/results/RESULT.md ]; then
+            cat experiments/mutants/results/RESULT.md >> $GITHUB_STEP_SUMMARY
+          else
+            tail -60 mut.log >> $GITHUB_STEP_SUMMARY || true
+          fi
+
+      - name: Nateeja repo me commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/mutants/results
+          tail -c 200000 mut.log > experiments/mutants/results/run.log || true
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -f experiments/mutants/results/
+          if git diff --cached --quiet; then
+            echo "kuch naya nahi"
+          else
+            git commit -m "mutant experiment result (run ${{ github.run_number }})"
+            for i in 1 2 3; do
+              git pull --rebase --autostash origin ${{ github.ref_name }} || true
+              git push origin HEAD:${{ github.ref_name }} && break
+              sleep 10
+            done
+          fi
