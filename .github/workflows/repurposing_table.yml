@@ -38,6 +38,27 @@ jobs:
           python -m pip install -q transformers
           python -c "import rdkit,xgboost,torch;print('rdkit',rdkit.__version__,'xgb',xgboost.__version__)"
 
+      # Script jo bhi import karta hai wo yahin check karo - warna pata 2 minute ke
+      # ChEMBL fetch ke BAAD chalta hai, jo bekar me waqt aur minutes jalata hai.
+      - name: Imports ka smoke test
+        run: |
+          python - <<'EOF'
+          from rdkit import Chem, RDLogger
+          from rdkit.Chem import inchi, Descriptors, rdFingerprintGenerator
+          from rdkit.Chem.MolStandardize import rdMolStandardize
+          import gzip, shutil, json, urllib.parse, urllib.request
+          import numpy as np, pandas as pd, xgboost as xgb, torch
+          from transformers import AutoTokenizer, AutoModel
+          m = Chem.MolFromSmiles("CC(=O)Oc1ccccc1C(=O)O")
+          assert m is not None
+          print("InChIKey:", inchi.MolToInchiKey(m)[:14])
+          print("largest-fragment + uncharge:",
+                Chem.MolToSmiles(rdMolStandardize.Uncharger().uncharge(
+                    rdMolStandardize.LargestFragmentChooser().choose(m))))
+          print("descriptors:", len(Descriptors._descList))
+          print("saare imports theek hain")
+          EOF
+
       - name: Cache
         uses: actions/cache@v4
         with:

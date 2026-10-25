@@ -87,7 +87,8 @@ info(f"{len(raw):,} molecules (phase {MIN_PHASE}+)")
 
 # ---------------------------------------------------------- 2. salt forms
 step("2. Salt forms jodte hain (Erlotinib + Erlotinib HCl = ek dawa)")
-from rdkit import Chem, RDLogger, inchi
+from rdkit import Chem, RDLogger
+from rdkit.Chem import inchi          # rdkit.inchi nahi - rdkit.Chem.inchi
 from rdkit.Chem.MolStandardize import rdMolStandardize
 
 RDLogger.DisableLog("rdApp.*")
