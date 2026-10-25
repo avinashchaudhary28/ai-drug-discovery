@@ -42,12 +42,12 @@
    !! known-drug lookup bharose layak nahi (24% genes). Table banegi par 'known' column par bharosa na karein - app usko chhupa degi.
 
 ======================================================================
-[ 15.4 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
+[  8.6 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
 ======================================================================
    cache: (10465, 1625)
 
 ======================================================================
-[ 15.4 min] 5. v2 model se saare targets pe scoring
+[  8.6 min] 5. v2 model se saare targets pe scoring
 ======================================================================
    model ready · 2905 features · 442 targets · 10,465 dawaiyan
    50/442 targets
@@ -61,4 +61,4 @@
    22,100 rows likhe -> data/repurposing_top.csv (5.7 MB)
 
    top 50 me se 0.6% pehle se jaani-pehchani dawaiyan hain
-   Total: 16.8 min
+   Total: 10.9 min
