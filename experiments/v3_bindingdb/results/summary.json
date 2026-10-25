@@ -1,29 +1,108 @@
 {
-  "finished_utc": "2026-10-25T08:42:29Z",
-  "total_minutes": 9.8,
-  "test_set": "Davis cold-drug (GroupShuffleSplit on drug, seed 0, 20%)",
-  "test_pairs": 6188,
-  "test_drugs": 14,
+  "finished_utc": "2026-10-25T09:26:30Z",
+  "total_minutes": 40.2,
+  "design": "Model/features/hyperparameters dono me same; sirf training data badla.",
+  "test_set": "Davis cold-drug (GroupShuffleSplit on drug, 20%), per seed",
+  "n_seeds": 5,
   "bindingdb_proteins_matched": 351,
-  "bindingdb_pairs_added": 33982,
-  "delta_CI": 0.0195,
-  "verdict": "DATA se faida hua - BindingDB jodne se model behtar hua.",
-  "results": [
+  "mean_delta_CI": -0.0122,
+  "std_delta_CI": 0.0515,
+  "B_wins": 3,
+  "verdict": "DATA se koi pakka farak nahi - shor ke andar hai. Bottleneck data nahi, protein representation hai (pocket-aware raasta).",
+  "per_model": {
+    "CI": {
+      "A": 0.7437268657,
+      "B": 0.7314846416
+    },
+    "MSE": {
+      "A": 0.6673982024,
+      "B": 0.662910825
+    },
+    "Pearson": {
+      "A": 0.5281146705,
+      "B": 0.5419187963
+    }
+  },
+  "per_seed": [
     {
-      "model": "A: Davis sirf",
-      "n_train": 23868,
       "CI": 0.7322018368708676,
       "MSE": 0.6910755634307861,
       "Pearson": 0.530051589012146,
-      "minutes": 3.0
+      "seed": 0,
+      "model": "A",
+      "n_train": 23868
     },
     {
-      "model": "B: Davis+BindingDB",
-      "n_train": 57850,
       "CI": 0.7517332735450609,
       "MSE": 0.5864559412002563,
       "Pearson": 0.6117892861366272,
-      "minutes": 4.6
+      "seed": 0,
+      "model": "B",
+      "n_train": 57850
+    },
+    {
+      "CI": 0.799429985146561,
+      "MSE": 0.4930557608604431,
+      "Pearson": 0.5511803030967712,
+      "seed": 1,
+      "model": "A",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7096174270866109,
+      "MSE": 0.6608377695083618,
+      "Pearson": 0.4538171589374542,
+      "seed": 1,
+      "model": "B",
+      "n_train": 57850
+    },
+    {
+      "CI": 0.7139021109526181,
+      "MSE": 0.7523132562637329,
+      "Pearson": 0.4805285632610321,
+      "seed": 2,
+      "model": "A",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.6730641181748684,
+      "MSE": 0.7831836342811584,
+      "Pearson": 0.4585602879524231,
+      "seed": 2,
+      "model": "B",
+      "n_train": 57850
+    },
+    {
+      "CI": 0.778887375177974,
+      "MSE": 0.5003557801246643,
+      "Pearson": 0.6178290843963623,
+      "seed": 3,
+      "model": "A",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.8004984445326129,
+      "MSE": 0.4682369530200958,
+      "Pearson": 0.6645728349685669,
+      "seed": 3,
+      "model": "B",
+      "n_train": 57850
+    },
+    {
+      "CI": 0.6942130202997229,
+      "MSE": 0.9001906514167786,
+      "Pearson": 0.4609838128089905,
+      "seed": 4,
+      "model": "A",
+      "n_train": 23868
+    },
+    {
+      "CI": 0.7225099445741769,
+      "MSE": 0.8158398270606995,
+      "Pearson": 0.5208544135093689,
+      "seed": 4,
+      "model": "B",
+      "n_train": 57850
     }
   ]
 }

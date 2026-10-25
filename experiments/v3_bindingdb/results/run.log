@@ -33,67 +33,95 @@
    dedupe ke baad: 47,258 unique jode
 
 ======================================================================
-[  0.1 min] 5. Test split - dono models ke liye bilkul ek jaisa
-======================================================================
-   train 23,868 jode / test 6,188 jode
-   test ki dawaiyan: 14 (training me ek bhi nahi)
-   14 test SMILES canonical form me
-   leakage hatane se 2,797 BindingDB rows gaye -> 44,461 bache
-   Davis ke saath duplicate 10,479 jode hataye -> BindingDB se 33,982 naye jode
-
-======================================================================
-[  0.3 min] 6. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)
+[  0.1 min] 5. Molecule features (Morgan FP + RDKit descriptors + ChemBERTa)
 ======================================================================
    RDKit 217 descriptors
-   12,678 unique molecules ke features banenge
-   cache: rdkit_feats (12678, 1241)
+   12,718 unique molecules ke features banenge
+   cache rdkit_feats purana hai (12678 vs 12718) - dobara banega
+   RDKit 10,000/12,718
+   bana: rdkit_feats (12718, 1241) (2.5 min)
    ChemBERTa: DeepChem/ChemBERTa-77M-MTR
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 21191.43it/s]
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 16594.36it/s]
 [transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
 Key                        | Status     | 
 ---------------------------+------------+-
-regression.dense.bias      | UNEXPECTED | 
-regression.out_proj.bias   | UNEXPECTED | 
 regression.dense.weight    | UNEXPECTED | 
 norm_mean                  | UNEXPECTED | 
-norm_std                   | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
 regression.out_proj.weight | UNEXPECTED | 
-pooler.dense.weight        | MISSING    | 
+norm_std                   | UNEXPECTED | 
+regression.dense.bias      | UNEXPECTED | 
 pooler.dense.bias          | MISSING    | 
+pooler.dense.weight        | MISSING    | 
 
 Notes:
 - UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
 - MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
-   ChemBERTa 0/12,678
-   ChemBERTa 6,400/12,678
-   bana: chemberta (12678, 384) (1.9 min)
-   DRUG_X (12678, 1625) (0.08 GB)
+   ChemBERTa 0/12,718
+   ChemBERTa 6,400/12,718
+   bana: chemberta (12718, 384) (2.2 min)
+   DRUG_X (12718, 1625) (0.08 GB)
 
 ======================================================================
-[  2.2 min] 7. Training matrices banate hain
+[  4.9 min] 6. Tools: CI aur training
 ======================================================================
-   A (Davis sirf)   : (23868, 2905)
-   B (Davis+BindingDB): (57850, 2905)  (+33,982 jode = 2.4x data)
-   test             : (6188, 2905)
 
 ======================================================================
-[  2.2 min] 8. Dono models train karte hain (bilkul same settings)
+[  4.9 min] 7. 5 seeds pe chalate hain (ek split ka result tukka ho sakta hai)
 ======================================================================
-   A: Davis sirf          CI=0.7322  MSE=0.6911  Pearson=0.5301  (3.0 min)
-   B: Davis+BindingDB     CI=0.7517  MSE=0.5865  Pearson=0.6118  (4.6 min)
+
+--- seed 0 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 33,982
+   A (Davis sirf)     n=23,868  CI=0.7322 MSE=0.6911 Pearson=0.5301
+   B (Davis+BindingDB) n=57,850  CI=0.7517 MSE=0.5865 Pearson=0.6118
+   seed 0 done (7.0 min)
+
+--- seed 1 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 33,982
+   A (Davis sirf)     n=23,868  CI=0.7994 MSE=0.4931 Pearson=0.5512
+   B (Davis+BindingDB) n=57,850  CI=0.7096 MSE=0.6608 Pearson=0.4538
+   seed 1 done (7.1 min)
+
+--- seed 2 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 33,982
+   A (Davis sirf)     n=23,868  CI=0.7139 MSE=0.7523 Pearson=0.4805
+   B (Davis+BindingDB) n=57,850  CI=0.6731 MSE=0.7832 Pearson=0.4586
+   seed 2 done (7.1 min)
+
+--- seed 3 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 33,982
+   A (Davis sirf)     n=23,868  CI=0.7789 MSE=0.5004 Pearson=0.6178
+   B (Davis+BindingDB) n=57,850  CI=0.8005 MSE=0.4682 Pearson=0.6646
+   seed 3 done (7.0 min)
+
+--- seed 4 --------------------------------------------------
+   test: 6,188 jode / 14 nayi dawaiyan · BindingDB se jude: 33,982
+   A (Davis sirf)     n=23,868  CI=0.6942 MSE=0.9002 Pearson=0.4610
+   B (Davis+BindingDB) n=57,850  CI=0.7225 MSE=0.8158 Pearson=0.5209
+   seed 4 done (7.1 min)
 
 ======================================================================
-[  9.8 min] 9. NATEEJA
+[ 40.2 min] 8. NATEEJA
 ======================================================================
-             model  n_train     CI    MSE  Pearson
-     A: Davis sirf    23868 0.7322 0.6911   0.5301
-B: Davis+BindingDB    57850 0.7517 0.5865   0.6118
+           CI             MSE         Pearson        
+         mean     std    mean     std    mean     std
+model                                                
+A      0.7437  0.0442  0.6674  0.1734  0.5281  0.0620
+B      0.7315  0.0478  0.6629  0.1428  0.5419  0.0936
 
-   Davis cold-drug test set, 6,188 jode, 14 nayi dawaiyan
-   CI me farak: +0.0195
+   Har seed ka CI:
+model       A       B  farak (B-A)
+seed                              
+0      0.7322  0.7517       0.0195
+1      0.7994  0.7096      -0.0898
+2      0.7139  0.6731      -0.0408
+3      0.7789  0.8005       0.0216
+4      0.6942  0.7225       0.0283
 
-   >>> DATA se faida hua - BindingDB jodne se model behtar hua.
+   B jeeta 3/5 seeds me · CI farak -0.0122 (±0.0515)
 
-   Files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/results/summary.json, results.csv, RESULT.md
-   Total time: 9.8 min
+   >>> DATA se koi pakka farak nahi - shor ke andar hai. Bottleneck data nahi, protein representation hai (pocket-aware raasta).
+
+   Files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/v3_bindingdb/results/RESULT.md, summary.json, per_seed.csv
+   Total: 40.2 min
