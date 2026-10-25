@@ -9,10 +9,10 @@
   },
   {
     "tag": "MUT",
-    "groups": 515,
-    "rows": 1241,
-    "pct_rows": 4.13,
-    "mean_std": 0.5154,
-    "mean_range": 0.7771
+    "groups": 555,
+    "rows": 1192,
+    "pct_rows": 3.97,
+    "mean_std": 0.5051,
+    "mean_range": 0.7356
   }
 ]
