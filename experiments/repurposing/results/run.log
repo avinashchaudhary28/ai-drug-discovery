@@ -28,27 +28,28 @@
    100/381 genes · ab tak 31 resolve hue
    125/381 genes · ab tak 37 resolve hue
    150/381 genes · ab tak 49 resolve hue
-   175/381 genes · ab tak 59 resolve hue
-   200/381 genes · ab tak 63 resolve hue
-   225/381 genes · ab tak 67 resolve hue
-   250/381 genes · ab tak 68 resolve hue
-   275/381 genes · ab tak 75 resolve hue
-   300/381 genes · ab tak 81 resolve hue
-   325/381 genes · ab tak 85 resolve hue
-   350/381 genes · ab tak 88 resolve hue
-   375/381 genes · ab tak 91 resolve hue
-   known drugs mile: 91/381 genes (24%), total 773 entries
+     JAK3: RuntimeError - khaali chhoda
+   175/381 genes · ab tak 55 resolve hue
+   200/381 genes · ab tak 59 resolve hue
+   225/381 genes · ab tak 63 resolve hue
+   250/381 genes · ab tak 64 resolve hue
+   275/381 genes · ab tak 71 resolve hue
+   300/381 genes · ab tak 77 resolve hue
+   325/381 genes · ab tak 81 resolve hue
+   350/381 genes · ab tak 84 resolve hue
+   375/381 genes · ab tak 87 resolve hue
+   known drugs mile: 87/381 genes (23%), total 708 entries
      EGFR      76 known dawaein
      ABL1      18 known dawaein
      ALK       11 known dawaein
-     KIT       34 known dawaein
+     KIT        0 known dawaein
      BRAF      14 known dawaein
      SRC        8 known dawaein
 
-   !! known-drug lookup bharose layak nahi (24% genes). Table banegi par 'known' column par bharosa na karein - app usko chhupa degi.
+   !! known-drug lookup bharose layak nahi (23% genes). Table banegi par 'known' column par bharosa na karein - app usko chhupa degi.
 
 ======================================================================
-[ 31.6 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
+[105.6 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
 ======================================================================
    RDKit 2,000/10,465
    RDKit 4,000/10,465
@@ -56,16 +57,16 @@
    RDKit 8,000/10,465
    RDKit 10,000/10,465
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 22296.70it/s]
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 21135.02it/s]
 [transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
 Key                        | Status     | 
 ---------------------------+------------+-
-norm_std                   | UNEXPECTED | 
-regression.dense.bias      | UNEXPECTED | 
-regression.out_proj.weight | UNEXPECTED | 
-norm_mean                  | UNEXPECTED | 
 regression.dense.weight    | UNEXPECTED | 
 regression.out_proj.bias   | UNEXPECTED | 
+regression.out_proj.weight | UNEXPECTED | 
+norm_std                   | UNEXPECTED | 
+regression.dense.bias      | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
 pooler.dense.weight        | MISSING    | 
 pooler.dense.bias          | MISSING    | 
 
@@ -80,7 +81,7 @@ Notes:
    bana: (10465, 1625)
 
 ======================================================================
-[ 38.1 min] 5. v2 model se saare targets pe scoring
+[112.1 min] 5. v2 model se saare targets pe scoring
 ======================================================================
    model ready · 2905 features · 442 targets · 10,465 dawaiyan
    library ka MW: median 368 Da · 312 molecules 1000 Da se bade
@@ -92,10 +93,12 @@ Notes:
    300/442 targets
    350/442 targets
    400/442 targets
+   known_drugs.json saved (708 entries)
+   score matrix saved (10465, 442) (6.1 MB)
 
-   seedhi top-50      : 41/146 targets pe known mila · median MW 972.8 Da
-   dawa-jaise size se : 58/146 targets pe known mila · median MW 536.5 Da
+   seedhi top-50      : 41/134 targets pe known mila · median MW 972.8 Da
+   dawa-jaise size se : 58/134 targets pe known mila · median MW 536.5 Da
    22,100 rows likhe -> data/repurposing_top.csv (5.9 MB)
 
    top 50 me se 0.9% pehle se jaani-pehchani dawaiyan hain
-   Total: 40.5 min
+   Total: 114.5 min

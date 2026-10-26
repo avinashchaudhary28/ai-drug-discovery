@@ -1,5 +1,5 @@
 {
-  "built_utc": "2026-10-26T06:00:38Z",
+  "built_utc": "2026-10-26T08:16:46Z",
   "n_drugs": 10465,
   "n_targets": 442,
   "top_n": 50,
@@ -7,7 +7,7 @@
   "known_in_top": 204,
   "known_pct": 0.9,
   "known_lookup_ok": false,
-  "known_genes_resolved": "91/381",
+  "known_genes_resolved": "87/381",
   "resolved_genes": [
     "ABL1",
     "ACVR1",
@@ -62,11 +62,7 @@
     "INSR",
     "IRAK1",
     "IRAK4",
-    "ITK",
-    "JAK1",
     "JAK2",
-    "JAK3",
-    "KIT",
     "LCK",
     "LYN",
     "MAP3K1",
@@ -106,15 +102,15 @@
   "top_pct_over_1000da": 46.8,
   "druglike_filter": "MW 250-700 Da",
   "recall_plain": {
-    "checkable_targets": 146,
+    "checkable_targets": 134,
     "with_any_known": 41,
-    "zero_known": 105,
+    "zero_known": 93,
     "median_mw": 972.8
   },
   "recall_druglike": {
-    "checkable_targets": 146,
+    "checkable_targets": 134,
     "with_any_known": 58,
-    "zero_known": 88,
+    "zero_known": 76,
     "median_mw": 536.5
   },
   "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
