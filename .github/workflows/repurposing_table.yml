@@ -76,7 +76,13 @@ jobs:
         uses: actions/cache@v4
         with:
           path: experiments/repurposing/work
-          key: rep-work-v1
+          # Key ko script ke hash se jodna zaroori hai. GitHub ka cache
+          # IMMUTABLE hai: ek hi key pe dobara save nahi hota. Fixed key "v1"
+          # hone se pehli run ka purana cache hamesha restore hota tha aur naya
+          # (all_ids, feats_ids.json, sudhra known_drugs.json) kabhi save nahi
+          # hota - isliye HAR run salt-merge + features + known lookup dobara
+          # karta tha, ~40 min extra.
+          key: rep-work-${{ hashFiles('experiments/repurposing/build_table.py') }}
           restore-keys: rep-work-
 
       - name: Table banao
