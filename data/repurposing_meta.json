@@ -114,5 +114,13 @@
     "median_mw": 536.5
   },
   "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
-  "caveat": "Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."
+  "caveat": "Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi.",
+  "corrected": {
+    "transform": "dawa ka mean ghatao (promiscuity correction)",
+    "filter": "MW 250-700 Da",
+    "top5": "43/134",
+    "top10": "52/134",
+    "baseline_top5": "23/134",
+    "note": "adj = pKd minus us dawa ka saare targets pe average. Ranking isi se hoti hai. pKd column asli value hai, padhne ke liye."
+  }
 }

@@ -1,0 +1,15 @@
+transform,filter,top5,top5_n,top10,top10_n,top20,top20_n,top50,top50_n
+raw (jaisa hai),koi nahi,23/134,23,24/134,24,24/134,24,41/134,41
+raw (jaisa hai),MW 250-700,45/134,45,46/134,46,49/134,49,58/134,58
+dawa ka mean ghatao,koi nahi,38/134,38,42/134,42,48/134,48,57/134,57
+dawa ka mean ghatao,MW 250-700,43/134,43,52/134,52,56/134,56,59/134,59
+dawa ka z-score,koi nahi,42/134,42,46/134,46,49/134,49,55/134,55
+dawa ka z-score,MW 250-700,43/134,43,52/134,52,52/134,52,57/134,57
+target ka mean ghatao,koi nahi,23/134,23,24/134,24,24/134,24,41/134,41
+target ka mean ghatao,MW 250-700,45/134,45,46/134,46,49/134,49,58/134,58
+target ka z-score,koi nahi,23/134,23,24/134,24,24/134,24,41/134,41
+target ka z-score,MW 250-700,45/134,45,46/134,46,49/134,49,58/134,58
+dono mean ghatao,koi nahi,38/134,38,42/134,42,48/134,48,57/134,57
+dono mean ghatao,MW 250-700,43/134,43,52/134,52,56/134,56,59/134,59
+dawa z + target z,koi nahi,38/134,38,41/134,41,42/134,42,50/134,50
+dawa z + target z,MW 250-700,42/134,42,47/134,47,52/134,52,59/134,59

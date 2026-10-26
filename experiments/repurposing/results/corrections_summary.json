@@ -1,0 +1,8 @@
+{
+  "baseline_top5": "23/134",
+  "best_top5": "45/134",
+  "best_transform": "raw (jaisa hai)",
+  "best_filter": "MW 250-700",
+  "gain_targets": 22,
+  "n_checkable": 134
+}

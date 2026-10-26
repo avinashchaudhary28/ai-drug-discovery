@@ -25,17 +25,22 @@ def load_repurposing():
     """Precomputed repurposing table. Nahi mili to (None, None)."""
     import json
     p = os.path.join(DATA, "repurposing_top.csv")
-    pdl = os.path.join(DATA, "repurposing_top_druglike.csv")
+    pc = os.path.join(DATA, "repurposing_top_corrected.csv")
     m = os.path.join(DATA, "repurposing_meta.json")
     if not os.path.exists(p):
         return None, None, None
     df = pd.read_csv(p)
-    # Dawa-jaise size wali list default hai: naapa gaya ki wo top-5 pe recall
-    # 23/146 se 45/146 kar deti hai. Purani list bhi rakhte hain, taaki farak
-    # khud dekha ja sake.
-    ddl = pd.read_csv(pdl) if os.path.exists(pdl) else None
+    # Sudhri list default hai. Naapa gaya (134 checkable targets pe):
+    #   bar      raw   MW akela   MW + dawa ka mean ghata
+    #   top-5     23      45              43
+    #   top-10    24      46              52
+    #   top-20    24      49              56
+    #   rank-1    13      21              37   (out of 442)
+    # top-5 pe MW akela 2 target aage hai, par baaki sab bar pe combined jeetta
+    # hai aur aankh se bhi saaf behtar hai (ABL1 pe Dasatinib #3 se #1).
+    dc = pd.read_csv(pc) if os.path.exists(pc) else None
     meta = json.load(open(m)) if os.path.exists(m) else {}
-    return df, ddl, meta
+    return df, dc, meta
 
 
 core = load_core()
@@ -110,12 +115,18 @@ with tab_rep:
         use_dl = False
         if rep_dl is not None:
             use_dl = st.toggle(
-                "Sirf dawa-jaise size wale molecules (250–700 Da)", value=True,
-                help="Model ka bada jhukav hai bhaari molecules ki taraf: uske "
-                     "top-50 ka median 973 Da hai, jabki asli kinase inhibitor "
-                     "300–600 Da ka hota hai. Ye filter naapa gaya hai — top-5 pe "
-                     "recall 23/146 se 45/146 ho jaata hai.")
+                "Sudhri ranking (promiscuity correction + dawa-jaisa size)",
+                value=True,
+                help="Do naapi hui sudhaar ek saath: (1) sirf 250–700 Da wale "
+                     "molecules — model ka jhukav bhaari molecules ki taraf hai, "
+                     "uske top-50 ka median 973 Da tha; (2) har dawa ka apna "
+                     "average ghata diya — kuch dawaein har target pe upar aati "
+                     "thi. Nateeja: rank-1 pe sahi dawa 13/442 se 37/442, aur "
+                     "top-10 recall 24/134 se 52/134. Model badla nahi hai.")
         rep = rep_dl if (use_dl and rep_dl is not None) else rep_plain
+        if use_dl and rep_dl is not None:
+            st.caption("Ranking **adj** se hui hai (pKd minus us dawa ka average). "
+                       "`pKd` column asli value hai — padhne ke liye.")
 
         @st.cache_data(show_spinner=False)
         def rep_quality(df, resolved_tuple):
@@ -201,10 +212,16 @@ Isliye ye tab **model ki jaanch** ke liye hai, dawa dhoondhne ke liye nahi.""")
                 "nahi**. Jo baaki hain unme se kai chhupe hue usi tarah ke inhibitor ya "
                 "galat andaza ho sakte hain.")
 
-        cols = ["rank", "drug", "pKd", "max_phase"] + (
-            ["known_for_target"] if checkable else [])
+        cols = ["rank", "drug", "pKd"]
+        for extra in ("adj", "mw"):          # sudhri list me hi hote hain
+            if extra in full.columns:
+                cols.append(extra)
+        cols.append("max_phase")
+        if checkable:
+            cols.append("known_for_target")
         st.dataframe(
             full[cols].rename(columns={"rank": "#", "drug": "Dawa", "max_phase": "Phase",
+                                       "mw": "MW", "adj": "adj (ranking)",
                                        "known_for_target": "Pehle se jaani?"}),
             hide_index=True, use_container_width=True)
 

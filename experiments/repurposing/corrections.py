@@ -106,49 +106,53 @@ def main():
     }
 
     # ---- molecule filters ----
-    from rdkit import Chem, RDLogger
-    from rdkit.Chem import Descriptors, Crippen, Lipinski
-    RDLogger.DisableLog("rdApp.*")
-
+    # MW matrix me hi aa chuka hai, to MW wala filter rdkit ke bina chalta hai.
+    # Lipinski/PAINS ko rdkit chahiye; jahan wo na ho wahan unhe chhod dete hain
+    # (poora script rok dena galat hai - MW wala jawab aaj hi mil sakta hai).
+    druglike = (mw >= 250) & (mw <= 700)
+    lipinski = nopains = None
     cache = os.path.join(HERE, "work", "filters.npz")
-    os.makedirs(os.path.dirname(cache), exist_ok=True)
     if os.path.exists(cache):
         f = np.load(cache)
-        druglike, lipinski, nopains = f["druglike"], f["lipinski"], f["nopains"]
-        print("filters cache se load\n", flush=True)
+        lipinski, nopains = f["lipinski"], f["nopains"]
+        print("Lipinski/PAINS filters cache se load\n", flush=True)
     else:
-        from rdkit.Chem import FilterCatalog
-        pp = FilterCatalog.FilterCatalogParams()
-        pp.AddCatalog(FilterCatalog.FilterCatalogParams.FilterCatalogs.PAINS)
-        cat = FilterCatalog.FilterCatalog(pp)
-        druglike = (mw >= 250) & (mw <= 700)
-        lipinski = np.zeros(len(smiles), bool)
-        nopains = np.zeros(len(smiles), bool)
-        for i, s in enumerate(smiles):
-            m = Chem.MolFromSmiles(s)
-            if m is None:
-                continue
-            try:
-                ok = (Descriptors.MolWt(m) <= 700 and Crippen.MolLogP(m) <= 5.5
-                      and Lipinski.NumHDonors(m) <= 5
-                      and Lipinski.NumHAcceptors(m) <= 10
-                      and Lipinski.NumRotatableBonds(m) <= 12
-                      and m.GetRingInfo().NumRings() >= 1)
-                lipinski[i] = ok
-                nopains[i] = not cat.HasMatch(m)
-            except Exception:
-                pass
-            if (i + 1) % 2000 == 0:
-                print(f"  filters {i+1:,}/{len(smiles):,}", flush=True)
-        np.savez_compressed(cache, druglike=druglike, lipinski=lipinski,
-                            nopains=nopains)
+        try:
+            from rdkit import Chem, RDLogger
+            from rdkit.Chem import Descriptors, Crippen, Lipinski, FilterCatalog
+            RDLogger.DisableLog("rdApp.*")
+            pp = FilterCatalog.FilterCatalogParams()
+            pp.AddCatalog(FilterCatalog.FilterCatalogParams.FilterCatalogs.PAINS)
+            cat = FilterCatalog.FilterCatalog(pp)
+            lipinski = np.zeros(len(smiles), bool)
+            nopains = np.zeros(len(smiles), bool)
+            for i, sm in enumerate(smiles):
+                m = Chem.MolFromSmiles(sm)
+                if m is None:
+                    continue
+                try:
+                    lipinski[i] = (Descriptors.MolWt(m) <= 700
+                                   and Crippen.MolLogP(m) <= 5.5
+                                   and Lipinski.NumHDonors(m) <= 5
+                                   and Lipinski.NumHAcceptors(m) <= 10
+                                   and Lipinski.NumRotatableBonds(m) <= 12
+                                   and m.GetRingInfo().NumRings() >= 1)
+                    nopains[i] = not cat.HasMatch(m)
+                except Exception:
+                    pass
+                if (i + 1) % 2000 == 0:
+                    print(f"  filters {i+1:,}/{len(smiles):,}", flush=True)
+            os.makedirs(os.path.dirname(cache), exist_ok=True)
+            np.savez_compressed(cache, lipinski=lipinski, nopains=nopains)
+        except ImportError:
+            print("NOTE: rdkit nahi hai - Lipinski/PAINS skip. MW wala filter "
+                  "chalega (MW matrix me maujood hai).\n", flush=True)
 
-    FILTERS = {
-        "koi nahi": None,
-        "MW 250-700": druglike,
-        "Lipinski-ish": lipinski,
-        "Lipinski + no PAINS": lipinski & nopains,
-    }
+    FILTERS = {"koi nahi": None, "MW 250-700": druglike}
+    if lipinski is not None:
+        FILTERS["Lipinski-ish"] = lipinski
+        if nopains is not None:
+            FILTERS["Lipinski + no PAINS"] = lipinski & nopains
     for k, v in FILTERS.items():
         if v is not None:
             print(f"  filter '{k}': {int(v.sum()):,}/{len(mw):,} molecules bachte hain")
@@ -165,11 +169,14 @@ def main():
     df = pd.DataFrame(rows)
     df.to_csv(os.path.join(OUT, "corrections.csv"), index=False)
 
-    base = df[(df.transform == "raw (jaisa hai)") & (df["filter"] == "koi nahi")].iloc[0]
+    # NOTE: df.transform DataFrame ka method hai, column nahi -
+    # df.transform == "..." hamesha False deta hai. Bracket se access zaroori.
+    base = df[(df["transform"] == "raw (jaisa hai)")
+              & (df["filter"] == "koi nahi")].iloc[0]
     best = df.sort_values(["top5_n", "top10_n"], ascending=False).iloc[0]
     print("\n" + "=" * 70)
-    print(f"  shuruaat : {base.transform} + {base['filter']:20s} top5={base.top5}")
-    print(f"  sabse achha: {best.transform} + {best['filter']:20s} top5={best.top5}")
+    print(f"  shuruaat   : {base['transform']} + {base['filter']:20s} top5={base.top5}")
+    print(f"  sabse achha: {best['transform']} + {best['filter']:20s} top5={best.top5}")
     gain = int(best.top5_n) - int(base.top5_n)
     print(f"  faida    : +{gain} targets ({base.top5_n} -> {best.top5_n}), "
           f"bina model ko chhede")
@@ -187,9 +194,9 @@ def main():
         f.write(df[["transform", "filter"] + [f"top{N}" for N in TOPS]]
                 .to_markdown(index=False))
         f.write(f"\n\n**Shuruaat:** {base.top5} · **Sabse achha:** {best.top5} "
-                f"({best.transform} + {best['filter']})\n")
+                f"({best['transform']} + {best['filter']})\n")
     json.dump({"baseline_top5": base.top5, "best_top5": best.top5,
-               "best_transform": best.transform, "best_filter": best["filter"],
+               "best_transform": best["transform"], "best_filter": best["filter"],
                "gain_targets": gain, "n_checkable": int(checkable.sum())},
               open(os.path.join(OUT, "corrections_summary.json"), "w"), indent=2)
     print(f"\nFiles: {OUT}/CORRECTIONS.md, corrections.csv")
