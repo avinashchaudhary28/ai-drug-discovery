@@ -93,10 +93,17 @@ from rdkit.Chem.MolStandardize import rdMolStandardize
 
 RDLogger.DisableLog("rdApp.*")
 CLEAN = os.path.join(WORK, "drug_library_clean.csv")
-if os.path.exists(CLEAN) and len(pd.read_csv(CLEAN)) > 1000:
-    drugs = pd.read_csv(CLEAN)
-    info(f"cache: {len(drugs):,} dawaiyan")
-else:
+drugs = None
+if os.path.exists(CLEAN):
+    c = pd.read_csv(CLEAN)
+    # all_ids chahiye: purana cache usi ke bina bana tha, aur usse known_for_target
+    # galat (kam) nikalta tha. Chup-chaap use kar lena fix ko bekaar kar deta.
+    if len(c) > 1000 and "all_ids" in c.columns:
+        drugs = c
+        info(f"cache: {len(drugs):,} dawaiyan")
+    else:
+        info(f"cache phenk rahe hain (all_ids nahi hai) - dobara banega")
+if drugs is None:
     chooser = rdMolStandardize.LargestFragmentChooser()
     uncharger = rdMolStandardize.Uncharger()
     keys, parents = [], []
@@ -118,9 +125,18 @@ else:
     t["has_name"] = (t.namelen > 0).astype(int)
     t = t.sort_values(["key", "has_name", "max_phase", "namelen"],
                       ascending=[True, False, False, True])
+    # Group ke SAARE ChEMBL ids rakhna zaroori hai. Pehle sirf representative id
+    # rakhi thi, aur usi se "known_for_target" check hota tha - jiski wajah se
+    # Dasatinib (table me CHEMBL5416410, ChEMBL ke mechanism data me CHEMBL1421)
+    # 'known' me nahi gina gaya. Yaani naap model ko asli se KHARAB dikha rahi thi.
+    allids = (t.groupby("key").chembl_id
+               .apply(lambda s: "|".join(sorted(set(s.astype(str)))))
+               .rename("all_ids"))
     drugs = (t.groupby("key", as_index=False).first()
-              [["chembl_id", "name", "parent_smiles", "max_phase"]]
-              .rename(columns={"parent_smiles": "smiles"}).reset_index(drop=True))
+              [["key", "chembl_id", "name", "parent_smiles", "max_phase"]]
+              .merge(allids, on="key")
+              .rename(columns={"parent_smiles": "smiles"})
+              .drop(columns=["key"]).reset_index(drop=True))
     drugs.to_csv(CLEAN, index=False)
 info(f"{len(raw):,} entries -> {len(drugs):,} alag-alag dawaiyan")
 
@@ -231,11 +247,19 @@ from rdkit.Chem import Descriptors, rdFingerprintGenerator
 fp1024 = rdFingerprintGenerator.GetMorganGenerator(radius=2, fpSize=1024)
 DESC = Descriptors._descList
 FEAT = os.path.join(WORK, "feats.npy")
-if os.path.exists(FEAT):
-    X = np.load(FEAT)
-    info(f"cache: {X.shape}")
-    assert len(X) == len(drugs), f"cache {len(X)} vs drugs {len(drugs)} - WORK saaf karo"
-else:
+FEAT_IDS = os.path.join(WORK, "feats_ids.json")
+X = None
+if os.path.exists(FEAT) and os.path.exists(FEAT_IDS):
+    cand = np.load(FEAT)
+    ids = json.load(open(FEAT_IDS))
+    # Sirf length check kaafi nahi: order badal jaaye to features galat molecule
+    # se jud jaate hain aur koi error nahi aata - chup-chaap galat nateeja.
+    if len(cand) == len(drugs) and ids == list(drugs.chembl_id.astype(str)):
+        X = cand
+        info(f"cache: {X.shape} (order verify ho gaya)")
+    else:
+        info(f"features ka cache mel nahi khata ({len(cand)} vs {len(drugs)}) - dobara banega")
+if X is None:
     good, rd_rows = [], []
     for i, s in enumerate(drugs.smiles):
         m = Chem.MolFromSmiles(str(s))
@@ -273,6 +297,7 @@ else:
                 print(f"   ChemBERTa {i:,}/{len(drugs):,}", flush=True)
     X = np.hstack([RD, np.concatenate(outs)]).astype(np.float32)
     np.save(FEAT, X)
+    json.dump(list(drugs.chembl_id.astype(str)), open(FEAT_IDS, "w"))
     drugs.to_csv(CLEAN, index=False)
     info(f"bana: {X.shape}")
 
@@ -301,6 +326,15 @@ def gene_of(n):
             .replace("-phosphorylated", "").strip()
 
 
+# Molecular weight: "model bade ajeeb molecules ko upar rakhta hai" ko aankde me
+# badalne ke liye. Kinase inhibitor aam taur pe 300-600 Da ka hota hai; 1000+
+# wale peptides kinase pocket me baithte hi nahi.
+MW = np.array([Descriptors.MolWt(Chem.MolFromSmiles(str(s))) if Chem.MolFromSmiles(str(s))
+               else 0.0 for s in drugs.smiles], dtype=np.float32)
+info(f"library ka MW: median {np.median(MW):.0f} Da · "
+     f"{int((MW > 1000).sum()):,} molecules 1000 Da se bade")
+
+
 all_rows = []
 for pi, pname in enumerate(names):
     Xf = np.hstack([X, np.repeat(ESM[pi][None, :], len(X), 0)]).astype(np.float32)
@@ -309,13 +343,17 @@ for pi, pname in enumerate(names):
     ordr = np.argsort(-pred)[:TOP_N]
     kn = set(KNOWN.get(gene_of(pname), []))
     for rank, j in enumerate(ordr, 1):
+        ids = str(drugs.all_ids.iloc[j] if "all_ids" in drugs.columns
+                  else drugs.chembl_id.iloc[j]).split("|")
         all_rows.append({
             "target": pname, "rank": rank,
             "drug": drugs.name.iloc[j] or drugs.chembl_id.iloc[j],
             "chembl_id": drugs.chembl_id.iloc[j],
             "max_phase": drugs.max_phase.iloc[j],
             "pKd": round(float(pred[j]), 3),
-            "known_for_target": bool(drugs.chembl_id.iloc[j] in kn),
+            # group ke kisi bhi id ka match kaafi hai (salt forms jud chuke hain)
+            "known_for_target": bool(kn & set(ids)),
+            "mw": round(float(MW[j]), 1),
             "smiles": drugs.smiles.iloc[j],
         })
     if (pi + 1) % 50 == 0:
@@ -342,6 +380,11 @@ meta = {
     # Jis gene pe ek bhi known dawa nahi mili use conservative tareeke se
     # "pata nahi" maanenge - "koi known nahi" keh dena jhooth hoga.
     "resolved_genes": sorted(g for g, v in KNOWN.items() if v),
+    # Kinase inhibitor aam taur pe 300-600 Da. Top-50 ka median library se
+    # bahut zyada ho to model bade molecules ki taraf jhuka hua hai.
+    "library_mw_median": round(float(np.median(MW)), 1),
+    "top_mw_median": round(float(tbl.mw.median()), 1),
+    "top_pct_over_1000da": round(100 * float((tbl.mw > 1000).mean()), 1),
     "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
     "caveat": ("Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' "
                "sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."),
