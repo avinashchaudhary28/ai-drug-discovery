@@ -1,5 +1,5 @@
 {
-  "built_utc": "2026-10-26T05:15:26Z",
+  "built_utc": "2026-10-26T06:00:38Z",
   "n_drugs": 10465,
   "n_targets": 442,
   "top_n": 50,
@@ -104,6 +104,19 @@
   "library_mw_median": 368.5,
   "top_mw_median": 972.8,
   "top_pct_over_1000da": 46.8,
+  "druglike_filter": "MW 250-700 Da",
+  "recall_plain": {
+    "checkable_targets": 146,
+    "with_any_known": 41,
+    "zero_known": 105,
+    "median_mw": 972.8
+  },
+  "recall_druglike": {
+    "checkable_targets": 146,
+    "with_any_known": 58,
+    "zero_known": 88,
+    "median_mw": 536.5
+  },
   "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
   "caveat": "Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."
 }

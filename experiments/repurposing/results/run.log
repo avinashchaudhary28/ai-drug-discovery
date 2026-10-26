@@ -48,7 +48,7 @@
    !! known-drug lookup bharose layak nahi (24% genes). Table banegi par 'known' column par bharosa na karein - app usko chhupa degi.
 
 ======================================================================
-[ 40.7 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
+[ 31.6 min] 4. Features (v2 jaise hi: Morgan FP + RDKit descriptors + ChemBERTa)
 ======================================================================
    RDKit 2,000/10,465
    RDKit 4,000/10,465
@@ -56,16 +56,16 @@
    RDKit 8,000/10,465
    RDKit 10,000/10,465
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 20537.52it/s]
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 22296.70it/s]
 [transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
 Key                        | Status     | 
 ---------------------------+------------+-
-regression.out_proj.bias   | UNEXPECTED | 
-norm_mean                  | UNEXPECTED | 
-regression.dense.weight    | UNEXPECTED | 
 norm_std                   | UNEXPECTED | 
 regression.dense.bias      | UNEXPECTED | 
 regression.out_proj.weight | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
+regression.dense.weight    | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
 pooler.dense.weight        | MISSING    | 
 pooler.dense.bias          | MISSING    | 
 
@@ -80,7 +80,7 @@ Notes:
    bana: (10465, 1625)
 
 ======================================================================
-[ 47.3 min] 5. v2 model se saare targets pe scoring
+[ 38.1 min] 5. v2 model se saare targets pe scoring
 ======================================================================
    model ready · 2905 features · 442 targets · 10,465 dawaiyan
    library ka MW: median 368 Da · 312 molecules 1000 Da se bade
@@ -92,7 +92,10 @@ Notes:
    300/442 targets
    350/442 targets
    400/442 targets
+
+   seedhi top-50      : 41/146 targets pe known mila · median MW 972.8 Da
+   dawa-jaise size se : 58/146 targets pe known mila · median MW 536.5 Da
    22,100 rows likhe -> data/repurposing_top.csv (5.9 MB)
 
    top 50 me se 0.9% pehle se jaani-pehchani dawaiyan hain
-   Total: 49.7 min
+   Total: 40.5 min
