@@ -336,10 +336,17 @@ info(f"library ka MW: median {np.median(MW):.0f} Da · "
 
 
 all_rows, dl_rows = [], []
+# POORA score matrix bhi save karte hain (10,465 x 442 float16 = ~9 MB).
+# Kyun: abhi sirf top-50 bachte hain, aur unse corrections test nahi ho sakte.
+# Poora matrix ek baar nikalne ke baad "dawa ka mean ghatao", "per-drug z-score",
+# "target-centering" jaisi dozens cheezein BINA Actions minutes kharch kiye
+# offline naapi ja sakti hain.
+SCORES = np.zeros((len(drugs), len(names)), dtype=np.float16)
 for pi, pname in enumerate(names):
     Xf = np.hstack([X, np.repeat(ESM[pi][None, :], len(X), 0)]).astype(np.float32)
     pred = model.predict(Xf)
     del Xf
+    SCORES[:, pi] = pred.astype(np.float16)
     kn = set(KNOWN.get(gene_of(pname), []))
     # Do list: ek seedhi top-N, aur ek sirf dawa-jaise size wale molecules me se.
     # Sawaal: model ka bada-molecule jhukav hi poori problem hai, ya ranking khud
@@ -377,6 +384,23 @@ for pi, pname in enumerate(names):
         })
     if (pi + 1) % 50 == 0:
         print(f"   {pi+1}/{len(names)} targets", flush=True)
+
+np.savez_compressed(
+    os.path.join(OUT, "score_matrix.npz"),
+    scores=SCORES,
+    drug_ids=np.array(drugs.chembl_id.astype(str), dtype=object),
+    all_ids=np.array(drugs.all_ids.astype(str) if "all_ids" in drugs.columns
+                     else drugs.chembl_id.astype(str), dtype=object),
+    drug_names=np.array(drugs.name.fillna("").astype(str), dtype=object),
+    max_phase=np.array(drugs.max_phase, dtype=np.float32),
+    smiles=np.array(drugs.smiles.astype(str), dtype=object),
+    mw=MW,
+    targets=np.array(names, dtype=object))
+# known lists bhi commit karte hain: inke bina offline recall nahi naapa ja sakta
+json.dump(KNOWN, open(os.path.join(OUT, "known_drugs.json"), "w"))
+info(f"known_drugs.json saved ({sum(len(v) for v in KNOWN.values()):,} entries)")
+info(f"score matrix saved {SCORES.shape} "
+     f"({os.path.getsize(os.path.join(OUT,'score_matrix.npz'))/1e6:.1f} MB)")
 
 tbl = pd.DataFrame(all_rows)
 dl = pd.DataFrame(dl_rows)
