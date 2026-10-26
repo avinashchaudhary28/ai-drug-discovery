@@ -25,12 +25,17 @@ def load_repurposing():
     """Precomputed repurposing table. Nahi mili to (None, None)."""
     import json
     p = os.path.join(DATA, "repurposing_top.csv")
+    pdl = os.path.join(DATA, "repurposing_top_druglike.csv")
     m = os.path.join(DATA, "repurposing_meta.json")
     if not os.path.exists(p):
-        return None, None
+        return None, None, None
     df = pd.read_csv(p)
+    # Dawa-jaise size wali list default hai: naapa gaya ki wo top-5 pe recall
+    # 23/146 se 45/146 kar deti hai. Purani list bhi rakhte hain, taaki farak
+    # khud dekha ja sake.
+    ddl = pd.read_csv(pdl) if os.path.exists(pdl) else None
     meta = json.load(open(m)) if os.path.exists(m) else {}
-    return df, meta
+    return df, ddl, meta
 
 
 core = load_core()
@@ -97,11 +102,20 @@ with tab_mol:
 
 # -------------------------------------------------------------- repurposing
 with tab_rep:
-    rep, meta = load_repurposing()
-    if rep is None:
+    rep_plain, rep_dl, meta = load_repurposing()
+    if rep_plain is None:
         st.info("Repurposing table abhi is app me nahi hai. Ye alag se banti hai "
                 "(`experiments/repurposing/build_table.py`) aur `data/` me aati hai.")
     else:
+        use_dl = False
+        if rep_dl is not None:
+            use_dl = st.toggle(
+                "Sirf dawa-jaise size wale molecules (250–700 Da)", value=True,
+                help="Model ka bada jhukav hai bhaari molecules ki taraf: uske "
+                     "top-50 ka median 973 Da hai, jabki asli kinase inhibitor "
+                     "300–600 Da ka hota hai. Ye filter naapa gaya hai — top-5 pe "
+                     "recall 23/146 se 45/146 ho jaata hai.")
+        rep = rep_dl if (use_dl and rep_dl is not None) else rep_plain
 
         @st.cache_data(show_spinner=False)
         def rep_quality(df, resolved_tuple):
@@ -132,14 +146,14 @@ with tab_rep:
                     "model is kaam ke layak hai ya nahi — aur abhi **nahi hai.**")
 
         st.error(
-            f"""**Ye list candidate dhoondhne ke layak NAHI hai. Kyun, ye naap ke bataya ja raha hai:**
+            f"""**Ye list candidate dhoondhne ke layak abhi NAHI hai. Kyun, ye naap ke bataya ja raha hai:**
 
-    - Jin **{q['checkable']}** targets ki jaanch ho sakti hai (jinki known-drug list ChEMBL se mili), unme se
-      **{q['zero_known']}** pe top-50 me **ek bhi** jaani-pehchani dawa nahi aayi — sirf **{q['with_any_known']}** pe aayi.
-    - Jo chale wo lagbhag sab **EGFR** ke roop hain — aur Davis me EGFR ke saare roop **ek hi sequence** share karte hain, to wo asal me ek hi protein hai.
-    - Sabse bada sabooot: **wahi kuch molecules {q['n_targets']} me se 250–290 targets ke top-50 me baithe hain.** Matlab model target dekh kar rank nahi kar raha — wo bas "bade aur ajeeb" molecules ko upar rakh deta hai, chahe target koi bhi ho.
+- Jin **{q['checkable']}** targets ki jaanch ho sakti hai (known-drug list ChEMBL se mila), unme se **{q['zero_known']}** pe top-50 me **ek bhi** jaani-pehchani dawa nahi aayi — sirf **{q['with_any_known']}** pe aayi.
+- Model ka **bada jhukav bhaari molecules ki taraf** hai: bina filter uske top-50 ka median **973 Da**, jabki library ka 368 Da aur asli kinase inhibitor **300–600 Da** ka hota hai. 47% top picks 1000 Da se bade — peptides, jo kinase pocket me baith hi nahi sakte.
+- Upar ka filter wahi theek karta hai, aur **naapa gaya faida** deta hai — top-5 pe recall **23/146 → 45/146**. Par phir bhi **88/146 targets pe zero** rehta hai, to ranking ki kami size se alag bhi hai.
+- Aur ek sabooot: bina filter wahi kuch molecules **{q['n_targets']} me se 250–290 targets** ke top-50 me baithe hain — matlab model target dekh kar rank nahi kar raha.
 
-    Isliye ye tab ab **model ki jaanch** ke liye hai, dawa dhoondhne ke liye nahi.""")
+Isliye ye tab **model ki jaanch** ke liye hai, dawa dhoondhne ke liye nahi.""")
 
         with st.expander("Wahi molecules har target pe — khud dekh lo", expanded=False):
             hog = q["top_hoggers"].rename("kitne targets ke top-50 me").to_frame()
