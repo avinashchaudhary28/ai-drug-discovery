@@ -335,13 +335,32 @@ info(f"library ka MW: median {np.median(MW):.0f} Da · "
      f"{int((MW > 1000).sum()):,} molecules 1000 Da se bade")
 
 
-all_rows = []
+all_rows, dl_rows = [], []
 for pi, pname in enumerate(names):
     Xf = np.hstack([X, np.repeat(ESM[pi][None, :], len(X), 0)]).astype(np.float32)
     pred = model.predict(Xf)
     del Xf
-    ordr = np.argsort(-pred)[:TOP_N]
     kn = set(KNOWN.get(gene_of(pname), []))
+    # Do list: ek seedhi top-N, aur ek sirf dawa-jaise size wale molecules me se.
+    # Sawaal: model ka bada-molecule jhukav hi poori problem hai, ya ranking khud
+    # tooti hui hai? Agar size filter karne se known dawaein upar aa jaati hain to
+    # ek saadha post-filter bahut kuch sudhar deta hai; na aayein to ranking ki
+    # kami size se alag hai. Dono ka recall meta me likhte hain.
+    druglike = (MW >= 250) & (MW <= 700)
+    ordr = np.argsort(-pred)[:TOP_N]
+    dl_idx = np.where(druglike)[0]
+    ordr_dl = dl_idx[np.argsort(-pred[dl_idx])][:TOP_N] if len(dl_idx) else np.array([], int)
+    for rank, j in enumerate(ordr_dl, 1):
+        ids_dl = str(drugs.all_ids.iloc[j] if "all_ids" in drugs.columns
+                     else drugs.chembl_id.iloc[j]).split("|")
+        dl_rows.append({"target": pname, "rank": rank,
+                        "drug": drugs.name.iloc[j] or drugs.chembl_id.iloc[j],
+                        "chembl_id": drugs.chembl_id.iloc[j],
+                        "max_phase": drugs.max_phase.iloc[j],
+                        "pKd": round(float(pred[j]), 3),
+                        "known_for_target": bool(kn & set(ids_dl)),
+                        "mw": round(float(MW[j]), 1),
+                        "smiles": drugs.smiles.iloc[j]})
     for rank, j in enumerate(ordr, 1):
         ids = str(drugs.all_ids.iloc[j] if "all_ids" in drugs.columns
                   else drugs.chembl_id.iloc[j]).split("|")
@@ -360,7 +379,33 @@ for pi, pname in enumerate(names):
         print(f"   {pi+1}/{len(names)} targets", flush=True)
 
 tbl = pd.DataFrame(all_rows)
+dl = pd.DataFrame(dl_rows)
 tbl.to_csv(os.path.join(OUT, "repurposing_top.csv"), index=False)
+dl.to_csv(os.path.join(OUT, "repurposing_top_druglike.csv"), index=False)
+
+
+def _recall(df):
+    """Kitne checkable targets pe top-N me koi known dawa aayi."""
+    if not len(df):
+        return {}
+    d = df.copy()
+    d["gene"] = d.target.map(gene_of)
+    resolved = {g for g, v in KNOWN.items() if v}
+    sub = d[d.gene.isin(resolved)]
+    if not len(sub):
+        return {}
+    per = sub.groupby("target").known_for_target.sum()
+    return {"checkable_targets": int(per.size),
+            "with_any_known": int((per > 0).sum()),
+            "zero_known": int((per == 0).sum()),
+            "median_mw": round(float(d.mw.median()), 1)}
+
+
+_rp, _rd = _recall(tbl), _recall(dl)
+print(f"\n   seedhi top-{TOP_N}      : {_rp.get('with_any_known')}/{_rp.get('checkable_targets')} "
+      f"targets pe known mila · median MW {_rp.get('median_mw')} Da")
+print(f"   dawa-jaise size se : {_rd.get('with_any_known')}/{_rd.get('checkable_targets')} "
+      f"targets pe known mila · median MW {_rd.get('median_mw')} Da", flush=True)
 info(f"{len(tbl):,} rows likhe -> data/repurposing_top.csv "
      f"({os.path.getsize(os.path.join(OUT,'repurposing_top.csv'))/1e6:.1f} MB)")
 
@@ -385,6 +430,9 @@ meta = {
     "library_mw_median": round(float(np.median(MW)), 1),
     "top_mw_median": round(float(tbl.mw.median()), 1),
     "top_pct_over_1000da": round(100 * float((tbl.mw > 1000).mean()), 1),
+    "druglike_filter": "MW 250-700 Da",
+    "recall_plain": _recall(tbl),
+    "recall_druglike": _recall(dl),
     "model": "binding v2 (Davis) - XGBoost on Morgan FP + RDKit desc + ChemBERTa + ESM-2 650M",
     "caveat": ("Ye computer ka andaza hai, lab ka nateeja nahi. 'known_for_target' "
                "sach wali dawaiyan model ke sahi hone ka suboot hain, nayi khoj nahi."),
