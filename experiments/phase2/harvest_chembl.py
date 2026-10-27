@@ -30,6 +30,7 @@ import sys
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import chembl_api                                      # noqa: E402
 from chembl_api import count, fetch_all, get          # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -40,6 +41,22 @@ RES.mkdir(exist_ok=True)
 
 TYPES = ["Kd", "Ki", "IC50"]
 ORGANISM = "Homo sapiens"
+
+# Bade result set ko todne ke tareeke. Dono POORE batware hain - koi row
+# kisi tukde me chhootti nahi - aur chembl_api har tod ka jod parent se
+# milakar dekhta hai, isliye galti pakdi jati hai.
+ASSAY_TYPES = [{"assay_type": t} for t in ["B", "F", "A", "T", "P", "U"]]
+
+# pchembl ke bands. Pehla band bina niche ki seema, aakhri bina upar ki,
+# aur null ka apna tukda - taaki saari asli sankhyayein cover hon.
+PCHEMBL_BANDS = (
+    [{"pchembl_value__isnull": "true"}]
+    + [{"pchembl_value__lt": 4}]
+    + [{"pchembl_value__gte": lo, "pchembl_value__lt": lo + 1}
+       for lo in range(4, 10)]
+    + [{"pchembl_value__gte": 10}]
+)
+SPLITTERS = [ASSAY_TYPES, PCHEMBL_BANDS]
 
 # Tulna ke liye maujooda aankde
 PLATINUM = 796
@@ -124,8 +141,7 @@ def harvest_mutants():
                 "standard_type": t,
                 "standard_units": "nM",
                 "standard_relation": "=",
-            }, split_on=[("assay_type", ["B", "F", "A", "T", "P", "U"])],
-                on_batch=on_batch, label=f"MUT {t}")
+            }, splitters=SPLITTERS, on_batch=on_batch, label=f"MUT {t}")
     done_flag.write_text("ok")
     print(f"  kul: {len(out):,} rows")
     return out
@@ -169,8 +185,8 @@ def harvest_wt(target_ids):
                     "standard_type": t,
                     "standard_units": "nM",
                     "standard_relation": "=",
-                }, split_on=[("assay_type", ["B", "F", "A", "T", "P", "U"])],
-                    on_batch=on_batch, label=f"WT {tid} {t}")
+                }, splitters=SPLITTERS, on_batch=on_batch,
+                    label=f"WT {tid} {t}")
             done.add(tid)
             # Har target ke baad likho, taaki run ruke to progress bache
             done_path.write_text(json.dumps(sorted(done)))
@@ -391,7 +407,22 @@ def main():
           f"(chahiye: >=40 genes aur >={DAVIS_CLEAN:,} jode; "
           f"mila: {ng} genes, {len(df):,} jode)")
 
+    short = chembl_api.SHORTFALL
+    if short:
+        tot = sum(s["missing"] for s in short)
+        print(f"\n  !! CHETAVNI: {len(short)} jagah data adhoora raha, "
+              f"kul {tot:,} rows chhoot gayi. Yaani niche ke aankde "
+              f"KAM hain, zyada nahi. Sabse bade:")
+        for s_ in sorted(short, key=lambda x: -x["missing"])[:5]:
+            print(f"      {s_['missing']:>7,} rows  {s_['slice']}")
+    else:
+        print("\n  ✓ koi slice adhoori nahi rahi - har tod ka jod "
+              "parent count se mila")
+
     summary = {
+        "shortfall_slices": len(short),
+        "shortfall_rows": int(sum(s["missing"] for s in short)),
+        "shortfall_detail": short[:50],
         "pairs": len(df),
         "pairs_same_doc": len(same),
         "genes": ng,

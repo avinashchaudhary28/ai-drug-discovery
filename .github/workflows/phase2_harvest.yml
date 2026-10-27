@@ -8,9 +8,17 @@ on:
         required: false
         default: "v1"
       fresh:
-        description: "true = cache ignore karke dobara download"
+        description: "true = cache ignore karke sab dobara download"
         required: false
         default: "false"
+      drop_mut:
+        description: "true = sirf mutation wala download dobara (WT cache bacha rahega)"
+        required: false
+        default: "false"
+      drop_wt_targets:
+        description: "Comma se alag target ids, jinka WT data dobara utarna hai (jaise CHEMBL2041)"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -53,6 +61,39 @@ jobs:
           key: phase2-chembl-${{ inputs.data_version }}-${{ github.run_number }}
           restore-keys: |
             phase2-chembl-${{ inputs.data_version }}-
+
+      # Poora dobara download 5 ghante ka hai. Jo hissa adhoora raha tha
+      # sirf wahi girana sasta padta hai - baaki cache bacha rehta hai.
+      - name: Cache ka adhoora hissa girao
+        if: inputs.drop_mut == 'true' || inputs.drop_wt_targets != ''
+        env:
+          DROP_MUT: ${{ inputs.drop_mut }}
+          DROP_WT: ${{ inputs.drop_wt_targets }}
+        run: |
+          set -euo pipefail
+          python -u - <<'PY'
+          import json, os, pathlib
+          work = pathlib.Path("experiments/phase2/work")
+          if os.environ.get("DROP_MUT") == "true":
+              for f in ("variant_activities.jsonl", "variant.done"):
+                  p = work / f
+                  if p.exists():
+                      p.unlink()
+                      print(f"giraya: {f}")
+          drop = [t.strip() for t in os.environ.get("DROP_WT", "").split(",")
+                  if t.strip()]
+          if drop:
+              dp = work / "wt_done.json"
+              done = set(json.loads(dp.read_text())) if dp.exists() else set()
+              jl = work / "wt_activities.jsonl"
+              rows = ([json.loads(l) for l in jl.read_text().splitlines()
+                       if l.strip()] if jl.exists() else [])
+              kept = [r for r in rows if r.get("target_chembl_id") not in drop]
+              jl.write_text("".join(json.dumps(r) + "\n" for r in kept))
+              dp.write_text(json.dumps(sorted(done - set(drop))))
+              print(f"WT se hataye {len(rows) - len(kept)} rows, "
+                    f"targets dobara utrenge: {drop}")
+          PY
 
       - name: Harvest
         run: |

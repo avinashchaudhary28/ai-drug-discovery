@@ -82,30 +82,52 @@ def _page_through(path, params, cap, label, on_batch):
     return got
 
 
-def fetch_all(path, params, split_on, on_batch, label=""):
+# Kitni rows chhooti to shikayat karni hai. 0 rakha hai: ek bhi row
+# chupchaap chhootne nahi deni.
+SHORTFALL = []
+
+
+def fetch_all(path, params, splitters, on_batch, label=""):
     """Poora result set lao, chahe wo MAX_OFFSET se bada ho.
 
-    split_on: [(param_name, [value, ...]), ...] - agar result bahut bada ho
-    to pehle param se tod denge, fir dusre se, aur aise aage.
+    splitters: [[{param: val}, ...], ...] - har andar ki list ko result set
+    ka POORA batwara hona chahiye (koi row kisi tukde me na chhoote). Pehle
+    splitter se todte hain, fir agle se, aur aise aage.
+
+    Har tod ke baad tukdon ka jod parent ke count se milaya jata hai. Agar
+    na mile to wo gintee SHORTFALL me darj hoti hai - isliye adhoora data
+    chup-chaap nahi nikal sakta. Yahi sabse khatarnak surat thi: kam rows
+    aati hain, koi error nahi aata, aur nateeja halka dikhta hai.
     """
     n = count(path, params)
     tag = label or json.dumps(
         {k: v for k, v in params.items() if k not in ("limit", "offset")})
-    if n <= MAX_OFFSET or not split_on:
+
+    if n <= MAX_OFFSET or not splitters:
         if n > MAX_OFFSET:
-            # Yahan aana matlab todne ke liye kuch bacha nahi - chup na rahein.
+            miss = n - MAX_OFFSET
             print(f"!! {tag}: {n} rows hain par sirf {MAX_OFFSET} tak "
-                  f"pahunch sakte hain. Ye data ADHURA hai.", flush=True)
+                  f"pahunch sakte hain - {miss} rows CHHOOT RAHI HAIN "
+                  f"(todne ke liye kuch bacha nahi).", flush=True)
+            SHORTFALL.append({"slice": tag, "expected": n,
+                              "got": MAX_OFFSET, "missing": miss})
         return _page_through(path, params, min(n, MAX_OFFSET), f"{tag} (n={n})",
                              on_batch)
 
-    name, values = split_on[0]
-    rest = split_on[1:]
-    print(f"  {tag}: {n} rows - '{name}' se {len(values)} tukdon me tod rahe hain",
+    chunks, rest = splitters[0], splitters[1:]
+    print(f"  {tag}: {n} rows - {len(chunks)} tukdon me tod rahe hain",
           flush=True)
     total = 0
-    for v in values:
+    for extra in chunks:
         p = dict(params)
-        p[name] = v
-        total += fetch_all(path, p, rest, on_batch, label=f"{tag} | {name}={v}")
+        p.update(extra)
+        bit = ",".join(f"{k}={v}" for k, v in extra.items())
+        total += fetch_all(path, p, rest, on_batch, label=f"{tag} | {bit}")
+
+    if total != n:
+        print(f"!! {tag}: tukdon ka jod {total} hai par parent count {n} - "
+              f"{n - total} rows ka hisaab nahi mila. Batwara poora nahi hai.",
+              flush=True)
+        SHORTFALL.append({"slice": tag, "expected": n, "got": total,
+                          "missing": n - total})
     return total

@@ -131,7 +131,7 @@ H.WORK = _tmp
 H.TYPES = ["Kd"]
 
 
-def _fake_fetch(path, params, split_on, on_batch, label=""):
+def _fake_fetch(path, params, splitters, on_batch, label=""):
     """Ek nakli row deta hai, taaki asli network na lage."""
     tid = params.get("target_chembl_id", "CHEMBL203")
     on_batch([row(target_chembl_id=tid, assay_variant_mutation=None)])
@@ -165,6 +165,48 @@ check("WT resume: purana target dobara nahi utra",
 check("WT resume: dono targets done me darj",
       _json.loads((_tmp / "wt_done.json").read_text()),
       ["CHEMBL1", "CHEMBL2"])
+
+print("\nbatware ki jaanch (tukdon ka jod parent se milna chahiye)")
+import chembl_api as CA                                     # noqa: E402
+
+
+def _fake_api(counts):
+    """counts: assay_type -> kitni rows. None key = bina tod wala parent."""
+    def fake_get(path, params=None, tries=5):
+        params = params or {}
+        n = counts.get(params.get("assay_type"), 0)
+        if params.get("limit") == 1:
+            return {"page_meta": {"total_count": n}, "activities": []}
+        off = params.get("offset", 0)
+        lim = params.get("limit", 1000)
+        rows = [{"activity_id": off + i} for i in range(max(0, min(lim, n - off)))]
+        nxt = "more" if off + lim < n else None
+        return {"page_meta": {"total_count": n, "next": nxt},
+                "activities": rows}
+    return fake_get
+
+
+# Tod sirf tab hota hai jab parent MAX_OFFSET se bada ho, isliye test ke
+# liye limit ghata rahe hain: parent 30 > 25, par har tukda 25 se chhota.
+CA.MAX_OFFSET = 25
+
+# Theek batwara: 20 + 10 = 30 = parent
+CA.get = _fake_api({None: 30, "B": 20, "F": 10})
+CA.SHORTFALL.clear()
+got = CA.fetch_all("/activity.json", {}, [ASSAY := [{"assay_type": "B"},
+                                                    {"assay_type": "F"}]],
+                   lambda b: None, label="test-ok")
+check("poora batwara: 30 rows aayin", got, 30)
+check("poora batwara: koi shikayat nahi", len(CA.SHORTFALL), 0)
+
+# Adhoora batwara: 20 + 0 = 20 par parent 30 -> 10 rows ka hisaab nahi
+CA.get = _fake_api({None: 30, "B": 20, "F": 0})
+CA.SHORTFALL.clear()
+got = CA.fetch_all("/activity.json", {}, [ASSAY], lambda b: None,
+                   label="test-gap")
+check("adhoora batwara pakda gaya", len(CA.SHORTFALL), 1)
+check("adhoori gintee sahi darj hui",
+      CA.SHORTFALL[0]["missing"] if CA.SHORTFALL else None, 10)
 
 print()
 if FAIL:
