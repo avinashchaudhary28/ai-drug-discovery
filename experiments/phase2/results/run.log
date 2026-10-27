@@ -3,18 +3,26 @@
 [1/5] mutation wale assays
     MUT Kd (n=3466): 3466 rows
     MUT Ki (n=2289): 2289 rows
-  MUT IC50: 24121 rows - 'assay_type' se 6 tukdon me tod rahe hain
-!! MUT IC50 | assay_type=B: 23784 rows hain par sirf 20000 tak pahunch sakte hain. Ye data ADHURA hai.
-    MUT IC50 | assay_type=B (n=23784): 20000 rows
+  MUT IC50: 24121 rows - 6 tukdon me tod rahe hain
+  MUT IC50 | assay_type=B: 23784 rows - 9 tukdon me tod rahe hain
+    MUT IC50 | assay_type=B | pchembl_value__isnull=true (n=209): 209 rows
+    MUT IC50 | assay_type=B | pchembl_value__lt=4 (n=4): 4 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=4,pchembl_value__lt=5 (n=1341): 1341 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=5,pchembl_value__lt=6 (n=3324): 3324 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=6,pchembl_value__lt=7 (n=5615): 5615 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=7,pchembl_value__lt=8 (n=7203): 7203 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=8,pchembl_value__lt=9 (n=4615): 4615 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=9,pchembl_value__lt=10 (n=1347): 1347 rows
+    MUT IC50 | assay_type=B | pchembl_value__gte=10 (n=126): 126 rows
     MUT IC50 | assay_type=F (n=214): 214 rows
     MUT IC50 | assay_type=A (n=122): 122 rows
     MUT IC50 | assay_type=T (n=1): 1 rows
-  kul: 26,092 rows -> variant_activities.jsonl
-  mutation rows: 26,092 -> saaf 25,749
-      hataya     307  validity: Outside typical range
-      hataya      36  validity: Potential transcription error
+  kul: 29,876 rows
+  mutation rows: 29,876 -> saaf 29,523
+      hataya     313  validity: Outside typical range
+      hataya      40  validity: Potential transcription error
 
-[2/5] wild-type assays - 252 targets ke liye
+[2/5] wild-type assays - 266 targets ke liye
     WT CHEMBL1075104 Kd (n=31): 31 rows
     WT CHEMBL1075104 Ki (n=858): 858 rows
     WT CHEMBL1075104 IC50 (n=3500): 3500 rows
@@ -27,6 +35,9 @@
     WT CHEMBL1075145 Kd (n=4): 4 rows
     WT CHEMBL1075145 Ki (n=21): 21 rows
     WT CHEMBL1075145 IC50 (n=666): 666 rows
+    WT CHEMBL1075189 Kd (n=7): 7 rows
+    WT CHEMBL1075189 Ki (n=8): 8 rows
+    WT CHEMBL1075189 IC50 (n=192): 192 rows
     WT CHEMBL1075317 Kd (n=1031): 1031 rows
     WT CHEMBL1075317 Ki (n=626): 626 rows
     WT CHEMBL1075317 IC50 (n=201): 201 rows
@@ -41,9 +52,9 @@
     WT CHEMBL1275221 Kd (n=6): 6 rows
     WT CHEMBL1275221 Ki (n=13): 13 rows
     WT CHEMBL1275221 IC50 (n=222): 222 rows
+  --- 10/266 targets, 23,896 rows tak
     WT CHEMBL1275223 Kd (n=56): 56 rows
     WT CHEMBL1275223 IC50 (n=58): 58 rows
-  --- 10/252 targets, 23,803 rows tak
     WT CHEMBL1293229 Kd (n=42): 42 rows
     WT CHEMBL1293229 IC50 (n=149): 149 rows
     WT CHEMBL1293237 Kd (n=2): 2 rows
@@ -64,9 +75,9 @@
     WT CHEMBL1741186 Ki (n=335): 335 rows
     WT CHEMBL1741186 IC50 (n=12491): 12491 rows
     WT CHEMBL1741217 IC50 (n=961): 961 rows
+  --- 20/266 targets, 43,833 rows tak
     WT CHEMBL1744522 Kd (n=100): 100 rows
     WT CHEMBL1744522 IC50 (n=444): 444 rows
-  --- 20/252 targets, 44,170 rows tak
     WT CHEMBL1764946 Kd (n=78): 78 rows
     WT CHEMBL1764946 Ki (n=7): 7 rows
     WT CHEMBL1764946 IC50 (n=92): 92 rows
@@ -92,10 +103,10 @@
     WT CHEMBL1862 Kd (n=234): 234 rows
     WT CHEMBL1862 Ki (n=1068): 1068 rows
     WT CHEMBL1862 IC50 (n=3527): 3527 rows
+  --- 30/266 targets, 59,674 rows tak
     WT CHEMBL1871 Kd (n=37): 37 rows
     WT CHEMBL1871 Ki (n=1163): 1163 rows
     WT CHEMBL1871 IC50 (n=3297): 3297 rows
-  --- 30/252 targets, 63,964 rows tak
     WT CHEMBL1899 Kd (n=4): 4 rows
     WT CHEMBL1899 Ki (n=654): 654 rows
     WT CHEMBL1899 IC50 (n=682): 682 rows
@@ -116,16 +127,18 @@
     WT CHEMBL1936 Kd (n=182): 182 rows
     WT CHEMBL1936 Ki (n=2133): 2133 rows
     WT CHEMBL1936 IC50 (n=3083): 3083 rows
+    WT CHEMBL1938211 Ki (n=2): 2 rows
+    WT CHEMBL1938211 IC50 (n=287): 287 rows
     WT CHEMBL1942 Kd (n=1): 1 rows
     WT CHEMBL1942 Ki (n=726): 726 rows
     WT CHEMBL1942 IC50 (n=179): 179 rows
+  --- 40/266 targets, 81,547 rows tak
     WT CHEMBL1952 Kd (n=4): 4 rows
     WT CHEMBL1952 Ki (n=318): 318 rows
     WT CHEMBL1952 IC50 (n=587): 587 rows
     WT CHEMBL1974 Kd (n=379): 379 rows
     WT CHEMBL1974 Ki (n=554): 554 rows
     WT CHEMBL1974 IC50 (n=3919): 3919 rows
-  --- 40/252 targets, 86,812 rows tak
     WT CHEMBL1980 Kd (n=2): 2 rows
     WT CHEMBL1980 Ki (n=2): 2 rows
     WT CHEMBL1980 IC50 (n=1665): 1665 rows
@@ -149,14 +162,21 @@
     WT CHEMBL204 Kd (n=53): 53 rows
     WT CHEMBL204 Ki (n=4188): 4188 rows
     WT CHEMBL204 IC50 (n=2587): 2587 rows
+  --- 50/266 targets, 120,652 rows tak
     WT CHEMBL2041 Kd (n=204): 204 rows
     WT CHEMBL2041 Ki (n=352): 352 rows
-  WT CHEMBL2041 IC50: 24041 rows - 'assay_type' se 6 tukdon me tod rahe hain
-!! WT CHEMBL2041 IC50 | assay_type=B: 24041 rows hain par sirf 20000 tak pahunch sakte hain. Ye data ADHURA hai.
-    WT CHEMBL2041 IC50 | assay_type=B (n=24041): 20000 rows
+  WT CHEMBL2041 IC50: 24041 rows - 6 tukdon me tod rahe hain
+  WT CHEMBL2041 IC50 | assay_type=B: 24041 rows - 9 tukdon me tod rahe hain
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__isnull=true (n=2): 2 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=4,pchembl_value__lt=5 (n=92): 92 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=5,pchembl_value__lt=6 (n=2165): 2165 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=6,pchembl_value__lt=7 (n=7055): 7055 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=7,pchembl_value__lt=8 (n=11141): 11141 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=8,pchembl_value__lt=9 (n=2869): 2869 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=9,pchembl_value__lt=10 (n=681): 681 rows
+    WT CHEMBL2041 IC50 | assay_type=B | pchembl_value__gte=10 (n=36): 36 rows
     WT CHEMBL2047 Kd (n=8): 8 rows
     WT CHEMBL2047 IC50 (n=468): 468 rows
-  --- 50/252 targets, 141,188 rows tak
     WT CHEMBL205 Kd (n=830): 830 rows
     WT CHEMBL205 Ki (n=11985): 11985 rows
     WT CHEMBL205 IC50 (n=1225): 1225 rows
@@ -179,13 +199,13 @@
     WT CHEMBL2107 Kd (n=6): 6 rows
     WT CHEMBL2107 Ki (n=25): 25 rows
     WT CHEMBL2107 IC50 (n=1160): 1160 rows
+  --- 60/266 targets, 171,895 rows tak
     WT CHEMBL211 Kd (n=204): 204 rows
     WT CHEMBL211 Ki (n=1903): 1903 rows
     WT CHEMBL211 IC50 (n=644): 644 rows
     WT CHEMBL2111367 Kd (n=1): 1 rows
     WT CHEMBL2111367 Ki (n=743): 743 rows
     WT CHEMBL2111367 IC50 (n=1002): 1002 rows
-  --- 60/252 targets, 171,855 rows tak
     WT CHEMBL2111387 IC50 (n=76): 76 rows
     WT CHEMBL2157850 Kd (n=28): 28 rows
     WT CHEMBL2157850 Ki (n=69): 69 rows
@@ -206,13 +226,13 @@
     WT CHEMBL218 Kd (n=205): 205 rows
     WT CHEMBL218 Ki (n=3964): 3964 rows
     WT CHEMBL218 IC50 (n=2012): 2012 rows
+  --- 70/266 targets, 200,722 rows tak
     WT CHEMBL2185 Kd (n=190): 190 rows
     WT CHEMBL2185 Ki (n=765): 765 rows
     WT CHEMBL2185 IC50 (n=2207): 2207 rows
     WT CHEMBL2189110 Kd (n=18): 18 rows
     WT CHEMBL2189110 Ki (n=24): 24 rows
     WT CHEMBL2189110 IC50 (n=1603): 1603 rows
-  --- 70/252 targets, 200,992 rows tak
     WT CHEMBL2189121 Kd (n=184): 184 rows
     WT CHEMBL2189121 Ki (n=4): 4 rows
     WT CHEMBL2189121 IC50 (n=3823): 3823 rows
@@ -236,19 +256,22 @@
     WT CHEMBL227 Kd (n=21): 21 rows
     WT CHEMBL227 Ki (n=185): 185 rows
     WT CHEMBL227 IC50 (n=1019): 1019 rows
+  --- 80/266 targets, 233,594 rows tak
     WT CHEMBL228 Kd (n=23): 23 rows
     WT CHEMBL228 Ki (n=3395): 3395 rows
     WT CHEMBL228 IC50 (n=3683): 3683 rows
     WT CHEMBL2288 Kd (n=67): 67 rows
     WT CHEMBL2288 Ki (n=128): 128 rows
     WT CHEMBL2288 IC50 (n=419): 419 rows
-  --- 80/252 targets, 236,772 rows tak
     WT CHEMBL2292 Kd (n=240): 240 rows
     WT CHEMBL2292 Ki (n=574): 574 rows
     WT CHEMBL2292 IC50 (n=2022): 2022 rows
     WT CHEMBL231 Kd (n=206): 206 rows
     WT CHEMBL231 Ki (n=1660): 1660 rows
     WT CHEMBL231 IC50 (n=428): 428 rows
+    WT CHEMBL2321643 Kd (n=7): 7 rows
+    WT CHEMBL2321643 Ki (n=13): 13 rows
+    WT CHEMBL2321643 IC50 (n=1413): 1413 rows
     WT CHEMBL234 Kd (n=28): 28 rows
     WT CHEMBL234 Ki (n=8194): 8194 rows
     WT CHEMBL234 IC50 (n=479): 479 rows
@@ -262,6 +285,8 @@
     WT CHEMBL238 Kd (n=21): 21 rows
     WT CHEMBL238 Ki (n=2234): 2234 rows
     WT CHEMBL238 IC50 (n=2557): 2557 rows
+  --- 90/266 targets, 269,906 rows tak
+    WT CHEMBL2384891 IC50 (n=53): 53 rows
     WT CHEMBL240 Kd (n=46): 46 rows
     WT CHEMBL240 Ki (n=1815): 1815 rows
     WT CHEMBL240 IC50 (n=11987): 11987 rows
@@ -270,7 +295,6 @@
     WT CHEMBL242 IC50 (n=2202): 2202 rows
     WT CHEMBL2424510 Kd (n=2): 2 rows
     WT CHEMBL2424510 IC50 (n=21): 21 rows
-  --- 90/252 targets, 280,476 rows tak
     WT CHEMBL2429708 Kd (n=5): 5 rows
     WT CHEMBL2429708 IC50 (n=315): 315 rows
     WT CHEMBL2431 Kd (n=30): 30 rows
@@ -285,6 +309,10 @@
     WT CHEMBL251 Kd (n=152): 152 rows
     WT CHEMBL251 Ki (n=6539): 6539 rows
     WT CHEMBL251 IC50 (n=1755): 1755 rows
+    WT CHEMBL2527 Kd (n=21): 21 rows
+    WT CHEMBL2527 Ki (n=216): 216 rows
+    WT CHEMBL2527 IC50 (n=709): 709 rows
+  --- 100/266 targets, 304,645 rows tak
     WT CHEMBL2534 Kd (n=59): 59 rows
     WT CHEMBL2534 Ki (n=162): 162 rows
     WT CHEMBL2534 IC50 (n=1238): 1238 rows
@@ -300,7 +328,6 @@
     WT CHEMBL2593 Kd (n=1): 1 rows
     WT CHEMBL2593 Ki (n=73): 73 rows
     WT CHEMBL2593 IC50 (n=396): 396 rows
-  --- 100/252 targets, 313,299 rows tak
     WT CHEMBL260 Kd (n=218): 218 rows
     WT CHEMBL260 Ki (n=490): 490 rows
     WT CHEMBL260 IC50 (n=6327): 6327 rows
@@ -316,6 +343,7 @@
     WT CHEMBL2732 Kd (n=3): 3 rows
     WT CHEMBL2732 Ki (n=2): 2 rows
     WT CHEMBL2732 IC50 (n=10): 10 rows
+  --- 110/266 targets, 339,047 rows tak
     WT CHEMBL2742 Kd (n=67): 67 rows
     WT CHEMBL2742 Ki (n=319): 319 rows
     WT CHEMBL2742 IC50 (n=3391): 3391 rows
@@ -328,7 +356,6 @@
     WT CHEMBL2815 Kd (n=163): 163 rows
     WT CHEMBL2815 Ki (n=256): 256 rows
     WT CHEMBL2815 IC50 (n=8049): 8049 rows
-  --- 110/252 targets, 361,738 rows tak
     WT CHEMBL2850 Kd (n=72): 72 rows
     WT CHEMBL2850 Ki (n=459): 459 rows
     WT CHEMBL2850 IC50 (n=1570): 1570 rows
@@ -343,6 +370,7 @@
     WT CHEMBL2971 Kd (n=275): 275 rows
     WT CHEMBL2971 Ki (n=3332): 3332 rows
     WT CHEMBL2971 IC50 (n=14956): 14956 rows
+  --- 120/266 targets, 392,479 rows tak
     WT CHEMBL298 Kd (n=8): 8 rows
     WT CHEMBL298 Ki (n=566): 566 rows
     WT CHEMBL298 IC50 (n=1329): 1329 rows
@@ -357,7 +385,6 @@
     WT CHEMBL3055 IC50 (n=507): 507 rows
     WT CHEMBL3108645 Kd (n=57): 57 rows
     WT CHEMBL3108645 IC50 (n=596): 596 rows
-  --- 120/252 targets, 394,157 rows tak
     WT CHEMBL3112379 Kd (n=1): 1 rows
     WT CHEMBL3112379 IC50 (n=122): 122 rows
     WT CHEMBL3130 Kd (n=166): 166 rows
@@ -372,6 +399,7 @@
     WT CHEMBL3194 Kd (n=102): 102 rows
     WT CHEMBL3194 Ki (n=3): 3 rows
     WT CHEMBL3194 IC50 (n=237): 237 rows
+  --- 130/266 targets, 418,644 rows tak
     WT CHEMBL321 Kd (n=5): 5 rows
     WT CHEMBL321 Ki (n=869): 869 rows
     WT CHEMBL321 IC50 (n=2446): 2446 rows
@@ -387,7 +415,6 @@
     WT CHEMBL3385 Kd (n=20): 20 rows
     WT CHEMBL3385 Ki (n=3): 3 rows
     WT CHEMBL3385 IC50 (n=355): 355 rows
-  --- 130/252 targets, 431,471 rows tak
     WT CHEMBL3399911 Kd (n=2): 2 rows
     WT CHEMBL3399911 IC50 (n=29): 29 rows
     WT CHEMBL3425389 Kd (n=5): 5 rows
@@ -396,6 +423,7 @@
     WT CHEMBL3438 Kd (n=4): 4 rows
     WT CHEMBL3438 Ki (n=67): 67 rows
     WT CHEMBL3438 IC50 (n=274): 274 rows
+  --- 140/266 targets, 438,925 rows tak
     WT CHEMBL3522 Kd (n=1): 1 rows
     WT CHEMBL3522 Ki (n=27): 27 rows
     WT CHEMBL3522 IC50 (n=1057): 1057 rows
@@ -410,7 +438,6 @@
     WT CHEMBL3580522 Kd (n=77): 77 rows
     WT CHEMBL3580522 Ki (n=1): 1 rows
     WT CHEMBL3580522 IC50 (n=972): 972 rows
-  --- 140/252 targets, 437,493 rows tak
     WT CHEMBL3582 Kd (n=34): 34 rows
     WT CHEMBL3582 Ki (n=180): 180 rows
     WT CHEMBL3582 IC50 (n=353): 353 rows
@@ -425,6 +452,7 @@
     WT CHEMBL3629 IC50 (n=1387): 1387 rows
     WT CHEMBL3632452 Ki (n=99): 99 rows
     WT CHEMBL3632452 IC50 (n=1318): 1318 rows
+  --- 150/266 targets, 449,872 rows tak
     WT CHEMBL3650 Kd (n=118): 118 rows
     WT CHEMBL3650 Ki (n=556): 556 rows
     WT CHEMBL3650 IC50 (n=5833): 5833 rows
@@ -438,7 +466,6 @@
     WT CHEMBL3717 Kd (n=140): 140 rows
     WT CHEMBL3717 Ki (n=600): 600 rows
     WT CHEMBL3717 IC50 (n=6557): 6557 rows
-  --- 150/252 targets, 457,233 rows tak
     WT CHEMBL3759 Kd (n=162): 162 rows
     WT CHEMBL3759 Ki (n=1820): 1820 rows
     WT CHEMBL3759 IC50 (n=189): 189 rows
@@ -454,6 +481,7 @@
     WT CHEMBL3864 Kd (n=39): 39 rows
     WT CHEMBL3864 Ki (n=28): 28 rows
     WT CHEMBL3864 IC50 (n=3408): 3408 rows
+  --- 160/266 targets, 471,659 rows tak
     WT CHEMBL3883330 IC50 (n=136): 136 rows
     WT CHEMBL3885525 Kd (n=1): 1 rows
     WT CHEMBL3885525 Ki (n=251): 251 rows
@@ -464,7 +492,6 @@
     WT CHEMBL3973 Kd (n=55): 55 rows
     WT CHEMBL3973 Ki (n=5): 5 rows
     WT CHEMBL3973 IC50 (n=3118): 3118 rows
-  --- 160/252 targets, 468,844 rows tak
     WT CHEMBL3975 Kd (n=1): 1 rows
     WT CHEMBL3975 IC50 (n=742): 742 rows
     WT CHEMBL3988 Kd (n=120): 120 rows
@@ -478,6 +505,10 @@
     WT CHEMBL4015 Kd (n=22): 22 rows
     WT CHEMBL4015 Ki (n=499): 499 rows
     WT CHEMBL4015 IC50 (n=2632): 2632 rows
+  --- 170/266 targets, 489,602 rows tak
+    WT CHEMBL4026 Kd (n=72): 72 rows
+    WT CHEMBL4026 Ki (n=126): 126 rows
+    WT CHEMBL4026 IC50 (n=1413): 1413 rows
     WT CHEMBL4051 Kd (n=2): 2 rows
     WT CHEMBL4051 Ki (n=3): 3 rows
     WT CHEMBL4051 IC50 (n=122): 122 rows
@@ -488,7 +519,6 @@
     WT CHEMBL4105758 Kd (n=10): 10 rows
     WT CHEMBL4105758 IC50 (n=15): 15 rows
     WT CHEMBL4105763 Kd (n=1): 1 rows
-  --- 170/252 targets, 483,211 rows tak
     WT CHEMBL4105784 Kd (n=4): 4 rows
     WT CHEMBL4105786 Kd (n=110): 110 rows
     WT CHEMBL4105786 IC50 (n=541): 541 rows
@@ -498,6 +528,7 @@
     WT CHEMBL4128 Kd (n=63): 63 rows
     WT CHEMBL4128 Ki (n=3): 3 rows
     WT CHEMBL4128 IC50 (n=1149): 1149 rows
+  --- 180/266 targets, 494,066 rows tak
     WT CHEMBL4142 Kd (n=71): 71 rows
     WT CHEMBL4142 Ki (n=6): 6 rows
     WT CHEMBL4142 IC50 (n=2487): 2487 rows
@@ -516,7 +547,6 @@
     WT CHEMBL4235 Kd (n=1): 1 rows
     WT CHEMBL4235 Ki (n=299): 299 rows
     WT CHEMBL4235 IC50 (n=4519): 4519 rows
-  --- 180/252 targets, 500,130 rows tak
     WT CHEMBL4247 Kd (n=88): 88 rows
     WT CHEMBL4247 Ki (n=340): 340 rows
     WT CHEMBL4247 IC50 (n=2940): 2940 rows
@@ -525,6 +555,7 @@
     WT CHEMBL4282 IC50 (n=5906): 5906 rows
     WT CHEMBL4295974 Kd (n=4): 4 rows
     WT CHEMBL4295974 IC50 (n=15): 15 rows
+  --- 190/266 targets, 518,496 rows tak
     WT CHEMBL4302 Kd (n=58): 58 rows
     WT CHEMBL4302 Ki (n=303): 303 rows
     WT CHEMBL4302 IC50 (n=2268): 2268 rows
@@ -543,7 +574,6 @@
     WT CHEMBL4393 Kd (n=4): 4 rows
     WT CHEMBL4393 Ki (n=245): 245 rows
     WT CHEMBL4393 IC50 (n=557): 557 rows
-  --- 190/252 targets, 520,502 rows tak
     WT CHEMBL4394 Kd (n=1): 1 rows
     WT CHEMBL4394 Ki (n=188): 188 rows
     WT CHEMBL4394 IC50 (n=329): 329 rows
@@ -553,6 +583,7 @@
     WT CHEMBL4429 Kd (n=15): 15 rows
     WT CHEMBL4429 Ki (n=1114): 1114 rows
     WT CHEMBL4429 IC50 (n=646): 646 rows
+  --- 200/266 targets, 531,508 rows tak
     WT CHEMBL4438 Kd (n=1): 1 rows
     WT CHEMBL4438 Ki (n=10): 10 rows
     WT CHEMBL4438 IC50 (n=14): 14 rows
@@ -570,13 +601,16 @@
     WT CHEMBL4506 IC50 (n=922): 922 rows
     WT CHEMBL4507 Ki (n=1): 1 rows
     WT CHEMBL4507 IC50 (n=8): 8 rows
+    WT CHEMBL4523344 Kd (n=4): 4 rows
+    WT CHEMBL4523344 Ki (n=2): 2 rows
+    WT CHEMBL4523344 IC50 (n=39): 39 rows
     WT CHEMBL4523377 Kd (n=171): 171 rows
     WT CHEMBL4523377 Ki (n=32): 32 rows
     WT CHEMBL4523377 IC50 (n=591): 591 rows
-  --- 200/252 targets, 531,914 rows tak
     WT CHEMBL4523406 IC50 (n=2): 2 rows
     WT CHEMBL4523477 Kd (n=1): 1 rows
     WT CHEMBL4523477 IC50 (n=3): 3 rows
+  --- 210/266 targets, 540,545 rows tak
     WT CHEMBL4523510 Kd (n=3): 3 rows
     WT CHEMBL4523510 Ki (n=6): 6 rows
     WT CHEMBL4523510 IC50 (n=65): 65 rows
@@ -593,16 +627,22 @@
     WT CHEMBL4617 Kd (n=4): 4 rows
     WT CHEMBL4617 Ki (n=260): 260 rows
     WT CHEMBL4617 IC50 (n=30): 30 rows
-  --- 210/252 targets, 536,731 rows tak
     WT CHEMBL4625 Kd (n=85): 85 rows
     WT CHEMBL4625 Ki (n=732): 732 rows
     WT CHEMBL4625 IC50 (n=1254): 1254 rows
     WT CHEMBL4681 Kd (n=4): 4 rows
     WT CHEMBL4681 Ki (n=53): 53 rows
     WT CHEMBL4681 IC50 (n=1320): 1320 rows
+  --- 220/266 targets, 548,804 rows tak
     WT CHEMBL4685 Kd (n=60): 60 rows
     WT CHEMBL4685 Ki (n=179): 179 rows
     WT CHEMBL4685 IC50 (n=5027): 5027 rows
+    WT CHEMBL4708 Kd (n=81): 81 rows
+    WT CHEMBL4708 Ki (n=356): 356 rows
+    WT CHEMBL4708 IC50 (n=167): 167 rows
+    WT CHEMBL4718 Kd (n=32): 32 rows
+    WT CHEMBL4718 Ki (n=43): 43 rows
+    WT CHEMBL4718 IC50 (n=1640): 1640 rows
     WT CHEMBL4722 Kd (n=254): 254 rows
     WT CHEMBL4722 Ki (n=640): 640 rows
     WT CHEMBL4722 IC50 (n=3292): 3292 rows
@@ -618,9 +658,12 @@
     WT CHEMBL4860 Kd (n=69): 69 rows
     WT CHEMBL4860 Ki (n=2983): 2983 rows
     WT CHEMBL4860 IC50 (n=2809): 2809 rows
-  --- 220/252 targets, 557,356 rows tak
+  --- 230/266 targets, 568,300 rows tak
     WT CHEMBL4873 IC50 (n=41): 41 rows
     WT CHEMBL4879437 IC50 (n=22): 22 rows
+    WT CHEMBL4879514 Kd (n=26): 26 rows
+    WT CHEMBL4879514 Ki (n=52): 52 rows
+    WT CHEMBL4879514 IC50 (n=235): 235 rows
     WT CHEMBL4883 Kd (n=2): 2 rows
     WT CHEMBL4883 Ki (n=24): 24 rows
     WT CHEMBL4883 IC50 (n=50): 50 rows
@@ -640,15 +683,16 @@
     WT CHEMBL5145 Kd (n=454): 454 rows
     WT CHEMBL5145 Ki (n=17): 17 rows
     WT CHEMBL5145 IC50 (n=5243): 5243 rows
+  --- 240/266 targets, 595,872 rows tak
     WT CHEMBL5208 Ki (n=1): 1 rows
     WT CHEMBL5208 IC50 (n=66): 66 rows
-  --- 230/252 targets, 584,682 rows tak
     WT CHEMBL5251 Kd (n=114): 114 rows
     WT CHEMBL5251 Ki (n=262): 262 rows
     WT CHEMBL5251 IC50 (n=16522): 16522 rows
     WT CHEMBL5358 Kd (n=1): 1 rows
     WT CHEMBL5358 Ki (n=50): 50 rows
     WT CHEMBL5358 IC50 (n=427): 427 rows
+    WT CHEMBL5465239 IC50 (n=1): 1 rows
     WT CHEMBL5465393 Kd (n=2): 2 rows
     WT CHEMBL5465393 IC50 (n=169): 169 rows
     WT CHEMBL5485 Kd (n=44): 44 rows
@@ -662,6 +706,7 @@
     WT CHEMBL5608 Kd (n=60): 60 rows
     WT CHEMBL5608 Ki (n=270): 270 rows
     WT CHEMBL5608 IC50 (n=431): 431 rows
+  --- 250/266 targets, 615,762 rows tak
     WT CHEMBL5678 Kd (n=1): 1 rows
     WT CHEMBL5678 Ki (n=134): 134 rows
     WT CHEMBL5678 IC50 (n=253): 253 rows
@@ -670,7 +715,6 @@
     WT CHEMBL5742 IC50 (n=84): 84 rows
     WT CHEMBL5838 Kd (n=21): 21 rows
     WT CHEMBL5838 IC50 (n=18): 18 rows
-  --- 240/252 targets, 605,238 rows tak
     WT CHEMBL5866 Kd (n=78): 78 rows
     WT CHEMBL5866 Ki (n=230): 230 rows
     WT CHEMBL5866 IC50 (n=124): 124 rows
@@ -691,6 +735,7 @@
     WT CHEMBL5957 Kd (n=1): 1 rows
     WT CHEMBL5957 Ki (n=136): 136 rows
     WT CHEMBL5957 IC50 (n=1406): 1406 rows
+  --- 260/266 targets, 622,680 rows tak
     WT CHEMBL5971 Kd (n=6): 6 rows
     WT CHEMBL5971 Ki (n=15): 15 rows
     WT CHEMBL5971 IC50 (n=814): 814 rows
@@ -699,26 +744,27 @@
     WT CHEMBL6044 Kd (n=3): 3 rows
     WT CHEMBL6044 Ki (n=81): 81 rows
     WT CHEMBL6044 IC50 (n=149): 149 rows
-  --- 250/252 targets, 612,711 rows tak
     WT CHEMBL6094 Kd (n=3): 3 rows
     WT CHEMBL6094 IC50 (n=43): 43 rows
     WT CHEMBL6111 Ki (n=37): 37 rows
     WT CHEMBL6111 IC50 (n=1465): 1465 rows
-  kul: 614,259 rows -> wt_activities.jsonl
-  wild-type rows: 614,259 -> saaf 605,394
-      hataya   7,735  validity: Outside typical range
-      hataya     753  validity: Potential transcription error
+    WT CHEMBL6195575 IC50 (n=10): 10 rows
+  --- 266/266 targets, 625,527 rows tak
+  kul: 625,527 rows
+  wild-type rows: 625,527 -> saaf 616,493
+      hataya   7,901  validity: Outside typical range
+      hataya     756  validity: Potential transcription error
       hataya     313  validity: Manually validated
       hataya      47  validity: Potential author error
       hataya      17  value nahi padha
 
 [3/5] gene symbol
-  gene symbol: 0 cache me, 252 baaki
-    50/252
-    100/252
-    150/252
-    200/252
-    250/252
+  gene symbol: 0 cache me, 266 baaki
+    50/266
+    100/266
+    150/266
+    200/266
+    250/266
 
 [4/5] jodi banana
 
@@ -726,60 +772,61 @@
 NATEEJA
 ====================================================================
 
-  ddG jode                     : 11,585
-  ... jahan WT aur mutant ek hi paper se: 10,359  (89%)
-  alag genes                   : 209
-  alag mutations               : 850
-  alag drugs                   : 6332
-  jin mutant maapon ka WT nahi mila: 9,356 (jodi nahi ban saki)
+  ddG jode                     : 13,205
+  ... jahan WT aur mutant ek hi paper se: 11,869  (90%)
+  alag genes                   : 217
+  alag mutations               : 899
+  alag drugs                   : 7285
+  jin mutant maapon ka WT nahi mila: 10,352 (jodi nahi ban saki)
 
   tulna:
     Platinum (field ka dataset) : 796 - genes: ~100+
     Davis (humara Phase 1)      : 1,480 - genes: 10
-    ChEMBL (ye)                 : 11,585 - genes: 209
+    ChEMBL (ye)                 : 13,205 - genes: 217
 
   assay type ke hisaab se:
-    IC50     8,355
+    IC50     9,975
     Kd       1,824
     Ki       1,406
 
-  ddG ka faila: min -4.78  max 4.56  median 0.00  std 1.03
-    |ddG| >= 0.5: 5,571 (48%)
-    |ddG| >= 1.0: 3,032 (26%)
-    |ddG| >= 2.0: 885 (8%)
+  ddG ka faila: min -4.29  max 4.56  median 0.00  std 1.04
+    |ddG| >= 0.5: 6,535 (49%)
+    |ddG| >= 1.0: 3,575 (27%)
+    |ddG| >= 2.0: 1,018 (8%)
 
   top 25 genes:
         mutations  drugs  pairs  same_doc
 gene                                     
-EGFR           12   1348   2293      2242
-ABL1           13    481    967       962
-IDH1            6    702    903       358
-ALK             9    489    799       793
-FLT3            8    317    652       633
-LRRK2           3    524    569       550
-BRAF            1    396    409       337
-KIT            17    108    395       387
+EGFR           12   1607   2646      2580
+ABL1           20    492   1016      1010
+IDH1            6    749    997       431
+ALK            21    496    860       858
+FLT3            8    405    748       726
+LRRK2           4    645    695       657
+RET            14    214    462       449
+KIT            18    124    437       420
+BRAF            1    423    436       351
+EZH2            7    355    380       377
 GNRHR          69      7    373       345
-EZH2            7    306    323       322
-RET             8    128    250       241
-AR              6    158    210       207
+NTRK1           6    150    254       251
+AR              6    170    233       226
+MET            12    104    209       208
 BRD4            6    159    209       160
-MET            11     99    192       191
-KRAS            4     88    122        60
+KRAS            5    117    154        73
+FGFR3           8     82    132       132
 CXCR4          38      7    116       116
-NTRK1           5     49    114       114
-PIK3CA         13     28     96        95
+PIK3CA         13     29     99        98
 BCL2L1         17     13     88        88
 MC4R           11     10     76        76
-FGFR3           6     60     75        75
-BTK             4     44     73        73
+BTK             4     45     75        75
+FGFR2           6     35     74        69
 ESR1            4     28     69        67
 NOTUM           1     68     68         1
-HDAC8          11     14     65        65
 
   sabse bade asar:
   gene mutation assay_type   pK_wt  pK_mut     ddG  same_doc
-PDGFRA    D842V       IC50  9.2218  4.4437 -4.7782     False
+PDGFRA    D842V       IC50  9.5229  5.2288 -4.2941      True
+PDGFRA    T674I       IC50  9.6198  5.3937 -4.2261     False
   ABL1    E255K       IC50  9.0000  4.8153 -4.1847      True
  HTR2A    F340L         Ki  9.0362  4.8633 -4.1729      True
    KIT    D816V       IC50  8.7696  4.6021 -4.1675      True
@@ -788,8 +835,9 @@ PDGFRA    D842V       IC50  9.2218  4.4437 -4.7782     False
    ALK   L1196M       IC50  9.2840  5.2147 -4.0693      True
   ABL1    G250E       IC50  9.0000  4.9914 -4.0086      True
    KIT    D816H         Kd  9.1612  5.1549 -4.0062      True
-PPP1CC    N124D       IC50 10.6990  6.6990 -4.0000      True
 
-  >>> PHASE 2 GATE PAAS (chahiye: >=40 genes aur >=1,480 jode; mila: 209 genes, 11,585 jode)
+  >>> PHASE 2 GATE PAAS (chahiye: >=40 genes aur >=1,480 jode; mila: 217 genes, 13,205 jode)
+
+  ✓ koi slice adhoori nahi rahi - har tod ka jod parent count se mila
 
   files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/results/chembl_ddg.csv, chembl_harvest.json

@@ -1,64 +1,79 @@
 {
-  "pairs": 11585,
-  "pairs_same_doc": 10359,
-  "genes": 209,
-  "mutations": 850,
-  "drugs": 6332,
-  "unpaired_mutant_measurements": 9356,
+  "shortfall_slices": 0,
+  "shortfall_rows": 0,
+  "shortfall_detail": [],
+  "pairs": 13205,
+  "pairs_same_doc": 11869,
+  "genes": 217,
+  "mutations": 899,
+  "drugs": 7285,
+  "unpaired_mutant_measurements": 10352,
   "by_assay_type": {
-    "IC50": 8355,
+    "IC50": 9975,
     "Kd": 1824,
     "Ki": 1406
   },
-  "ddG_abs_ge_1": 3032,
+  "ddG_abs_ge_1": 3575,
   "per_gene": {
     "EGFR": {
       "mutations": 12,
-      "drugs": 1348,
-      "pairs": 2293,
-      "same_doc": 2242
+      "drugs": 1607,
+      "pairs": 2646,
+      "same_doc": 2580
     },
     "ABL1": {
-      "mutations": 13,
-      "drugs": 481,
-      "pairs": 967,
-      "same_doc": 962
+      "mutations": 20,
+      "drugs": 492,
+      "pairs": 1016,
+      "same_doc": 1010
     },
     "IDH1": {
       "mutations": 6,
-      "drugs": 702,
-      "pairs": 903,
-      "same_doc": 358
+      "drugs": 749,
+      "pairs": 997,
+      "same_doc": 431
     },
     "ALK": {
-      "mutations": 9,
-      "drugs": 489,
-      "pairs": 799,
-      "same_doc": 793
+      "mutations": 21,
+      "drugs": 496,
+      "pairs": 860,
+      "same_doc": 858
     },
     "FLT3": {
       "mutations": 8,
-      "drugs": 317,
-      "pairs": 652,
-      "same_doc": 633
+      "drugs": 405,
+      "pairs": 748,
+      "same_doc": 726
     },
     "LRRK2": {
-      "mutations": 3,
-      "drugs": 524,
-      "pairs": 569,
-      "same_doc": 550
+      "mutations": 4,
+      "drugs": 645,
+      "pairs": 695,
+      "same_doc": 657
+    },
+    "RET": {
+      "mutations": 14,
+      "drugs": 214,
+      "pairs": 462,
+      "same_doc": 449
+    },
+    "KIT": {
+      "mutations": 18,
+      "drugs": 124,
+      "pairs": 437,
+      "same_doc": 420
     },
     "BRAF": {
       "mutations": 1,
-      "drugs": 396,
-      "pairs": 409,
-      "same_doc": 337
+      "drugs": 423,
+      "pairs": 436,
+      "same_doc": 351
     },
-    "KIT": {
-      "mutations": 17,
-      "drugs": 108,
-      "pairs": 395,
-      "same_doc": 387
+    "EZH2": {
+      "mutations": 7,
+      "drugs": 355,
+      "pairs": 380,
+      "same_doc": 377
     },
     "GNRHR": {
       "mutations": 69,
@@ -66,23 +81,23 @@
       "pairs": 373,
       "same_doc": 345
     },
-    "EZH2": {
-      "mutations": 7,
-      "drugs": 306,
-      "pairs": 323,
-      "same_doc": 322
-    },
-    "RET": {
-      "mutations": 8,
-      "drugs": 128,
-      "pairs": 250,
-      "same_doc": 241
+    "NTRK1": {
+      "mutations": 6,
+      "drugs": 150,
+      "pairs": 254,
+      "same_doc": 251
     },
     "AR": {
       "mutations": 6,
-      "drugs": 158,
-      "pairs": 210,
-      "same_doc": 207
+      "drugs": 170,
+      "pairs": 233,
+      "same_doc": 226
+    },
+    "MET": {
+      "mutations": 12,
+      "drugs": 104,
+      "pairs": 209,
+      "same_doc": 208
     },
     "BRD4": {
       "mutations": 6,
@@ -90,17 +105,17 @@
       "pairs": 209,
       "same_doc": 160
     },
-    "MET": {
-      "mutations": 11,
-      "drugs": 99,
-      "pairs": 192,
-      "same_doc": 191
-    },
     "KRAS": {
-      "mutations": 4,
-      "drugs": 88,
-      "pairs": 122,
-      "same_doc": 60
+      "mutations": 5,
+      "drugs": 117,
+      "pairs": 154,
+      "same_doc": 73
+    },
+    "FGFR3": {
+      "mutations": 8,
+      "drugs": 82,
+      "pairs": 132,
+      "same_doc": 132
     },
     "CXCR4": {
       "mutations": 38,
@@ -108,17 +123,11 @@
       "pairs": 116,
       "same_doc": 116
     },
-    "NTRK1": {
-      "mutations": 5,
-      "drugs": 49,
-      "pairs": 114,
-      "same_doc": 114
-    },
     "PIK3CA": {
       "mutations": 13,
-      "drugs": 28,
-      "pairs": 96,
-      "same_doc": 95
+      "drugs": 29,
+      "pairs": 99,
+      "same_doc": 98
     },
     "BCL2L1": {
       "mutations": 17,
@@ -132,17 +141,17 @@
       "pairs": 76,
       "same_doc": 76
     },
-    "FGFR3": {
-      "mutations": 6,
-      "drugs": 60,
+    "BTK": {
+      "mutations": 4,
+      "drugs": 45,
       "pairs": 75,
       "same_doc": 75
     },
-    "BTK": {
-      "mutations": 4,
-      "drugs": 44,
-      "pairs": 73,
-      "same_doc": 73
+    "FGFR2": {
+      "mutations": 6,
+      "drugs": 35,
+      "pairs": 74,
+      "same_doc": 69
     },
     "ESR1": {
       "mutations": 4,
@@ -155,6 +164,12 @@
       "drugs": 68,
       "pairs": 68,
       "same_doc": 1
+    },
+    "JAK2": {
+      "mutations": 1,
+      "drugs": 64,
+      "pairs": 66,
+      "same_doc": 65
     },
     "HDAC8": {
       "mutations": 11,
@@ -174,17 +189,17 @@
       "pairs": 63,
       "same_doc": 63
     },
-    "JAK2": {
-      "mutations": 1,
-      "drugs": 61,
-      "pairs": 63,
-      "same_doc": 62
-    },
     "CCR2": {
       "mutations": 12,
       "drugs": 25,
       "pairs": 62,
       "same_doc": 48
+    },
+    "STING1": {
+      "mutations": 4,
+      "drugs": 38,
+      "pairs": 59,
+      "same_doc": 57
     },
     "ADORA2A": {
       "mutations": 11,
@@ -222,11 +237,23 @@
       "pairs": 47,
       "same_doc": 46
     },
-    "STING1": {
+    "BCL2": {
       "mutations": 4,
-      "drugs": 34,
-      "pairs": 47,
-      "same_doc": 47
+      "drugs": 33,
+      "pairs": 44,
+      "same_doc": 43
+    },
+    "PDGFRA": {
+      "mutations": 3,
+      "drugs": 25,
+      "pairs": 40,
+      "same_doc": 36
+    },
+    "TACR3": {
+      "mutations": 5,
+      "drugs": 10,
+      "pairs": 38,
+      "same_doc": 38
     },
     "XIAP": {
       "mutations": 8,
@@ -240,15 +267,15 @@
       "pairs": 38,
       "same_doc": 38
     },
-    "TACR3": {
-      "mutations": 5,
-      "drugs": 10,
-      "pairs": 38,
-      "same_doc": 38
-    },
     "NMT1": {
       "mutations": 13,
       "drugs": 9,
+      "pairs": 38,
+      "same_doc": 38
+    },
+    "FGFR4": {
+      "mutations": 5,
+      "drugs": 23,
       "pairs": 38,
       "same_doc": 38
     },
@@ -282,17 +309,17 @@
       "pairs": 28,
       "same_doc": 28
     },
-    "ABCB1": {
-      "mutations": 27,
-      "drugs": 1,
-      "pairs": 27,
-      "same_doc": 27
-    },
     "DDR2": {
       "mutations": 3,
       "drugs": 27,
       "pairs": 27,
       "same_doc": 26
+    },
+    "ABCB1": {
+      "mutations": 27,
+      "drugs": 1,
+      "pairs": 27,
+      "same_doc": 27
     },
     "HDAC4": {
       "mutations": 1,
@@ -312,17 +339,17 @@
       "pairs": 26,
       "same_doc": 25
     },
-    "GSK3B": {
-      "mutations": 1,
-      "drugs": 25,
-      "pairs": 25,
-      "same_doc": 2
-    },
     "HTR3A": {
       "mutations": 9,
       "drugs": 2,
       "pairs": 25,
       "same_doc": 25
+    },
+    "GSK3B": {
+      "mutations": 1,
+      "drugs": 25,
+      "pairs": 25,
+      "same_doc": 2
     },
     "CA2": {
       "mutations": 2,
@@ -330,23 +357,23 @@
       "pairs": 24,
       "same_doc": 14
     },
-    "GRK2": {
-      "mutations": 1,
-      "drugs": 23,
-      "pairs": 23,
-      "same_doc": 0
-    },
     "ADORA1": {
       "mutations": 7,
       "drugs": 7,
       "pairs": 23,
       "same_doc": 23
     },
-    "FGFR4": {
-      "mutations": 3,
-      "drugs": 15,
-      "pairs": 21,
-      "same_doc": 21
+    "RAF1": {
+      "mutations": 4,
+      "drugs": 22,
+      "pairs": 23,
+      "same_doc": 1
+    },
+    "GRK2": {
+      "mutations": 1,
+      "drugs": 23,
+      "pairs": 23,
+      "same_doc": 0
     },
     "BRD2": {
       "mutations": 7,
@@ -354,15 +381,21 @@
       "pairs": 21,
       "same_doc": 15
     },
-    "RAF1": {
+    "IDH2": {
       "mutations": 2,
-      "drugs": 20,
+      "drugs": 15,
       "pairs": 20,
-      "same_doc": 0
+      "same_doc": 18
     },
     "HRH4": {
       "mutations": 7,
       "drugs": 6,
+      "pairs": 20,
+      "same_doc": 20
+    },
+    "STAT3": {
+      "mutations": 4,
+      "drugs": 5,
       "pairs": 20,
       "same_doc": 20
     },
@@ -390,9 +423,9 @@
       "pairs": 16,
       "same_doc": 16
     },
-    "RORC": {
-      "mutations": 8,
-      "drugs": 2,
+    "FGFR1": {
+      "mutations": 1,
+      "drugs": 16,
       "pairs": 16,
       "same_doc": 16
     },
@@ -402,21 +435,15 @@
       "pairs": 16,
       "same_doc": 11
     },
-    "AKR1C1": {
-      "mutations": 7,
+    "RORC": {
+      "mutations": 8,
+      "drugs": 2,
+      "pairs": 16,
+      "same_doc": 16
+    },
+    "CTNNB1": {
+      "mutations": 6,
       "drugs": 3,
-      "pairs": 15,
-      "same_doc": 7
-    },
-    "PADI4": {
-      "mutations": 4,
-      "drugs": 4,
-      "pairs": 15,
-      "same_doc": 15
-    },
-    "TYMS": {
-      "mutations": 2,
-      "drugs": 7,
       "pairs": 15,
       "same_doc": 15
     },
@@ -426,41 +453,41 @@
       "pairs": 15,
       "same_doc": 15
     },
-    "ALOX15": {
-      "mutations": 8,
-      "drugs": 2,
-      "pairs": 15,
-      "same_doc": 15
-    },
-    "CTNNB1": {
-      "mutations": 6,
-      "drugs": 3,
-      "pairs": 15,
-      "same_doc": 15
-    },
     "BRDT": {
       "mutations": 3,
       "drugs": 11,
       "pairs": 15,
       "same_doc": 10
     },
+    "ALOX15": {
+      "mutations": 8,
+      "drugs": 2,
+      "pairs": 15,
+      "same_doc": 15
+    },
+    "TYMS": {
+      "mutations": 2,
+      "drugs": 7,
+      "pairs": 15,
+      "same_doc": 15
+    },
+    "PADI4": {
+      "mutations": 4,
+      "drugs": 4,
+      "pairs": 15,
+      "same_doc": 15
+    },
+    "AKR1C1": {
+      "mutations": 7,
+      "drugs": 3,
+      "pairs": 15,
+      "same_doc": 7
+    },
     "NTSR1": {
       "mutations": 8,
       "drugs": 3,
       "pairs": 14,
       "same_doc": 14
-    },
-    "ERBB2": {
-      "mutations": 5,
-      "drugs": 4,
-      "pairs": 13,
-      "same_doc": 12
-    },
-    "FGFR2": {
-      "mutations": 3,
-      "drugs": 10,
-      "pairs": 13,
-      "same_doc": 6
     },
     "PDE9A": {
       "mutations": 7,
@@ -474,6 +501,12 @@
       "pairs": 13,
       "same_doc": 13
     },
+    "ERBB2": {
+      "mutations": 5,
+      "drugs": 4,
+      "pairs": 13,
+      "same_doc": 12
+    },
     "CYP17A1": {
       "mutations": 1,
       "drugs": 12,
@@ -486,19 +519,19 @@
       "pairs": 12,
       "same_doc": 12
     },
-    "BCL2": {
-      "mutations": 4,
-      "drugs": 3,
-      "pairs": 12,
-      "same_doc": 11
-    },
-    "P2RY1": {
+    "P2RY2": {
       "mutations": 6,
       "drugs": 2,
       "pairs": 11,
       "same_doc": 11
     },
-    "P2RY2": {
+    "SLC6A3": {
+      "mutations": 7,
+      "drugs": 7,
+      "pairs": 11,
+      "same_doc": 11
+    },
+    "P2RY1": {
       "mutations": 6,
       "drugs": 2,
       "pairs": 11,
@@ -510,17 +543,23 @@
       "pairs": 11,
       "same_doc": 11
     },
-    "SLC6A3": {
-      "mutations": 7,
-      "drugs": 7,
+    "PTPN11": {
+      "mutations": 3,
+      "drugs": 10,
       "pairs": 11,
       "same_doc": 11
     },
-    "DAO": {
-      "mutations": 2,
-      "drugs": 5,
+    "SRC": {
+      "mutations": 4,
+      "drugs": 10,
       "pairs": 10,
-      "same_doc": 10
+      "same_doc": 8
+    },
+    "ROS1": {
+      "mutations": 2,
+      "drugs": 7,
+      "pairs": 10,
+      "same_doc": 9
     },
     "KIF11": {
       "mutations": 3,
@@ -534,17 +573,17 @@
       "pairs": 10,
       "same_doc": 10
     },
-    "IDH2": {
+    "CDK2": {
+      "mutations": 6,
+      "drugs": 4,
+      "pairs": 10,
+      "same_doc": 10
+    },
+    "DAO": {
       "mutations": 2,
       "drugs": 5,
       "pairs": 10,
-      "same_doc": 5
-    },
-    "SRC": {
-      "mutations": 4,
-      "drugs": 10,
-      "pairs": 10,
-      "same_doc": 8
+      "same_doc": 10
     },
     "CNR1": {
       "mutations": 5,
@@ -552,13 +591,13 @@
       "pairs": 10,
       "same_doc": 10
     },
-    "CDK2": {
-      "mutations": 6,
-      "drugs": 4,
-      "pairs": 10,
-      "same_doc": 10
+    "PIK3CD": {
+      "mutations": 1,
+      "drugs": 9,
+      "pairs": 9,
+      "same_doc": 8
     },
-    "AGTR1": {
+    "SGK1": {
       "mutations": 1,
       "drugs": 9,
       "pairs": 9,
@@ -570,19 +609,7 @@
       "pairs": 9,
       "same_doc": 6
     },
-    "PTPN11": {
-      "mutations": 3,
-      "drugs": 9,
-      "pairs": 9,
-      "same_doc": 9
-    },
-    "SIRT1": {
-      "mutations": 4,
-      "drugs": 2,
-      "pairs": 9,
-      "same_doc": 9
-    },
-    "SGK1": {
+    "AGTR1": {
       "mutations": 1,
       "drugs": 9,
       "pairs": 9,
@@ -594,41 +621,23 @@
       "pairs": 9,
       "same_doc": 9
     },
-    "PIK3CD": {
-      "mutations": 1,
-      "drugs": 9,
-      "pairs": 9,
-      "same_doc": 8
-    },
-    "MCL1": {
-      "mutations": 1,
-      "drugs": 8,
-      "pairs": 8,
-      "same_doc": 8
-    },
-    "PTPN1": {
-      "mutations": 2,
-      "drugs": 8,
-      "pairs": 8,
-      "same_doc": 8
-    },
-    "ROS1": {
+    "SOS1": {
       "mutations": 2,
       "drugs": 5,
-      "pairs": 8,
-      "same_doc": 7
+      "pairs": 9,
+      "same_doc": 1
+    },
+    "SIRT1": {
+      "mutations": 4,
+      "drugs": 2,
+      "pairs": 9,
+      "same_doc": 9
     },
     "DRD2": {
       "mutations": 2,
       "drugs": 8,
       "pairs": 8,
       "same_doc": 8
-    },
-    "AKR1C3": {
-      "mutations": 8,
-      "drugs": 2,
-      "pairs": 8,
-      "same_doc": 7
     },
     "AURKA": {
       "mutations": 3,
@@ -642,17 +651,29 @@
       "pairs": 8,
       "same_doc": 8
     },
-    "PTPN22": {
-      "mutations": 7,
-      "drugs": 1,
-      "pairs": 7,
+    "PTPN1": {
+      "mutations": 2,
+      "drugs": 8,
+      "pairs": 8,
+      "same_doc": 8
+    },
+    "MCL1": {
+      "mutations": 1,
+      "drugs": 8,
+      "pairs": 8,
+      "same_doc": 8
+    },
+    "AKR1C3": {
+      "mutations": 8,
+      "drugs": 2,
+      "pairs": 8,
       "same_doc": 7
     },
-    "GBA1": {
-      "mutations": 1,
-      "drugs": 7,
+    "CENPE": {
+      "mutations": 6,
+      "drugs": 2,
       "pairs": 7,
-      "same_doc": 6
+      "same_doc": 7
     },
     "CYP21A2": {
       "mutations": 1,
@@ -660,9 +681,21 @@
       "pairs": 7,
       "same_doc": 0
     },
-    "CENPE": {
-      "mutations": 6,
-      "drugs": 2,
+    "GBA1": {
+      "mutations": 1,
+      "drugs": 7,
+      "pairs": 7,
+      "same_doc": 6
+    },
+    "PIP4K2C": {
+      "mutations": 1,
+      "drugs": 7,
+      "pairs": 7,
+      "same_doc": 7
+    },
+    "PTPN22": {
+      "mutations": 7,
+      "drugs": 1,
       "pairs": 7,
       "same_doc": 7
     },
@@ -672,38 +705,14 @@
       "pairs": 7,
       "same_doc": 7
     },
-    "SOS1": {
-      "mutations": 2,
-      "drugs": 4,
-      "pairs": 6,
-      "same_doc": 0
-    },
-    "HTR2A": {
+    "GGPS1": {
       "mutations": 1,
       "drugs": 6,
-      "pairs": 6,
-      "same_doc": 6
-    },
-    "BLM": {
-      "mutations": 5,
-      "drugs": 2,
       "pairs": 6,
       "same_doc": 6
     },
     "CSNK2A1": {
       "mutations": 4,
-      "drugs": 2,
-      "pairs": 6,
-      "same_doc": 6
-    },
-    "FGFR1": {
-      "mutations": 1,
-      "drugs": 6,
-      "pairs": 6,
-      "same_doc": 5
-    },
-    "RAB7A": {
-      "mutations": 3,
       "drugs": 2,
       "pairs": 6,
       "same_doc": 6
@@ -714,20 +723,44 @@
       "pairs": 6,
       "same_doc": 6
     },
-    "GGPS1": {
+    "BLM": {
+      "mutations": 5,
+      "drugs": 2,
+      "pairs": 6,
+      "same_doc": 6
+    },
+    "HTR2A": {
       "mutations": 1,
       "drugs": 6,
       "pairs": 6,
       "same_doc": 6
     },
-    "PIP4K2C": {
+    "RAB7A": {
+      "mutations": 3,
+      "drugs": 2,
+      "pairs": 6,
+      "same_doc": 6
+    },
+    "ADRB2": {
+      "mutations": 5,
+      "drugs": 2,
+      "pairs": 5,
+      "same_doc": 5
+    },
+    "HSPA8": {
+      "mutations": 5,
+      "drugs": 1,
+      "pairs": 5,
+      "same_doc": 5
+    },
+    "MALT1": {
       "mutations": 1,
       "drugs": 5,
       "pairs": 5,
       "same_doc": 5
     },
-    "PARP10": {
-      "mutations": 2,
+    "HPN": {
+      "mutations": 1,
       "drugs": 5,
       "pairs": 5,
       "same_doc": 5
@@ -738,20 +771,14 @@
       "pairs": 5,
       "same_doc": 5
     },
-    "HSPA8": {
-      "mutations": 5,
-      "drugs": 1,
-      "pairs": 5,
-      "same_doc": 5
-    },
-    "HPN": {
+    "NTRK3": {
       "mutations": 1,
       "drugs": 5,
       "pairs": 5,
-      "same_doc": 5
+      "same_doc": 4
     },
-    "MALT1": {
-      "mutations": 1,
+    "PARP10": {
+      "mutations": 2,
       "drugs": 5,
       "pairs": 5,
       "same_doc": 5
@@ -762,59 +789,17 @@
       "pairs": 5,
       "same_doc": 0
     },
-    "CBS": {
-      "mutations": 5,
-      "drugs": 1,
-      "pairs": 5,
-      "same_doc": 5
-    },
     "APOBEC3G": {
       "mutations": 1,
       "drugs": 5,
       "pairs": 5,
       "same_doc": 5
     },
-    "ADRB2": {
+    "CBS": {
       "mutations": 5,
-      "drugs": 2,
+      "drugs": 1,
       "pairs": 5,
       "same_doc": 5
-    },
-    "KDR": {
-      "mutations": 1,
-      "drugs": 4,
-      "pairs": 4,
-      "same_doc": 0
-    },
-    "PDGFRA": {
-      "mutations": 2,
-      "drugs": 4,
-      "pairs": 4,
-      "same_doc": 0
-    },
-    "BTN3A1": {
-      "mutations": 4,
-      "drugs": 1,
-      "pairs": 4,
-      "same_doc": 4
-    },
-    "CCKBR": {
-      "mutations": 2,
-      "drugs": 2,
-      "pairs": 4,
-      "same_doc": 4
-    },
-    "EPAS1": {
-      "mutations": 1,
-      "drugs": 4,
-      "pairs": 4,
-      "same_doc": 4
-    },
-    "GRK5": {
-      "mutations": 1,
-      "drugs": 4,
-      "pairs": 4,
-      "same_doc": 4
     },
     "LGALS3": {
       "mutations": 4,
@@ -828,61 +813,43 @@
       "pairs": 4,
       "same_doc": 0
     },
-    "MAP3K14": {
+    "PKM": {
+      "mutations": 2,
+      "drugs": 2,
+      "pairs": 4,
+      "same_doc": 4
+    },
+    "BTN3A1": {
+      "mutations": 4,
+      "drugs": 1,
+      "pairs": 4,
+      "same_doc": 4
+    },
+    "KDR": {
       "mutations": 1,
-      "drugs": 3,
-      "pairs": 3,
+      "drugs": 4,
+      "pairs": 4,
       "same_doc": 0
     },
-    "BDKRB1": {
+    "GRK5": {
       "mutations": 1,
-      "drugs": 3,
-      "pairs": 3,
-      "same_doc": 3
+      "drugs": 4,
+      "pairs": 4,
+      "same_doc": 4
     },
-    "PIK3CB": {
+    "EPAS1": {
       "mutations": 1,
-      "drugs": 3,
-      "pairs": 3,
-      "same_doc": 3
+      "drugs": 4,
+      "pairs": 4,
+      "same_doc": 4
     },
-    "TRPM8": {
-      "mutations": 3,
+    "CCKBR": {
+      "mutations": 2,
       "drugs": 2,
-      "pairs": 3,
-      "same_doc": 3
+      "pairs": 4,
+      "same_doc": 4
     },
-    "MAPK9": {
-      "mutations": 1,
-      "drugs": 3,
-      "pairs": 3,
-      "same_doc": 3
-    },
-    "NME2": {
-      "mutations": 3,
-      "drugs": 1,
-      "pairs": 3,
-      "same_doc": 3
-    },
-    "NOS2": {
-      "mutations": 3,
-      "drugs": 1,
-      "pairs": 3,
-      "same_doc": 3
-    },
-    "NR3C2": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 3,
-      "same_doc": 0
-    },
-    "ARHGEF12": {
-      "mutations": 3,
-      "drugs": 1,
-      "pairs": 3,
-      "same_doc": 3
-    },
-    "WHR1": {
+    "STK3": {
       "mutations": 3,
       "drugs": 1,
       "pairs": 3,
@@ -894,37 +861,73 @@
       "pairs": 3,
       "same_doc": 3
     },
-    "NTRK3": {
+    "MAP3K14": {
       "mutations": 1,
       "drugs": 3,
       "pairs": 3,
-      "same_doc": 1
-    },
-    "PDPK1": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
       "same_doc": 0
     },
-    "MGLL": {
-      "mutations": 2,
+    "NME2": {
+      "mutations": 3,
       "drugs": 1,
-      "pairs": 2,
-      "same_doc": 2
+      "pairs": 3,
+      "same_doc": 3
     },
-    "TRAP1": {
+    "MAPK9": {
+      "mutations": 1,
+      "drugs": 3,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "NSD2": {
+      "mutations": 3,
+      "drugs": 2,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "NR3C2": {
       "mutations": 1,
       "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
+      "pairs": 3,
+      "same_doc": 0
     },
-    "FAAH": {
+    "BDKRB1": {
       "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
+      "drugs": 3,
+      "pairs": 3,
+      "same_doc": 3
     },
-    "PRKCE": {
+    "ARHGEF12": {
+      "mutations": 3,
+      "drugs": 1,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "NOS2": {
+      "mutations": 3,
+      "drugs": 1,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "TRPM8": {
+      "mutations": 3,
+      "drugs": 2,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "PIK3CB": {
+      "mutations": 1,
+      "drugs": 3,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "WHR1": {
+      "mutations": 3,
+      "drugs": 1,
+      "pairs": 3,
+      "same_doc": 3
+    },
+    "AURKB": {
       "mutations": 1,
       "drugs": 2,
       "pairs": 2,
@@ -936,61 +939,13 @@
       "pairs": 2,
       "same_doc": 0
     },
-    "WDR5": {
+    "TRAP1": {
       "mutations": 1,
       "drugs": 2,
       "pairs": 2,
       "same_doc": 2
     },
-    "KDM4A": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "HSD11B1": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 1
-    },
-    "IDE": {
-      "mutations": 2,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "MAPK14": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "MDM2": {
-      "mutations": 2,
-      "drugs": 1,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "CHEMBL4845623": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "CBX7": {
-      "mutations": 1,
-      "drugs": 2,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "ALKBH5": {
-      "mutations": 2,
-      "drugs": 1,
-      "pairs": 2,
-      "same_doc": 2
-    },
-    "AURKB": {
+    "PRKCE": {
       "mutations": 1,
       "drugs": 2,
       "pairs": 2,
@@ -1002,7 +957,13 @@
       "pairs": 2,
       "same_doc": 2
     },
-    "ALDH1A1": {
+    "FAAH": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "CBX7": {
       "mutations": 1,
       "drugs": 2,
       "pairs": 2,
@@ -1020,7 +981,91 @@
       "pairs": 2,
       "same_doc": 2
     },
+    "KDM4A": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "IDE": {
+      "mutations": 2,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "HSD11B1": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 1
+    },
+    "PDPK1": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 0
+    },
+    "WDR5": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "MDM2": {
+      "mutations": 2,
+      "drugs": 1,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "MAPK14": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "MGLL": {
+      "mutations": 2,
+      "drugs": 1,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "CHEMBL4845623": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "ALKBH5": {
+      "mutations": 2,
+      "drugs": 1,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "ALDH1A1": {
+      "mutations": 1,
+      "drugs": 2,
+      "pairs": 2,
+      "same_doc": 2
+    },
+    "CDK4": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "CHEK2": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
     "CDK7": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "CHEMBL3832742": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1044,7 +1089,19 @@
       "pairs": 1,
       "same_doc": 0
     },
-    "APLNR": {
+    "CASP6": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "CHRM1": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "ADRA2B": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1056,23 +1113,17 @@
       "pairs": 1,
       "same_doc": 0
     },
-    "ADRA2B": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
     "AKT2": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
       "same_doc": 0
     },
-    "CASP6": {
+    "APLNR": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
-      "same_doc": 0
+      "same_doc": 1
     },
     "F2": {
       "mutations": 1,
@@ -1092,73 +1143,7 @@
       "pairs": 1,
       "same_doc": 0
     },
-    "CHEMBL3832742": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "CHRM1": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "CDK4": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "NT5E": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 0
-    },
-    "NR1H4": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "HDAC1": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "GSK3A": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "GRIN1": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "KCNJ1": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 0
-    },
-    "MMP9": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 0
-    },
-    "NEK2": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "MAPK11": {
+    "NR4A1": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1170,13 +1155,73 @@
       "pairs": 1,
       "same_doc": 1
     },
-    "NSD2": {
+    "NR1H4": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
       "same_doc": 1
     },
-    "NR4A1": {
+    "NT5E": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "NEK2": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "GSK3A": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "KCNJ1": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "HDAC1": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "GRIN1": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "KDM6B": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "MAPK11": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "MMP9": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "MAP1LC3B": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "SCN5A": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1188,7 +1233,19 @@
       "pairs": 1,
       "same_doc": 1
     },
+    "RAPGEF3": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
     "RGS17": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 1
+    },
+    "RAC1": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1206,19 +1263,7 @@
       "pairs": 1,
       "same_doc": 1
     },
-    "RAPGEF3": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "RAC1": {
-      "mutations": 1,
-      "drugs": 1,
-      "pairs": 1,
-      "same_doc": 1
-    },
-    "SCN5A": {
+    "SMYD3": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
@@ -1230,13 +1275,19 @@
       "pairs": 1,
       "same_doc": 0
     },
-    "TEK": {
+    "TET2": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
       "same_doc": 0
     },
     "TP53": {
+      "mutations": 1,
+      "drugs": 1,
+      "pairs": 1,
+      "same_doc": 0
+    },
+    "TEK": {
       "mutations": 1,
       "drugs": 1,
       "pairs": 1,
