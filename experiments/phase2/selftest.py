@@ -119,6 +119,53 @@ W = median_by(wt, ["mol", "target", "type"])
 pairs, _ = make_pairs(M, W, {})
 check("alag drug ki jodi NAHI banti", len(pairs), 0)
 
+print("\ncache ka resume (adhoora download poora na dikhe)")
+import json as _json                                        # noqa: E402
+import pathlib as _pl                                       # noqa: E402
+import tempfile                                             # noqa: E402
+
+import harvest_chembl as H                                  # noqa: E402
+
+_tmp = _pl.Path(tempfile.mkdtemp())
+H.WORK = _tmp
+H.TYPES = ["Kd"]
+
+
+def _fake_fetch(path, params, split_on, on_batch, label=""):
+    """Ek nakli row deta hai, taaki asli network na lage."""
+    tid = params.get("target_chembl_id", "CHEMBL203")
+    on_batch([row(target_chembl_id=tid, assay_variant_mutation=None)])
+    return 1
+
+
+H.fetch_all = _fake_fetch
+
+# Bina 'done' nishaan wali adhoori file -> dobara download honi chahiye
+(_tmp / "variant_activities.jsonl").write_text(_json.dumps(row()) + "\n")
+got = H.harvest_mutants()
+check("done nishaan ke bina file dobara utarti hai", len(got), 1)
+check("nishaan ab ban gaya", (_tmp / "variant.done").exists(), True)
+
+# Ab nishaan hai -> cache se hi uthna chahiye, download nahi
+H.fetch_all = lambda *a, **k: (_ for _ in ()).throw(
+    AssertionError("nishaan hone ke baad bhi download hua"))
+got = H.harvest_mutants()
+check("nishaan hone par cache se uthta hai", len(got), 1)
+
+# WT resume: do targets me se ek pehle ho chuka hai
+H.fetch_all = _fake_fetch
+(_tmp / "wt_done.json").write_text(_json.dumps(["CHEMBL1"]))
+(_tmp / "wt_activities.jsonl").write_text(
+    _json.dumps(row(target_chembl_id="CHEMBL1",
+                    assay_variant_mutation=None)) + "\n")
+got = H.harvest_wt(["CHEMBL1", "CHEMBL2"])
+check("WT resume: purana + naya = 2 rows", len(got), 2)
+check("WT resume: purana target dobara nahi utra",
+      sum(1 for r in got if r["target_chembl_id"] == "CHEMBL1"), 1)
+check("WT resume: dono targets done me darj",
+      _json.loads((_tmp / "wt_done.json").read_text()),
+      ["CHEMBL1", "CHEMBL2"])
+
 print()
 if FAIL:
     print(f"✗ {len(FAIL)} test fail: {FAIL}")

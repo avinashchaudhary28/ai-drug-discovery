@@ -40,17 +40,31 @@ jobs:
       - name: Selftest (bina network)
         run: python -u experiments/phase2/selftest.py
 
-      - name: Cache (download kiya hua data)
+      # restore aur save alag-alag hain, jaan-boojh kar. actions/cache
+      # sirf job SAFAL hone pe save karta hai - yaani timeout ya error pe
+      # ghanton ka download zaaya. Niche 'always()' wala save step wahi
+      # bachata hai, aur script target-wise resume kar leti hai.
+      - name: Cache restore (download kiya hua data)
+        id: cache
         if: inputs.fresh != 'true'
-        uses: actions/cache@v4
+        uses: actions/cache/restore@v4
         with:
           path: experiments/phase2/work
-          key: phase2-chembl-${{ inputs.data_version }}
+          key: phase2-chembl-${{ inputs.data_version }}-${{ github.run_number }}
+          restore-keys: |
+            phase2-chembl-${{ inputs.data_version }}-
 
       - name: Harvest
         run: |
           set -o pipefail
           python -u experiments/phase2/harvest_chembl.py 2>&1 | tee harvest.log
+
+      - name: Cache save (run fail ho ya na ho)
+        if: always() && inputs.fresh != 'true'
+        uses: actions/cache/save@v4
+        with:
+          path: experiments/phase2/work
+          key: phase2-chembl-${{ inputs.data_version }}-${{ github.run_number }}
 
       - name: Summary
         if: always()

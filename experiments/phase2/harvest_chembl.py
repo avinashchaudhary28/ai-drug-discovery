@@ -87,23 +87,30 @@ def _slim(rows):
     return [{k: r.get(k) for k in FIELDS} for r in rows]
 
 
-def _cached(cache_name):
-    path = WORK / cache_name
-    if path.exists():
-        rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
-        print(f"  cache se: {len(rows):,} rows ({cache_name})")
-        return rows
-    return None
+def _read_jsonl(path):
+    if not path.exists():
+        return []
+    return [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
 
 
+# Adhoora download poora dikhna - yahi sabse khatarnak bug hai, kyunki
+# koi error nahi aata, bas kam jode milte hain aur nateeja halka lagta
+# hai. Isliye har download ke saath ek 'done' nishaan likha jata hai,
+# aur nishaan ke bina file ko adhoora hi maana jata hai.
 def harvest_mutants():
     """Saare mutation-annotated assays (poori ChEMBL me)."""
-    cache_name = "variant_activities.jsonl"
-    hit = _cached(cache_name)
-    if hit is not None:
-        return hit
+    jl = WORK / "variant_activities.jsonl"
+    done_flag = WORK / "variant.done"
+    if done_flag.exists():
+        rows = _read_jsonl(jl)
+        print(f"  cache se (poora): {len(rows):,} rows")
+        return rows
+    if jl.exists():
+        print("  !! pichla download adhoora tha (done nishaan nahi mila) - "
+              "dobara shuru kar rahe hain")
+
     out = []
-    with (WORK / cache_name).open("w") as fh:
+    with jl.open("w") as fh:
         def on_batch(batch):
             for r in _slim(batch):
                 fh.write(json.dumps(r) + "\n")
@@ -119,7 +126,8 @@ def harvest_mutants():
                 "standard_relation": "=",
             }, split_on=[("assay_type", ["B", "F", "A", "T", "P", "U"])],
                 on_batch=on_batch, label=f"MUT {t}")
-    print(f"  kul: {len(out):,} rows -> {cache_name}")
+    done_flag.write_text("ok")
+    print(f"  kul: {len(out):,} rows")
     return out
 
 
@@ -129,21 +137,31 @@ def harvest_wt(target_ids):
     Poori ChEMBL ka WT data lakhon rows ka hai aur ChEMBL ki paging limit
     se bada; target-wise maangne se wo bhi theek ho jata hai aur download
     bhi sau guna chhota.
+
+    Har target poora hone par uska id 'wt_done.json' me likha jata hai,
+    isliye beech me ruka hua run agli baar wahin se aage chalta hai -
+    jo kuch utar chuka hai wo dobara nahi utarta.
     """
-    cache_name = "wt_activities.jsonl"
-    hit = _cached(cache_name)
-    if hit is not None:
-        return hit
-    out = []
-    done = 0
-    with (WORK / cache_name).open("w") as fh:
+    jl = WORK / "wt_activities.jsonl"
+    done_path = WORK / "wt_done.json"
+    done = set(json.loads(done_path.read_text())) if done_path.exists() else set()
+
+    out = _read_jsonl(jl) if done else []
+    todo = [t for t in target_ids if t not in done]
+    if done:
+        print(f"  cache se: {len(done)} targets pehle ho chuke "
+              f"({len(out):,} rows), {len(todo)} baaki")
+    if not todo:
+        return out
+
+    with jl.open("a") as fh:
         def on_batch(batch):
             for r in _slim(batch):
                 fh.write(json.dumps(r) + "\n")
                 out.append(r)
             fh.flush()
 
-        for tid in target_ids:
+        for i, tid in enumerate(todo, 1):
             for t in TYPES:
                 fetch_all("/activity.json", {
                     "assay_variant_mutation__isnull": "true",
@@ -153,11 +171,13 @@ def harvest_wt(target_ids):
                     "standard_relation": "=",
                 }, split_on=[("assay_type", ["B", "F", "A", "T", "P", "U"])],
                     on_batch=on_batch, label=f"WT {tid} {t}")
-            done += 1
-            if done % 10 == 0:
-                print(f"  --- {done}/{len(target_ids)} targets, "
-                      f"{len(out):,} rows tak", flush=True)
-    print(f"  kul: {len(out):,} rows -> {cache_name}")
+            done.add(tid)
+            # Har target ke baad likho, taaki run ruke to progress bache
+            done_path.write_text(json.dumps(sorted(done)))
+            if i % 10 == 0 or i == len(todo):
+                print(f"  --- {i}/{len(todo)} targets, {len(out):,} rows tak",
+                      flush=True)
+    print(f"  kul: {len(out):,} rows")
     return out
 
 
