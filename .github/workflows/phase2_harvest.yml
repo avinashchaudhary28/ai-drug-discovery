@@ -1,0 +1,74 @@
+name: Phase 2 - ChEMBL mutation data harvest
+
+on:
+  workflow_dispatch:
+    inputs:
+      data_version:
+        description: "Cache ki chaabi. Query badle to ise badlo, warna purana download wapas aayega."
+        required: false
+        default: "v1"
+      fresh:
+        description: "true = cache ignore karke dobara download"
+        required: false
+        default: "false"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase2-harvest
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas tabulate
+
+      # Pehle ye. Lamba download shuru karke baad me "parser galat tha"
+      # pata chalna sabse mehnga hai.
+      - name: Selftest (bina network)
+        run: python -u experiments/phase2/selftest.py
+
+      - name: Cache (download kiya hua data)
+        if: inputs.fresh != 'true'
+        uses: actions/cache@v4
+        with:
+          path: experiments/phase2/work
+          key: phase2-chembl-${{ inputs.data_version }}
+
+      - name: Harvest
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/harvest_chembl.py 2>&1 | tee harvest.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 2 - ChEMBL mutation harvest" >> $GITHUB_STEP_SUMMARY
+          if [ -f experiments/phase2/results/RESULT.md ]; then
+            cat experiments/phase2/results/RESULT.md >> $GITHUB_STEP_SUMMARY
+          else
+            echo '```' >> $GITHUB_STEP_SUMMARY
+            tail -60 harvest.log >> $GITHUB_STEP_SUMMARY || true
+            echo '```' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Nateeja repo me commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase2/results
+          tail -c 200000 harvest.log > experiments/phase2/results/run.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase2: ChEMBL mutation harvest (run ${{ github.run_number }})" \
+            experiments/phase2/results
