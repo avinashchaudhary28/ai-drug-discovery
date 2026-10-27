@@ -1,6 +1,6 @@
 ---
 title: "Frozen sequence encoders with gradient boosting match the state of the art on drug–target affinity domain generalization, and a sequence defect in the Davis kinase benchmark"
-author: "Avinash Chaudhary"
+author: "Avinash Kumar"
 date: "October 2026"
 geometry: margin=1in
 fontsize: 11pt
