@@ -1,0 +1,73 @@
+{
+  "ddg_pairs": 3604,
+  "distinct_mutants": 53,
+  "distinct_genes": 10,
+  "distinct_drugs": 68,
+  "platinum_n": 796,
+  "ratio_vs_platinum": 4.53,
+  "abs_ddg_ge_1": 318,
+  "abs_ddg_lt_02": 2381,
+  "per_gene": [
+    {
+      "gene": "ABL1",
+      "n_mutants": 13,
+      "wt_used": "ABL1",
+      "ddG_pairs": 884
+    },
+    {
+      "gene": "BRAF",
+      "n_mutants": 1,
+      "wt_used": "BRAF",
+      "ddG_pairs": 68
+    },
+    {
+      "gene": "EGFR",
+      "n_mutants": 11,
+      "wt_used": "EGFR",
+      "ddG_pairs": 748
+    },
+    {
+      "gene": "FGFR3",
+      "n_mutants": 1,
+      "wt_used": "FGFR3",
+      "ddG_pairs": 68
+    },
+    {
+      "gene": "FLT3",
+      "n_mutants": 5,
+      "wt_used": "FLT3",
+      "ddG_pairs": 340
+    },
+    {
+      "gene": "KIT",
+      "n_mutants": 7,
+      "wt_used": "KIT",
+      "ddG_pairs": 476
+    },
+    {
+      "gene": "LRRK2",
+      "n_mutants": 1,
+      "wt_used": "LRRK2",
+      "ddG_pairs": 68
+    },
+    {
+      "gene": "MET",
+      "n_mutants": 2,
+      "wt_used": "MET",
+      "ddG_pairs": 136
+    },
+    {
+      "gene": "PIK3CA",
+      "n_mutants": 9,
+      "wt_used": "PIK3CA",
+      "ddG_pairs": 612
+    },
+    {
+      "gene": "RET",
+      "n_mutants": 3,
+      "wt_used": "RET",
+      "ddG_pairs": 204
+    }
+  ],
+  "verdict": "PLAN TIKTA HAI"
+}

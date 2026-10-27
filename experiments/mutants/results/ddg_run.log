@@ -1,0 +1,57 @@
+======================================================================
+Davis se ddG (mutation effect) data ki ginti
+======================================================================
+   downloaded davis_ligands_can.txt
+   downloaded davis_proteins.txt
+   downloaded davis_Y
+
+Davis: 68 drugs x 442 proteins · 30,056 measured pairs
+
+======================================================================
+NATEEJA
+======================================================================
+
+  ddG jode (drug, wild-type, mutant): 3,604
+  alag mutants                       : 53
+  alag genes                         : 10
+  alag drugs                         : 68
+
+  tulna - Platinum (field ka maujooda mutation dataset): 796
+  Davis se mila                                        : 3,604 (4.5x)
+
+  Gene ke hisaab se:
+  gene  n_mutants wt_used  ddG_pairs
+  ABL1         13    ABL1        884
+  EGFR         11    EGFR        748
+PIK3CA          9  PIK3CA        612
+   KIT          7     KIT        476
+  FLT3          5    FLT3        340
+   RET          3     RET        204
+   MET          2     MET        136
+  BRAF          1    BRAF         68
+ FGFR3          1   FGFR3         68
+ LRRK2          1   LRRK2         68
+
+  ddG ka faila: min -4.49 max 3.02 median 0.00 · std 0.59
+  |ddG| >= 1.0 (10x affinity farak): 318 jode (9%)
+  |ddG| >= 0.5                      : 726
+  |ddG| ~ 0 (farak nahi)            : 2,381
+
+  (agar zyadatar ddG ~0 hai to signal kam hai - ye zaroori check hai)
+
+  Sabse bade effects (resistance jaise):
+gene           mutant  pKd_wt  pKd_mut     ddG
+ABL1      ABL1(T315I) 10.5376   6.0506 -4.4870
+ KIT KIT(V559D-T670I)  9.0915   5.0000 -4.0915
+ABL1     ABL1(T315I)p  8.9586   5.0000 -3.9586
+ABL1      ABL1(T315I)  8.9586   5.0000 -3.9586
+ KIT KIT(V559D-T670I)  8.7447   5.0000 -3.7447
+ABL1     ABL1(T315I)p  8.6778   5.0000 -3.6778
+ABL1      ABL1(T315I)  8.6778   5.0000 -3.6778
+EGFR EGFR(L858RT790M)  8.6198   5.0000 -3.6198
+ABL1     ABL1(T315I)p 10.5376   6.9208 -3.6168
+ KIT       KIT(D816H)  9.4202   6.0862 -3.3340
+
+  >>> PLAN TIKTA HAI
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/mutants/results/davis_ddg.csv, ddg_feasibility.json
