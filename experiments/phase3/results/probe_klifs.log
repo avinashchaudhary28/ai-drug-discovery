@@ -80,3 +80,67 @@
   ['/interactions_get_IFP', '/interactions_get_types', '/interactions_match_residues', '/ligands_list_structures', '/structure_conformation', '/structure_get_complex', '/structure_get_ligand', '/structure_get_pdb_complex', '/structure_get_pocket', '/structure_get_protein', '/structure_list', '/structure_modified_residues', '/structures_list', '/structures_pdb_list']
 
   (inhe agle kadam me aazmayenge, jab kinase ID mil jayegi - ID ke bina inhe aazmana andaza hoga)
+======================================================================
+1) ABL1 ki kinase_ID aur pocket
+======================================================================
+  kinase_ID 392, uniprot P00519
+  pocket ki lambai: 85  (85 honi chahiye)
+  pocket: HKLGGGQYGEVYEVAVKTLEFLKEAAVMKEIKPNLVQLLGVYIITEFMTYGNLLDYLREYLEKKNFIHRDLAARNCLVVADFGLS
+
+======================================================================
+2) is kinase ki structures
+======================================================================
+  ✓ /structures_list -> 200, 165 rows
+      fields: ['DFG', 'Grich_angle', 'Grich_distance', 'Grich_rotation', 'aC_helix', 'allosteric_ligand', 'allosteric_ligand_ID', 'alt', 'back', 'bp_III', 'bp_II_A_in', 'bp_II_B', 'bp_II_B_in', 'bp_II_in', 'bp_II_out', 'bp_IV', 'bp_I_A', 'bp_I_B', 'bp_V', 'chain', 'curation_flag', 'fp_I', 'fp_II', 'front', 'gate', 'kinase', 'kinase_ID', 'ligand', 'ligand_ID', 'missing_atoms', 'missing_residues', 'pdb', 'pocket', 'quality_score', 'resolution', 'rmsd1', 'rmsd2', 'species', 'structure_ID']
+      pehli row: {"structure_ID": 1081, "kinase": "ABL1", "species": "Human", "kinase_ID": 392, "pdb": "4twp", "alt": "", "chain": "B", "rmsd1": 0.781, "rmsd2": 2.138, "pocket": "HKLGGGQYGEVYEVAVKTLEFLKEAAVMKEIKPNLVQLLGVYIIIEFMTYGNLLDYLREYLEKKNFIHRDLAARNCLVVADFGLS", "resolution": 2.4, "quality_score": 8, "missing_residues": 0, "missing_atoms": 0, "ligand": "AXI", "allosteric_ligand": 0, "DFG": "in", "aC_helix": "in", "Grich_distance": 17.3874, "Grich_angle": 58.5388, "Grich_rotation": 16.0263, "front": true, "gate": false, "back": false, "fp_I": true, "fp_II": false, "bp_I_A": false, "bp_I_B": false, "bp_II_in
+
+======================================================================
+3) pocket position -> residue number (asli sawal)
+======================================================================
+  structure_ID 1081 pe aazma rahe hain
+
+  ✓ /interactions_match_residues {'structure_ID': 1081} -> 200
+      list of 85
+      fields: ['KLIFS_position', 'Xray_position', 'index']
+      {"index": 1, "Xray_position": "246", "KLIFS_position": "I.1"}
+      {"index": 2, "Xray_position": "247", "KLIFS_position": "I.2"}
+      {"index": 3, "Xray_position": "248", "KLIFS_position": "I.3"}
+      {"index": 4, "Xray_position": "249", "KLIFS_position": "g.l.4"}
+      {"index": 5, "Xray_position": "250", "KLIFS_position": "g.l.5"}
+      {"index": 6, "Xray_position": "251", "KLIFS_position": "g.l.6"}
+  ✓ /structure_modified_residues {'structure_ID': 1081} -> 200
+      []
+
+======================================================================
+4) ek structure ka pocket bhi dekh lo
+======================================================================
+  /structure_get_pocket -> 200
+      pehli lines:
+@<TRIPOS>MOLECULE
+HUMAN/ABL1_4twp_chainB
+1389 1395 85 0 0 
+BIOPOLYMER
+USER_CHARGES
+
+
+@<TRIPOS>ATOM
+   1 N        8.2870    15.8472    52.0873 N.3    1 HIS246   0.0000 BACKBONE
+   2 H        7.8189    15.9855    52.9715 H      1 HIS246   0.0000 BACKBONE
+   3 CA       8.0756    14.6010    51.3561 C.3    1 HIS246   0.0000 BACKBONE
+   4 HA       9.0298    14.0775    51.2982 H      1 HIS246   0.0000 BACKBONE
+   5 C        7.5823    14.8803    49.9325 C.2    1 HIS246   0.0000 BACKBONE
+   6 O        6.7855    15.7983    49.7115 O.2    1 HIS246   0.0000 BACKBONE
+   7 CB       7.0582    13.7197    52.0914 C.3    1 HIS246   0.0000 
+   8 HB2      6.1138    14.2607    52.1502 H      1 HIS246   0.0000 
+   9 HB3      7.4315    13.5300    53.0978 H      1 HIS246   0.0000 
+  10 CG       6.8066    12.3995    51.4234 C.2    1 HIS246   0.0000 
+  11 ND1      7.6359    11.8835    50.4520 N.2    1 HIS246   0.
+
+======================================================================
+FAISLA
+======================================================================
+  Dekhna ye hai ki upar kisi jawab me KLIFS position (1-85) aur
+  residue number DONO ek saath aaye hain ya nahi. Agar nahi, to
+  pocket sequence ko UniProt sequence se align karna padega -
+  wo ho sakta hai (pocket kuch contiguous tukdon ka jod hai), par
+  wo alag kaam hai aur uski apni jaanch chahiye.
