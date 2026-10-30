@@ -87,13 +87,40 @@ for name, kw in [
     d, _ = compute(pd.DataFrame([row(**kw)]))
     check(f"{name} -> row hat jati hai", len(d), 0)
 
-print("\nmulti-mutant aur kinase ka nishaan")
+print("\nmulti-mutant")
 d, _ = compute(pd.DataFrame([row(mutation="D30N/N88D")]))
 check("D30N/N88D parse hua", d.mutation_norm.iloc[0], "D30N+N88D")
-check("kinase nishaan laga", bool(d.is_kinase.iloc[0]), True)
 
-d, _ = compute(pd.DataFrame([row(**{"prot.protein_class": "Hydrolase"})]))
-check("kinase nahi -> nishaan nahi", bool(d.is_kinase.iloc[0]), False)
+print("\nkinase ka nishaan - yahan maine pehle galti ki thi")
+# Platinum PDB ki vocabulary deta hai: kinase "TRANSFERASE" ke neeche
+# aati hai aur class me "kinase" shabd KABHI nahi hota. Pehle maine sirf
+# class me dhundha tha aur "0 kinase" nikla - jo galat tha.
+d, _ = compute(pd.DataFrame([row(**{
+    "mut.uniprot": "P00519",
+    "prot.molecule_name": "PROTO-ONCOGENE TYROSINE-PROTEIN KINASE ABL1",
+    "prot.protein_class": "TRANSFERASE"})]))
+check("ABL1 (class TRANSFERASE) protein kinase mana gaya",
+      bool(d.is_protein_kinase.iloc[0]), True)
+check("naam me kinase bhi mila", bool(d.name_has_kinase.iloc[0]), True)
+
+# Aur "kinase" naam hona kaafi nahi: thymidine kinase METABOLIC kinase
+# hai, protein kinase nahi - uska KLIFS pocket nahi hota
+d, _ = compute(pd.DataFrame([row(**{
+    "mut.uniprot": "P03176",
+    "prot.molecule_name": "THYMIDINE KINASE",
+    "prot.protein_class": "TRANSFERASE"})]))
+check("thymidine kinase: naam me kinase hai",
+      bool(d.name_has_kinase.iloc[0]), True)
+check("par protein kinase NAHI mana gaya",
+      bool(d.is_protein_kinase.iloc[0]), False)
+
+d, _ = compute(pd.DataFrame([row(**{
+    "mut.uniprot": "P12345",
+    "prot.molecule_name": "Aldose reductase",
+    "prot.protein_class": "OXIDOREDUCTASE"})]))
+check("aldose reductase: dono nishaan nahi",
+      bool(d.name_has_kinase.iloc[0]) or bool(d.is_protein_kinase.iloc[0]),
+      False)
 
 print("\nsign ki jaanch - yahi asli pehredaar hai")
 # Sab theek: ddG aur fold_change ek disha me

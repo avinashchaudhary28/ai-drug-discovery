@@ -43,6 +43,19 @@ WORK = HERE / "work_plat"
 URL = ("https://biosig.lab.uq.edu.au/platinum/static/platinum_flat_file.csv")
 UA = "ai-drug-discovery/phase2 (research)"
 
+# Platinum ke wo protein jo ASLI protein kinase hain (UniProt se).
+# Platinum me "kinase" naam wale sirf 8 protein hain, isliye haath se
+# list banai gayi aur nateeje me saaf chhapti hai. Baki paanch -
+# APS kinase (O43252), thymidine kinase (P03176), NDP kinase A
+# (P15531), pyruvate phosphate dikinase (P22983), PEP carboxykinase
+# (P07379) - metabolic kinase hain, protein kinase nahi; unka KLIFS
+# pocket nahi hota, isliye Phase 3 ke kaam ke nahi.
+PROTEIN_KINASES = {
+    "P00519": "ABL1",
+    "O14965": "AURKA",
+    "P17612": "PRKACA",
+}
+
 
 def download():
     WORK.mkdir(exist_ok=True)
@@ -116,8 +129,24 @@ def compute(df):
     drop["SMILES nahi mila"] = int((~has).sum())
     d = d[has].copy()
 
-    d["is_kinase"] = (d["prot.protein_class"].astype(str)
-                      .str.contains("kinase", case=False, na=False))
+    # Kinase pehchanna: pehle maine sirf prot.protein_class me "kinase"
+    # dhundha tha aur "0 kinase" nikla. Wo GALAT tha - Platinum PDB ki
+    # vocabulary istemaal karta hai, jisme kinase "TRANSFERASE" ke neeche
+    # aati hai aur "kinase" shabd class me kabhi nahi hota. Isliye naam
+    # bhi dekhna padta hai.
+    name = d["prot.molecule_name"].astype(str)
+    cls = d["prot.protein_class"].astype(str)
+    d["name_has_kinase"] = (name.str.contains("kinase", case=False, na=False)
+                            | cls.str.contains("kinase", case=False,
+                                               na=False))
+    # Aur "kinase" naam hona kaafi nahi: thymidine kinase, APS kinase,
+    # NDP kinase aur pyruvate phosphate dikinase METABOLIC kinase hain,
+    # protein kinase nahi - unka KLIFS pocket nahi hota, isliye Phase 3
+    # ke kaam ke nahi. Platinum me kinase-naam wale sirf 8 protein hain,
+    # isliye list haath se likhi hai aur neeche nateeje me chhapti hai -
+    # andaze se chhanne se behtar hai ki naam saaf dikhein.
+    d["is_protein_kinase"] = d["mut.uniprot"].isin(PROTEIN_KINASES)
+    d["is_kinase"] = d["is_protein_kinase"]
     print(f"  {n0:,} rows -> {len(d):,} istemaal layak")
     for k, v in drop.items():
         if v:
@@ -176,6 +205,7 @@ def main():
     RES.mkdir(exist_ok=True)
     cols = ["mutation", "mutation_norm", "mut.uniprot", "prot.molecule_name",
             "prot.protein_class", "prot.organism", "is_kinase",
+            "is_protein_kinase", "name_has_kinase",
             "lig.canonical_smiles", "affin.lig_name", "affin.unit",
             "affin.exptal_method", "k_wt", "k_mt", "ddG",
             "mut.is_single_point", "mut.in_binding_site",
@@ -198,8 +228,22 @@ def main():
     print(f"  binding site me       : "
           f"{(out['mut.in_binding_site'].astype(str).str.upper() == 'YES').sum():,}")
     print(f"\n  tulna: published SOTA ne Platinum ke 796 jode istemaal kiye")
-    print(f"\n  KINASE: {len(k):,} jode, {k['mut.uniprot'].nunique()} proteins")
-    print(f"  kinase nahi: {len(out) - len(k):,}")
+    print(f"\n  PROTEIN KINASE: {len(k):,} jode, "
+          f"{k['mut.uniprot'].nunique()} proteins")
+    for u, g in k.groupby("mut.uniprot"):
+        print(f"      {PROTEIN_KINASES.get(u, u)} ({u}): {len(g)} jode, "
+              f"{g.mutation_norm.nunique()} mutations")
+    print(f"  protein kinase nahi: {len(out) - len(k):,}")
+
+    # Jin protein ke naam me "kinase" hai par humne protein kinase nahi
+    # maana - inhe chhapna zaroori hai, taaki list jaanchi ja sake aur
+    # chup-chaap koi kinase chhoot na jaye.
+    nk = out[out.name_has_kinase & ~out.is_protein_kinase]
+    if len(nk):
+        print(f"\n  naam me 'kinase' par protein kinase NAHI maana "
+              f"({len(nk)} jode) - ye metabolic kinase hain:")
+        for (u, nm_), g in nk.groupby(["mut.uniprot", "prot.molecule_name"]):
+            print(f"      {u}  {nm_[:70]}  ({len(g)} jode)")
 
     print(f"\n  ddG ka faila: min {out.ddG.min():.2f}  max {out.ddG.max():.2f}  "
           f"median {out.ddG.median():.2f}  std {out.ddG.std():.2f}")
@@ -220,8 +264,10 @@ def main():
         "mutations": int(out.mutation_norm.nunique()),
         "proteins": int(out["mut.uniprot"].nunique()),
         "ligands": int(out["lig.canonical_smiles"].nunique()),
-        "kinase_pairs": int(len(k)),
-        "kinase_proteins": int(k["mut.uniprot"].nunique()),
+        "protein_kinase_pairs": int(len(k)),
+        "protein_kinase_proteins": int(k["mut.uniprot"].nunique()),
+        "protein_kinase_list": PROTEIN_KINASES,
+        "name_has_kinase_pairs": int(out.name_has_kinase.sum()),
         "ddG_abs_ge_1": int((out.ddG.abs() >= 1).sum()),
         "dropped": drop,
         "sign_check": sc,
