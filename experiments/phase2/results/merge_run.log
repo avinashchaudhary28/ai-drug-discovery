@@ -1,0 +1,9 @@
+Traceback (most recent call last):
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/classify_targets.py", line 185, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/classify_targets.py", line 118, in main
+    probe()
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/classify_targets.py", line 42, in probe
+    raise RuntimeError(
+RuntimeError: target_component me 'protein_classifications' nahi hai. maujood: ['accession', 'component_description', 'component_id', 'component_type', 'relationship', 'target_component_synonyms', 'target_component_xrefs']
