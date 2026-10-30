@@ -16,9 +16,15 @@ jobs:
         with:
           python-version: "3.11"
 
-      # Jaan-boojh kar: koi download nahi, sirf file ki shuruaat ke kuch
-      # MB. Poori file 1-2 GB ki hai aur usme mutation ka column hai ya
-      # nahi, yahi pata karna hai.
+      # Pehle zip padhne wale code ka test, bina network. Pichli baar
+      # wo code Actions pe gira tha - aisi galti yahan pakdi jaani
+      # chahiye, 600 MB wali file pe jaate waqt nahi.
+      - name: Selftest (zip padhna)
+        run: python -u experiments/phase2/selftest_zip.py
+
+      # Jaan-boojh kar: koi poora download nahi, sirf file ki shuruaat ke
+      # kuch MB. File 594 MB ki hai aur sawal yahi hai ki usme mutation
+      # ka column hai ya nahi.
       - name: Probe
         run: |
           set -o pipefail
