@@ -98,8 +98,30 @@ res = scan(chunks_of(zip_bytes(plain), 100), progress_every=0)
 check("50 rows", res["rows"], 50)
 check("zero hits", res["hits_in_target_name"], 0)
 
+print("\nADHOORI stream pe hisaab galat nikalna chahiye")
+# Yahi wo halat thi jisme pichla run chup-chaap faisla de gaya
+full = zip_bytes(text)
+half = full[: len(full) // 3]
+st = {}
+res = scan(chunks_of(half, 100), progress_every=0, stats=st)
+check("adhoori stream pe eof FALSE", st.get("eof"), False)
+check("adhoori stream pe kuch rows to aati hain", res["rows"] > 0, True)
+check("par poori nahi", res["rows"] < 300, True)
+
+st = {}
+res = scan(chunks_of(full, 100), progress_every=0, stats=st)
+check("poori stream pe eof TRUE", st.get("eof"), True)
+check("poori stream pe saari rows", res["rows"], 300)
+# inflate_stream deflate khatam hote hi ruk jata hai, isliye zip ka
+# aakhiri central directory (kuch sau byte) nahi padha jata - ye theek
+# hai. Isliye bytes_in poori file se thoda kam hoga.
+check("bytes_in file se zyada nahi", st.get("bytes_in") <= len(full), True)
+check("bytes_in lagbhag poori file", st.get("bytes_in") > len(full) - 500,
+      True)
+check("bytes_out gina gaya", st.get("bytes_out"), len(text.encode()))
+
 print()
 if FAIL:
     print(f"✗ {len(FAIL)} test fail: {FAIL}")
     sys.exit(1)
-print("✓ saare test paas")
+print("✓ saare test paas (adhoori stream ki jaanch ke saath)")

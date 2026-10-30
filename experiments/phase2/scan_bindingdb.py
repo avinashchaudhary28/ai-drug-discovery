@@ -37,14 +37,24 @@ MUT = re.compile(rf"[\[(]\s*[{AA}]\d{{1,4}}[{AA}]\s*[\])]"
                  rf"|(?<![A-Za-z0-9])[{AA}]\d{{2,4}}[{AA}](?![A-Za-z0-9])")
 
 
-def inflate_stream(chunks):
+def inflate_stream(chunks, stats=None):
     """Zip ki stream ko chalte-chalte kholo -> uncompressed bytes ke tukde.
 
     Pehla tukda local header rakhta hai; wahan se aage raw deflate hai.
+
+    stats me hisaab likha jata hai (bytes_in, bytes_out, eof). Pehle ye
+    nahi tha, aur stream beech me khatam ho gayi to ye chup-chaap ruk
+    gaya - 73,036 rows padh kar poori file ka faisla de diya. Ab main()
+    is hisaab ko milata hai aur na mile to rukta hai.
     """
+    st = stats if stats is not None else {}
+    st.setdefault("bytes_in", 0)
+    st.setdefault("bytes_out", 0)
+    st["eof"] = False
     d = None
     head = b""
     for raw in chunks:
+        st["bytes_in"] += len(raw)
         if d is None:
             head += raw
             if len(head) < 64:
@@ -67,8 +77,10 @@ def inflate_stream(chunks):
         except zlib.error as e:
             raise RuntimeError(f"deflate toota: {e}") from e
         if out:
+            st["bytes_out"] += len(out)
             yield out
         if d.eof:
+            st["eof"] = True
             return
 
 
@@ -87,7 +99,7 @@ def lines_from(chunks):
         yield buf
 
 
-def scan(chunks, progress_every=500_000):
+def scan(chunks, progress_every=100_000, stats=None):
     """-> gintee ka dict. Memory me namune ke alawa kuch nahi rakha jata."""
     hdr = None
     ti = None
@@ -95,7 +107,7 @@ def scan(chunks, progress_every=500_000):
     hit_target = 0
     hit_anywhere = 0
     examples = {}
-    for raw in lines_from(inflate_stream(chunks)):
+    for raw in lines_from(inflate_stream(chunks, stats)):
         line = raw.decode("utf-8", "replace").rstrip("\r")
         if hdr is None:
             hdr = line.split("\t")
@@ -123,8 +135,10 @@ def scan(chunks, progress_every=500_000):
                     examples[name.strip()[:160]] = examples.get(
                         name.strip()[:160], 0) + 1
         if progress_every and n % progress_every == 0:
+            cin = (stats or {}).get("bytes_in", 0)
             print(f"    {n:,} rows | target-name hits {hit_target:,} | "
-                  f"line hits {hit_anywhere:,}", flush=True)
+                  f"line hits {hit_anywhere:,} | {cin / 1e6:,.0f} MB padhi",
+                  flush=True)
     return {"rows": n, "columns": len(hdr or []),
             "target_name_index": ti,
             "hits_in_target_name": hit_target,
@@ -132,21 +146,60 @@ def scan(chunks, progress_every=500_000):
             "examples": examples}
 
 
-def http_chunks(url):
+def http_chunks(url, stats):
     with urllib.request.urlopen(req(url), timeout=900) as r:
-        print(f"  HTTP {r.status}, "
-              f"{int(r.headers.get('Content-Length') or 0):,} byte", flush=True)
+        total = int(r.headers.get("Content-Length") or 0)
+        stats["content_length"] = total
+        print(f"  HTTP {r.status}, {total:,} byte", flush=True)
+        got = 0
         while True:
             b = r.read(CHUNK)
             if not b:
-                return
+                break
+            got += len(b)
             yield b
+        stats["http_bytes"] = got
 
 
 def main():
     RES.mkdir(exist_ok=True)
     print(f"stream: {URL}")
-    res = scan(http_chunks(URL))
+    stats = {}
+    res = scan(http_chunks(URL, stats), stats=stats)
+    res["stream"] = dict(stats)
+
+    # POORI file padhi gayi ya nahi - ye jaanch pehle nahi thi, aur usi
+    # ki kami se pichla run 73,036 rows pe ruk kar poore faisle ka
+    # elaan kar gaya. Adhoori file pe faisla dena sabse bura nateeja hai.
+    cl = stats.get("content_length") or 0
+    got = stats.get("bytes_in") or 0
+    print(f"\n  hisaab: {got:,} / {cl:,} byte padhe, "
+          f"deflate eof {stats.get('eof')}, "
+          f"{stats.get('bytes_out', 0) / 1e9:.2f} GB khuli")
+    problems = []
+    # Mukhya niyam: deflate stream khud khatam hua ya nahi. Yahi pakka
+    # pata hai. (byte ki gintee ispe kaam nahi karti - stream khatam
+    # hote hi hum ruk jate hain, isliye zip ka aakhiri hissa nahi padha
+    # jata aur gintee thodi kam rehti hai.)
+    if not stats.get("eof"):
+        problems.append(
+            f"deflate stream poora khatam nahi hua - {got:,} byte padhe "
+            f"the, {cl:,} declare the ({got / cl:.1%} agar cl sahi hai)")
+    if res["rows"] < 1_000_000:
+        problems.append(f"sirf {res['rows']:,} rows - BindingDB me lagbhag "
+                        f"28 lakh hain, to ye file adhoori hai")
+    if problems:
+        res["verdict"] = "ADHOORA - faisla nahi"
+        res["problems"] = problems
+        (RES / "bindingdb_scan.json").write_text(json.dumps(res, indent=2))
+        print("\n!! FILE ADHOORI PADHI GAYI - faisla nahi de rahe:")
+        for p_ in problems:
+            print(f"     - {p_}")
+        print(f"\n  (jo gina gaya: {res['rows']:,} rows, "
+              f"{res['hits_in_target_name']:,} target-name hits - ye "
+              f"aankde poore nahi hain)")
+        print(f"  file: {RES}/bindingdb_scan.json")
+        return 1
 
     print(f"\n{'=' * 68}\nNATEEJA\n{'=' * 68}\n")
     print(f"  rows                        : {res['rows']:,}")
