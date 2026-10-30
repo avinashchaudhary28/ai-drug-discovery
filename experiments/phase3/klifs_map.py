@@ -116,7 +116,15 @@ def fetch_gene(gene):
     WORK.mkdir(exist_ok=True)
     cache = WORK / f"{re.sub(r'[^A-Za-z0-9_-]', '_', gene)}.json"
     if cache.exists():
-        return json.loads(cache.read_text())
+        old = json.loads(cache.read_text())
+        # Purani cache nayi jaanch ko chup-chaap bekaar kar deti hai:
+        # file maujood hai, isliye hum seedha lautte the aur consensus
+        # kabhi banta hi nahi. Phase 2 me bilkul yahi bug nikla tha
+        # (stale cache ne ek fix ko palat diya tha). Isliye ab dekha
+        # jata hai ki cache me NAYE field hain ya nahi.
+        if old.get("error") or "consensus_pocket" in old:
+            return old
+        print(f"    {gene}: purani cache (consensus nahi) - dobara")
 
     ks = get("/kinase_ID", {"kinase_name": gene, "species": "HUMAN"})
     if not ks:
