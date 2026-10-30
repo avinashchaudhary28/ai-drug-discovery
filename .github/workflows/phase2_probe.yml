@@ -1,0 +1,35 @@
+name: Phase 2 - ChEMBL structure probe (ek baar ka)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Probe
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/probe_api.py 2>&1 | tee probe.log
+      - name: Summary
+        if: always()
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -200 probe.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase2/results
+          cp probe.log experiments/phase2/results/probe.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase2: ChEMBL structure probe (run ${{ github.run_number }})" \
+            experiments/phase2/results/probe.log
