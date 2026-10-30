@@ -1,0 +1,41 @@
+name: Phase 2 - BindingDB structure probe (ek baar ka)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Jaan-boojh kar: koi download nahi, sirf file ki shuruaat ke kuch
+      # MB. Poori file 1-2 GB ki hai aur usme mutation ka column hai ya
+      # nahi, yahi pata karna hai.
+      - name: Probe
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/probe_bindingdb.py 2>&1 | tee bdb.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -150 bdb.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase2/results
+          cp bdb.log experiments/phase2/results/probe_bindingdb.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase2: BindingDB structure probe (run ${{ github.run_number }})" \
+            experiments/phase2/results/probe_bindingdb.log
