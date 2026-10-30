@@ -1,0 +1,40 @@
+======================================================================
+1) interaction ke types - IFP ke bits ka matlab
+======================================================================
+  status 200
+  [{"position": "1", "name": "Apolar contact"}, {"position": "2", "name": "Aromatic face-to-face"}, {"position": "3", "name": "Aromatic edge-to-face"}, {"position": "4", "name": "Hydrogen bond donor (protein)"}, {"position": "5", "name": "Hydrogen bond acceptor (protein)"}, {"position": "6", "name": "Protein cation - ligand anion"}, {"position": "7", "name": "Protein anion - ligand cation"}]
+  fields: ['name', 'position'], kul 7
+
+======================================================================
+2) ABL1 ki structures, phir unka IFP
+======================================================================
+  ABL1 kinase_ID: 392
+  structures: 165
+  jinme ligand hai: 97
+  pehle 5: [1081, 1057, 1058, 1089, 1071]
+
+======================================================================
+3) IFP ka asli roop
+======================================================================
+
+  /interactions_get_IFP {'structure_ID': 1081} -> 200
+      list of 1
+      fields: ['IFP', 'structure_ID']
+        structure_ID: 1081
+        IFP: 00000000000000100000010000000000000000000000000001010000000000000000001000000000000000000000000000100000000000001001000000000000000000000000000000000000000000000000000000000000000000000000000000000000   (lambai 595)
+
+  /interactions_get_IFP {'structure_ID': [1081, 1057, 1058]} -> 200
+      list of 1
+      fields: ['IFP', 'structure_ID']
+        structure_ID: 1058
+        IFP: 00000000000000100000000000000000000000000000000000000000000000000000001000000000000000000000000000100000000000001000000000000000000000000000000000000000000000000000000000000000000000000000000000000000   (lambai 595)
+
+======================================================================
+FAISLA
+======================================================================
+  Dekhna ye hai:
+   - IFP ek lambi string hai kya, aur uski lambai kya hai?
+   - 85 positions x kitne interaction types? (85*7 = 595 hota hai
+     agar 7 types hon)
+   - agar lambai 85 ka gunank nahi hai to mera samajhna galat hai
+     aur usse pehle theek karna padega.
