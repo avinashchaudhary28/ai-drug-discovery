@@ -1,59 +1,112 @@
   8,110 jode, 56 genes (22 me 20+ jode)
+    ABL1: purani cache (consensus nahi) - dobara
   ABL1       ✓ offset +19  pocket me  14/20   wt match 93%  (theek)
+    ACVR1: purani cache (consensus nahi) - dobara
   ACVR1      ✓ offset  +0  pocket me   2/5    wt match 100%  (theek)
+    AKT1: purani cache (consensus nahi) - dobara
   AKT1       ✓ offset  +0  pocket me   1/2    wt match 100%  (theek)
+    AKT2: purani cache (consensus nahi) - dobara
   AKT2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
   AKT3       ✗ koi structure nahi
+    ALK: purani cache (consensus nahi) - dobara
   ALK        ✓ offset  +0  pocket me  18/20   wt match 100%  (theek)
+    AURKA: purani cache (consensus nahi) - dobara
   AURKA      ✓ offset  +0  pocket me   3/3    wt match 100%  (theek)
+    AURKB: purani cache (consensus nahi) - dobara
   AURKB      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    BRAF: purani cache (consensus nahi) - dobara
   BRAF       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    BTK: purani cache (consensus nahi) - dobara
   BTK        ✓ offset  +0  pocket me   4/4    wt match 100%  (theek)
+    CAMK2A: purani cache (consensus nahi) - dobara
   CAMK2A     ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    CDK2: purani cache (consensus nahi) - dobara
   CDK2       ✓ offset  +0  pocket me   6/6    wt match 100%  (theek)
+    CDK7: purani cache (consensus nahi) - dobara
   CDK7       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    CHEK2: purani cache (consensus nahi) - dobara
   CHEK2      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    CSNK2A1: purani cache (consensus nahi) - dobara
   CSNK2A1    ✓ offset  -6  pocket me   3/4    wt match 100%  (theek)
+    DDR2: purani cache (consensus nahi) - dobara
   DDR2       ✓ offset +47  pocket me   2/2    wt match 100%  (theek)
+    DYRK1A: purani cache (consensus nahi) - dobara
   DYRK1A     ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    EGFR: purani cache (consensus nahi) - dobara
   EGFR       ✓ offset  +0  pocket me  10/11   wt match 100%  (theek)
+    ERBB2: purani cache (consensus nahi) - dobara
   ERBB2      ✓ offset  +0  pocket me   4/5    wt match 100%  (theek)
+    FGFR1: purani cache (consensus nahi) - dobara
   FGFR1      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    FGFR2: purani cache (consensus nahi) - dobara
   FGFR2      ✓ offset  +0  pocket me   5/6    wt match 100%  (theek)
+    FGFR3: purani cache (consensus nahi) - dobara
   FGFR3      ✓ offset  +0  pocket me   3/8    wt match 100%  (theek)
-  FGFR4      ✗ offset  +0  pocket me   5/5    wt match 60%  (wild-type AA sirf 60% pe mila, 80% chahiye)
+    FGFR4: purani cache (consensus nahi) - dobara
+  FGFR4      ✓ offset  +0  pocket me   5/5    wt match 100%  (theek)
+    FLT3: purani cache (consensus nahi) - dobara
   FLT3       ✗ offset -24  pocket me   6/7    wt match 67%  (wild-type AA sirf 67% pe mila, 80% chahiye)
+    FYN: purani cache (consensus nahi) - dobara
   FYN        ✗ offset  +0  pocket me   0/3    wt match 0%  (ek bhi mutation pocket me nahi)
+    GRK2: purani cache (consensus nahi) - dobara
   GRK2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    GRK5: purani cache (consensus nahi) - dobara
   GRK5       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    JAK2: purani cache (consensus nahi) - dobara
   JAK2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    KDR: purani cache (consensus nahi) - dobara
   KDR        ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    KIT: purani cache (consensus nahi) - dobara
   KIT        ✓ offset  +0  pocket me   4/17   wt match 100%  (theek)
+    LRRK2: purani cache (consensus nahi) - dobara
   LRRK2      ✗ offset  +0  pocket me   0/4    wt match 0%  (ek bhi mutation pocket me nahi)
+    MAP2K1: purani cache (consensus nahi) - dobara
   MAP2K1     ✓ offset  -6  pocket me   1/1    wt match 100%  (theek)
+    MAP3K14: purani cache (consensus nahi) - dobara
   MAP3K14    ✓ offset -41  pocket me   1/1    wt match 100%  (theek)
+    MAPK11: purani cache (consensus nahi) - dobara
   MAPK11     ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    MAPK14: purani cache (consensus nahi) - dobara
   MAPK14     ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    MAPK3: purani cache (consensus nahi) - dobara
   MAPK3      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    MAPK9: purani cache (consensus nahi) - dobara
   MAPK9      ✓ offset -47  pocket me   1/1    wt match 100%  (theek)
+    MET: purani cache (consensus nahi) - dobara
   MET        ✗ offset  -6  pocket me   8/12   wt match 62%  (wild-type AA sirf 62% pe mila, 80% chahiye)
+    NEK2: purani cache (consensus nahi) - dobara
   NEK2       ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
+    NTRK1: purani cache (consensus nahi) - dobara
   NTRK1      ✓ offset  +0  pocket me   3/5    wt match 100%  (theek)
+    NTRK3: purani cache (consensus nahi) - dobara
   NTRK3      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-  PDGFRA     ✓ offset  +0  pocket me   1/3    wt match 100%  (theek)
+    PDGFRA: purani cache (consensus nahi) - dobara
+  PDGFRA     ✓ offset  -6  pocket me   1/3    wt match 100%  (theek)
+    PDPK1: purani cache (consensus nahi) - dobara
   PDPK1      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    PIK3CA: purani cache (consensus nahi) - dobara
   PIK3CA     ✓ offset  +0  pocket me   1/9    wt match 100%  (theek)
   PRKCE      ✗ koi structure nahi
   PRKCZ      ✗ koi structure nahi
+    RAF1: purani cache (consensus nahi) - dobara
   RAF1       ✗ offset +24  pocket me   4/4    wt match 75%  (wild-type AA sirf 75% pe mila, 80% chahiye)
+    RET: purani cache (consensus nahi) - dobara
   RET        ✓ offset  +0  pocket me  10/14   wt match 100%  (theek)
+    RIPK2: purani cache (consensus nahi) - dobara
   RIPK2      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    ROS1: purani cache (consensus nahi) - dobara
   ROS1       ✓ offset  +0  pocket me   2/2    wt match 100%  (theek)
+    RPS6KB1: purani cache (consensus nahi) - dobara
   RPS6KB1    ✗ offset  +0  pocket me   0/2    wt match 0%  (ek bhi mutation pocket me nahi)
+    SGK1: purani cache (consensus nahi) - dobara
   SGK1       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
+    SRC: purani cache (consensus nahi) - dobara
   SRC        ✓ offset  +0  pocket me   2/3    wt match 100%  (theek)
+    STK3: purani cache (consensus nahi) - dobara
   STK3       ✓ offset  +0  pocket me   3/3    wt match 100%  (theek)
+    TEK: purani cache (consensus nahi) - dobara
   TEK        ✓ offset +18  pocket me   1/1    wt match 100%  (theek)
+    TGFBR1: purani cache (consensus nahi) - dobara
   TGFBR1     ✓ offset +47  pocket me   1/1    wt match 100%  (theek)
 
 ======================================================================
@@ -61,10 +114,10 @@ NATEEJA
 ======================================================================
 
   genes dekhe        : 56
-  mapping bani aur jaanch paas: 33
-  LOGO ke folds (22) me se paas: 13
+  mapping bani aur jaanch paas: 34
+  LOGO ke folds (22) me se paas: 14
 
-  offset 0 wale (numbering seedha milti hai): 25/33
+  offset 0 wale (numbering seedha milti hai): 25/34
   jinme offset laga (Phase 1 jaisa farak):
       ABL1       offset  +19  wt match 93%  (6xr7)
       CSNK2A1    offset   -6  wt match 100%  (5zn0)
@@ -72,18 +125,18 @@ NATEEJA
       MAP2K1     offset   -6  wt match 100%  (6nyb)
       MAP3K14    offset  -41  wt match 100%  (6z1t)
       MAPK9      offset  -47  wt match 100%  (7n8t)
+      PDGFRA     offset   -6  wt match 100%  (6jol)
       TEK        offset  +18  wt match 100%  (1fvr)
       TGFBR1     offset  +47  wt match 100%  (4x2f)
 
-  in genes ke mutations: 164, pocket ke andar 113 (69%)
+  in genes ke mutations: 169, pocket ke andar 118 (70%)
 
-  jo istemaal NAHI honge (23):
+  jo istemaal NAHI honge (22):
       LRRK2        677 jode  (LOGO fold)  ek bhi mutation pocket me nahi
       FLT3         531 jode  (LOGO fold)  wild-type AA sirf 67% pe mila, 80% chahiye
       BRAF         431 jode  (LOGO fold)  ek bhi mutation pocket me nahi
       MET          204 jode  (LOGO fold)  wild-type AA sirf 62% pe mila, 80% chahiye
       JAK2          66 jode  (LOGO fold)  ek bhi mutation pocket me nahi
-      FGFR4         38 jode  (LOGO fold)  wild-type AA sirf 60% pe mila, 80% chahiye
       RPS6KB1       32 jode  (LOGO fold)  ek bhi mutation pocket me nahi
       GRK2          23 jode  (LOGO fold)  ek bhi mutation pocket me nahi
       RAF1          23 jode  (LOGO fold)  wild-type AA sirf 75% pe mila, 80% chahiye
@@ -92,13 +145,14 @@ NATEEJA
       PRKCZ          7 jode    koi structure nahi
       GRK5           4 jode    ek bhi mutation pocket me nahi
       KDR            4 jode    ek bhi mutation pocket me nahi
+      PRKCE          2 jode    koi structure nahi
       PDPK1          2 jode    ek bhi mutation pocket me nahi
 
-  jode jo aage ja sakte hain: 6,035 / 8,110 (74%)
+  jode jo aage ja sakte hain: 6,073 / 8,110 (75%)
 
 ======================================================================
 FAISLA
 ======================================================================
-  Aage badh sakte hain: 13 folds aur 6,035 jode. Ab pocket position ko feature banakar dekhna hai ki farsh toota ya nahi.
+  Aage badh sakte hain: 14 folds aur 6,073 jode. Ab pocket position ko feature banakar dekhna hai ki farsh toota ya nahi.
 
-  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/klifs_map.json, klifs_verify.csv (0s)
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/klifs_map.json, klifs_verify.csv (86s)

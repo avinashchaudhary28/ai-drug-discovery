@@ -1,10 +1,10 @@
 {
   "genes": 56,
-  "usable": 33,
+  "usable": 34,
   "fold_genes": 22,
-  "fold_usable": 13,
+  "fold_usable": 14,
   "pairs_total": 8110,
-  "pairs_usable": 6035,
+  "pairs_usable": 6073,
   "offset_zero": 25,
   "per_gene": [
     {
@@ -339,13 +339,13 @@
     },
     {
       "gene": "FGFR4",
-      "usable": false,
+      "usable": true,
       "offset": 0.0,
       "n_mutations": 5.0,
       "n_in_pocket": 5.0,
-      "n_wt_matched": 3.0,
-      "match_rate": 0.6,
-      "reason": "wild-type AA sirf 60% pe mila, 80% chahiye",
+      "n_wt_matched": 5.0,
+      "match_rate": 1.0,
+      "reason": "theek",
       "is_fold": true,
       "n_pairs": 38,
       "pdb": "7dtz",
@@ -625,7 +625,7 @@
     {
       "gene": "PDGFRA",
       "usable": true,
-      "offset": 0.0,
+      "offset": -6.0,
       "n_mutations": 3.0,
       "n_in_pocket": 1.0,
       "n_wt_matched": 1.0,

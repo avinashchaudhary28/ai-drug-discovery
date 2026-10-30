@@ -21,7 +21,7 @@ ERBB2,True,0.0,5.0,4.0,4.0,1.0,theek,False,13,7pcd,P04626,85.0
 FGFR1,True,0.0,1.0,1.0,1.0,1.0,theek,False,16,5ew8,P11362,85.0
 FGFR2,True,0.0,6.0,5.0,5.0,1.0,theek,True,74,4j99,P21802,85.0
 FGFR3,True,0.0,8.0,3.0,3.0,1.0,theek,True,133,8udu,P22607,85.0
-FGFR4,False,0.0,5.0,5.0,3.0,0.6,"wild-type AA sirf 60% pe mila, 80% chahiye",True,38,7dtz,P22455,85.0
+FGFR4,True,0.0,5.0,5.0,5.0,1.0,theek,True,38,7dtz,P22455,85.0
 FLT3,False,-24.0,7.0,6.0,4.0,0.6666666666666666,"wild-type AA sirf 67% pe mila, 80% chahiye",True,531,4xuf,P36888,85.0
 FYN,False,0.0,3.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,15,2dq7,P06241,85.0
 GRK2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,23,3v5w,P25098,85.0
@@ -40,7 +40,7 @@ MET,False,-6.0,12.0,8.0,5.0,0.625,"wild-type AA sirf 62% pe mila, 80% chahiye",T
 NEK2,True,0.0,1.0,1.0,1.0,1.0,theek,False,1,5m53,P51955,85.0
 NTRK1,True,0.0,5.0,3.0,3.0,1.0,theek,True,245,4yne,P04629,85.0
 NTRK3,True,0.0,1.0,1.0,1.0,1.0,theek,False,5,6kzc,Q16288,85.0
-PDGFRA,True,0.0,3.0,1.0,1.0,1.0,theek,True,40,6jol,P16234,85.0
+PDGFRA,True,-6.0,3.0,1.0,1.0,1.0,theek,True,40,6jol,P16234,85.0
 PDPK1,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,2,1uu3,O15530,85.0
 PIK3CA,True,0.0,9.0,1.0,1.0,1.0,theek,False,9,8exl,P42336,85.0
 PRKCE,False,,,,,,koi structure nahi,False,2,,,
