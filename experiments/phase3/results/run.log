@@ -5,29 +5,38 @@
 [2/3] features (bina protein ke - sirf dawa aur mutation)
   X: 8,110 x 1,054
 
-[3/3] leave-one-gene-out (3 seeds)
-  ABL1     n=1,181  (13s)
-  ACVR1    n=   26  (21s)
-  ALK      n=  815  (30s)
-  BRAF     n=  431  (38s)
-  BTK      n=   74  (47s)
-  DDR2     n=   26  (55s)
-  EGFR     n=2,376  (62s)
-  FGFR2    n=   74  (70s)
-  FGFR3    n=  133  (79s)
-  FGFR4    n=   38  (87s)
-  FLT3     n=  531  (95s)
-  GRK2     n=   23  (104s)
-  JAK2     n=   66  (112s)
-  KIT      n=  449  (120s)
-  LRRK2    n=  677  (128s)
-  MET      n=  204  (136s)
-  NTRK1    n=  245  (145s)
-  PDGFRA   n=   40  (153s)
-  RAF1     n=   23  (161s)
-  RET      n=  461  (169s)
-  RPS6KB1  n=   32  (178s)
-  TGFBR1   n=   29  (186s)
+[3/3] leave-one-gene-out (1 seeds)
+  ABL1     n=1,181  (8s)
+  ACVR1    n=   26  (11s)
+  ALK      n=  815  (14s)
+  BRAF     n=  431  (17s)
+  BTK      n=   74  (20s)
+  DDR2     n=   26  (23s)
+  EGFR     n=2,376  (26s)
+  FGFR2    n=   74  (28s)
+  FGFR3    n=  133  (31s)
+  FGFR4    n=   38  (34s)
+  FLT3     n=  531  (37s)
+  GRK2     n=   23  (40s)
+  JAK2     n=   66  (43s)
+  KIT      n=  449  (46s)
+  LRRK2    n=  677  (49s)
+  MET      n=  204  (52s)
+  NTRK1    n=  245  (55s)
+  PDGFRA   n=   40  (57s)
+  RAF1     n=   23  (60s)
+  RET      n=  461  (63s)
+  RPS6KB1  n=   32  (66s)
+  TGFBR1   n=   29  (69s)
+
+[jaanch] random split - features kaam karte hain ya nahi
+             mae  spearman
+model                     
+0 bolo  0.729114       NaN
+XGB     0.445261  0.751522
+
+  random split pe XGB vs farsh: MAE 0.445 vs 0.729, spearman +0.752
+  => features THEEK hain. Model seekh sakta hai, par ANDEKHE GENE pe nahi le ja pata. Yahi asli samasya hai.
 
 ======================================================================
 NATEEJA (har gene ek ikai)
@@ -38,16 +47,16 @@ model
 har dawa ka ausat         22  0.720368  0.979514  0.055499
 0 bolo (farsh)            22  0.749880  1.016810       NaN
 training ka ausat         22  0.755732  1.014770       NaN
-XGB (dawa + mutation)     22  0.779670  1.008552  0.069441
+XGB (dawa + mutation)     22  0.771480  0.995728  0.066646
 AA badlav ka ausat        22  0.845702  1.075903  0.078513
 
   '0 bolo (farsh)' se tulna (har gene pe MAE kitna GHATA):
 
     har dawa ka ausat          dMAE +0.0295  t= +0.57  jeeta 9/22 genes  spearman +0.055
-/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/run_baseline.py:139: RuntimeWarning: Mean of empty slice
+/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/run_baseline.py:173: RuntimeWarning: Mean of empty slice
   sp = float(np.nanmean(m.loc[common, "spearman"]))
     training ka ausat          dMAE -0.0059  t= -0.57  jeeta 13/22 genes  spearman +nan
-    XGB (dawa + mutation)      dMAE -0.0298  t= -0.48  jeeta 8/22 genes  spearman +0.069
+    XGB (dawa + mutation)      dMAE -0.0216  t= -0.36  jeeta 7/22 genes  spearman +0.067
     AA badlav ka ausat         dMAE -0.0958  t= -1.82  jeeta 5/22 genes  spearman +0.079
 
 ======================================================================
@@ -60,11 +69,11 @@ FAISLA
     har dawa ka ausat          +0.055
     training ka ausat          +nan
     AA badlav ka ausat         +0.079
-    XGB (dawa + mutation)      +0.069
+    XGB (dawa + mutation)      +0.067
 
   Reference (SEEDHE comparable NAHI - alag data, alag protocol):
     TKI-ABL1, 8 inhibitors (best reported)     0.39
     FEP+ (industry gold standard)              0.37
     Platinum 10-fold CV (Pearson)              0.20
 
-  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/baseline_logo.csv, baseline_report.json (186s)
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/baseline_logo.csv, baseline_report.json (81s)

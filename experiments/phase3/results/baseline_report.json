@@ -3,9 +3,7 @@
   "genes_tested": 22,
   "min_pairs": 20,
   "seeds": [
-    0,
-    1,
-    2
+    0
   ],
   "n_trees": 400,
   "summary": [
@@ -33,9 +31,9 @@
     {
       "model": "XGB (dawa + mutation)",
       "genes": 22,
-      "mae": 0.7796701851,
-      "rmse": 1.0085516107,
-      "spearman": 0.0694406208
+      "mae": 0.7714804061,
+      "rmse": 0.9957277142,
+      "spearman": 0.0666458165
     },
     {
       "model": "AA badlav ka ausat",
@@ -64,11 +62,11 @@
     },
     {
       "model": "XGB (dawa + mutation)",
-      "d_mae": -0.029790067101947572,
-      "t": -0.47775762091776525,
-      "wins": 8,
+      "d_mae": -0.02160028817772822,
+      "t": -0.3570476747361669,
+      "wins": 7,
       "genes": 22,
-      "spearman": 0.0694406207972545
+      "spearman": 0.06664581649348544
     },
     {
       "model": "AA badlav ka ausat",
@@ -84,6 +82,12 @@
     "TKI-ABL1, 8 inhibitors (best reported)": 0.39,
     "FEP+ (industry gold standard)": 0.37,
     "Platinum 10-fold CV (Pearson)": 0.2
+  },
+  "random_split_check": {
+    "mae_zero": 0.729114340320592,
+    "mae_xgb": 0.4452608492980731,
+    "spearman_xgb": 0.7515218932211867,
+    "features_ok": true
   },
   "note": "Ikai gene hai, row nahi. Published aankde seedhe comparable nahi hain."
 }
