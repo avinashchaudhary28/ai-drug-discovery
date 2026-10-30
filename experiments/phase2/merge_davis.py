@@ -164,6 +164,33 @@ def main():
                      .reindex(d.sort_values(ascending=False).index).head(10))
         print("\n    sabse bada matbhed:")
         print(worst.to_string())
+
+        # Matbhed kahan se aa raha hai - mutant ke maap se, ya wild-type
+        # se? ddG = pK_mut - pK_wt. Agar ek hi (gene, drug) ka WILD-TYPE
+        # number dono source me alag hai, to us drug ke SAARE mutations
+        # ka ddG bilkul utna hi khisak jayega - ek jaisa, na ghat na
+        # badh. Yaani ek jaisa farak = wild-type ka jhagda, aur wo ek
+        # jagah theek karne se kai jode theek ho jate hain.
+        od = both.assign(diff=both.chembl - both.davis).reset_index()
+        g = (od.groupby(["gene", "drug_key", "assay_type"])
+               .agg(n=("diff", "size"), spread=("diff", "std"),
+                    off=("diff", "mean")))
+        multi = g[g.n >= 3].copy()
+        const = multi[(multi.spread.fillna(0) < 0.1) & (multi.off.abs() >= 0.5)]
+        pairs_in_const = int(const.n.sum())
+        print(f"\n    matbhed ki jad:")
+        print(f"      {len(multi)} (gene, drug) jodiyan jinme 3+ mutations "
+              f"dono source me hain")
+        print(f"      inme {len(const)} me farak HAR mutation pe ek jaisa hai "
+              f"(spread < 0.1, |offset| >= 0.5)")
+        print(f"      = {pairs_in_const:,} jode, jinka matbhed wild-type ke "
+              f"maap se aa raha hai, mutant se nahi")
+        if len(const):
+            print(const.sort_values("off", key=abs, ascending=False)
+                       .head(8).to_string())
+        overlap["const_offset_groups"] = int(len(const))
+        overlap["const_offset_pairs"] = pairs_in_const
+        overlap["multi_mutation_groups"] = int(len(multi))
     else:
         print("  dono source me ek bhi saajha jodi nahi mili - "
               "yaani koi tulna nahi ho sakti")
