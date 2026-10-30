@@ -1,0 +1,40 @@
+======================================================================
+1) download page khulta hai kya, aur kaun si file maujood hai
+======================================================================
+  https://www.bindingdb.org/rwd/bind/chemsearch/marvin/Download.jsp -> HTTP 200, 38 BindingDB link
+      /bind/chemsearch/marvin/SDFdownload.jsp?download_file=/bind/downloads/BindingDB_JChem3D.sdf.zip
+      /bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_BindingDB_Articles_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDBValidationSets.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_Assays.tsv
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_Assays_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_BindingDB_Articles_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_BindingDB_Articles_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_CSAR_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_CSAR_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_CSAR_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ChEMBL_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ChEMBL_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ChEMBL_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_Covid-19_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_Covid-19_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_Covid-19_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_HostGuest_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_HostGuest_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ITC_202610_tsv.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ITC_2D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_ITC_3D_202610_sdf.zip
+      /rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_PDSPKi_202610_tsv.zip
+  https://www.bindingdb.org/bind/downloads/ -> HTTP 404, 0 BindingDB link
+  https://www.bindingdb.org/rwd/bind/downloads/ -> HTTP 404, 0 BindingDB link
+
+  TSV jaisi file: ['https://www.bindingdb.org/rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_202610_tsv.zip']
+
+======================================================================
+2) file ka size aur Range chalta hai kya
+======================================================================
+  https://www.bindingdb.org/rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
+  {"status": 200, "total": null, "accept_ranges": false, "type": "text/html;charset=UTF-8"}
+  !! Range nahi chalta - poori file utaarni padegi. Aaj nahi.
