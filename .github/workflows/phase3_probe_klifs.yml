@@ -15,10 +15,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-      - name: Probe
+      - name: Probe (daur 1 - spec aur kinase)
         run: |
           set -o pipefail
           python -u experiments/phase3/probe_klifs.py 2>&1 | tee klifs.log
+
+      - name: Probe (daur 2 - pocket position se residue number)
+        run: |
+          set -o pipefail
+          python -u experiments/phase3/probe_klifs2.py 2>&1 | tee -a klifs.log
       - name: Summary
         if: always()
         run: |
