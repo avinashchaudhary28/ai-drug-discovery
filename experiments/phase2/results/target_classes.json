@@ -1,0 +1,1795 @@
+{
+  "CHEMBL1075104": {
+    "gene": "LRRK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  lrrk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1075132": {
+    "gene": "TRAP1",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1075138": {
+    "gene": "TDP1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphodiesterase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1075145": {
+    "gene": "VCP",
+    "n_components": 1,
+    "classes": [
+      "transporter  ntpase  errt"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1075189": {
+    "gene": "PKM",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1075317": {
+    "gene": "WDR5",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  methyl-lysine  wdr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1075319": {
+    "gene": "TRPM8",
+    "n_components": 1,
+    "classes": [
+      "ion channel  vgc  trp"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1163125": {
+    "gene": "BRD4",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  brd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1275221": {
+    "gene": "PRMT6",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  writer  pmt  prmt"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1275223": {
+    "gene": "HSPA8",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1293229": {
+    "gene": "NR4A1",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr4  nr4a  nr4a1"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1293237": {
+    "gene": "BLM",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1293287": {
+    "gene": "IDE",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1293289": {
+    "gene": "BRD2",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  brd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1293292": {
+    "gene": "KCNJ1",
+    "n_components": 1,
+    "classes": [
+      "ion channel  vgc  k  kir"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1628481": {
+    "gene": "APLNR",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  neuropeptide receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1741186": {
+    "gene": "RORC",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr1  nr1f  nr1f3"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1741217": {
+    "gene": "APOBEC3G",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1744522": {
+    "gene": "EPAS1",
+    "n_components": 1,
+    "classes": [
+      "transcription factor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1764946": {
+    "gene": "CBX7",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  methyl-lysine  chromo"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1770034": {
+    "gene": "PIP4K2C",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1783": {
+    "gene": "VEGFA",
+    "n_components": 1,
+    "classes": [
+      "secreted"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1795185": {
+    "gene": "BRDT",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  brd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1795186": {
+    "gene": "BRD3",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  brd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1824": {
+    "gene": "ERBB2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  egfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1841": {
+    "gene": "FYN",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  src"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1855": {
+    "gene": "GNRHR",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  gnrh receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1862": {
+    "gene": "ABL1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  abl"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1871": {
+    "gene": "AR",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr3  nr3c  nr3c4"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1899": {
+    "gene": "HTR3A",
+    "n_components": 1,
+    "classes": [
+      "ion channel  lgic  5ht3"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1901": {
+    "gene": "CCKAR",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  cholecystokinin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1906": {
+    "gene": "RAF1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  raf"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1907601": {
+    "gene": "CDK4",
+    "n_components": 2,
+    "classes": [
+      "cytosolic other",
+      "enzyme  kinase  protein kinase  cmgc"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1907611": {
+    "gene": "TP53",
+    "n_components": 2,
+    "classes": [
+      "nuclear other",
+      "transcription factor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1936": {
+    "gene": "KIT",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  pdgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1938211": {
+    "gene": "KDM6B",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  kdm  jumonji"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1942": {
+    "gene": "ADRA2B",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  adrenergic receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1952": {
+    "gene": "TYMS",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1974": {
+    "gene": "FLT3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  pdgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL1980": {
+    "gene": "SCN5A",
+    "n_components": 1,
+    "classes": [
+      "ion channel  vgc  vg na"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL1994": {
+    "gene": "NR3C2",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr3  nr3c  nr3c2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2007": {
+    "gene": "PDGFRA",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  pdgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2007625": {
+    "gene": "IDH1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2015": {
+    "gene": "GRIN1",
+    "n_components": 1,
+    "classes": [
+      "ion channel  lgic  glut  nmda"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2029197": {
+    "gene": "RAPGEF3",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL203": {
+    "gene": "EGFR",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  egfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL204": {
+    "gene": "F2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  serine  pas  s1a"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2041": {
+    "gene": "RET",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  ret"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2047": {
+    "gene": "NR1H4",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr1  nr1h  nr1h4"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL205": {
+    "gene": "CA2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  lyase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL206": {
+    "gene": "ESR1",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr3  nr3a  nr3a1"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2079846": {
+    "gene": "SOS1",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2079849": {
+    "gene": "HPN",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  serine"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2096618": {
+    "gene": "ABL1",
+    "n_components": 2,
+    "classes": [
+      "cytosolic other",
+      "enzyme  kinase  protein kinase  atypical  bcr",
+      "enzyme  kinase  protein kinase  tk  abl"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL210": {
+    "gene": "ADRB2",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  adrenergic receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2107": {
+    "gene": "CXCR4",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  chemokine receptor  cxc chemokine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL211": {
+    "gene": "CHRM2",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  acetylcholine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2111367": {
+    "gene": "PIK3R1",
+    "n_components": 2,
+    "classes": [
+      "enzyme",
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2157850": {
+    "gene": "USP7",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  cysteine  ca  c19"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL216": {
+    "gene": "CHRM1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  acetylcholine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2160": {
+    "gene": "NME2",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL217": {
+    "gene": "DRD2",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  dopamine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2179": {
+    "gene": "GBA1",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL218": {
+    "gene": "CNR1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  lipid-like ligand receptor  cannabinoid receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2185": {
+    "gene": "AURKB",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  other  aur"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2189110": {
+    "gene": "EZH2",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  writer  pmt"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2189121": {
+    "gene": "KRAS",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL222": {
+    "gene": "SLC6A2",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc06"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL224": {
+    "gene": "HTR2A",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  serotonin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2243": {
+    "gene": "FAAH",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2250": {
+    "gene": "BLK",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  src"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL226": {
+    "gene": "ADORA1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  nucleotide-like receptor  adenosine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL227": {
+    "gene": "AGTR1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  angiotensin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL228": {
+    "gene": "SLC6A4",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc06"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2292": {
+    "gene": "DYRK1A",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  dyrk  dyrk1"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL231": {
+    "gene": "HRH1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  histamine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2321643": {
+    "gene": "SMYD3",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  writer  pmt  set"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL234": {
+    "gene": "DRD3",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  dopamine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2343": {
+    "gene": "SGK1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  sgk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL237": {
+    "gene": "OPRK1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  opioid receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL238": {
+    "gene": "SLC6A3",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc06"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL240": {
+    "gene": "KCNH2",
+    "n_components": 1,
+    "classes": [
+      "ion channel  vgc  k  vg k"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL242": {
+    "gene": "ESR2",
+    "n_components": 1,
+    "classes": [
+      "transcription factor  nuclear receptor  nr3  nr3a  nr3a2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2424510": {
+    "gene": "UHRF1",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  reader  methyl-lysine  tudor",
+      "epigenetic regulator  reader  phd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2429708": {
+    "gene": "PARP10",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2431": {
+    "gene": "AKT2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  akt"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL245": {
+    "gene": "CHRM3",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  acetylcholine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL249": {
+    "gene": "TACR1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  neurokinin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL251": {
+    "gene": "ADORA2A",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  nucleotide-like receptor  adenosine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2527": {
+    "gene": "CHEK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  camk  rad53"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2534": {
+    "gene": "PDPK1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  pdk1"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL256": {
+    "gene": "ADORA3",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  nucleotide-like receptor  adenosine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL259": {
+    "gene": "MC4R",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  melanocortin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2593": {
+    "gene": "NMT1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL260": {
+    "gene": "MAPK14",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  mapk  p38"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL262": {
+    "gene": "GSK3B",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  gsk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL267": {
+    "gene": "SRC",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  src"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2742": {
+    "gene": "FGFR3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  fgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL275": {
+    "gene": "PDE4B",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphodiesterase  pde_4  pde_4b"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2759": {
+    "gene": "CYP21A2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  cytochrome p450  cyp_21  cyp_21a  cyp_21a2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL279": {
+    "gene": "KDR",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  vegfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2815": {
+    "gene": "NTRK1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  trk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2850": {
+    "gene": "GSK3A",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  gsk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL2889": {
+    "gene": "PTPN22",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase  protein phosphatase  tyr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2903": {
+    "gene": "ALOX15",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL2971": {
+    "gene": "JAK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  jaka",
+      "enzyme  kinase  protein kinase  tk  jakb"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL298": {
+    "gene": "CCKBR",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  cholecystokinin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL301": {
+    "gene": "CDK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  cdk  cdc2"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3055": {
+    "gene": "CDK7",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  cdk  cdk7"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3108645": {
+    "gene": "NSD2",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  writer  pmt  set"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3112379": {
+    "gene": "SGMS2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3130": {
+    "gene": "PIK3CD",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3145": {
+    "gene": "PIK3CB",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3192": {
+    "gene": "HDAC8",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  hdac  hdac class i"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3194": {
+    "gene": "TTR",
+    "n_components": 1,
+    "classes": [
+      "secreted"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL321": {
+    "gene": "MMP9",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  metallo  mam  m10a"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL325": {
+    "gene": "HDAC1",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  hdac  hdac class i"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3308": {
+    "gene": "CASP6",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  cysteine  cd  c14"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL335": {
+    "gene": "PTPN1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase  protein phosphatase  tyr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3385": {
+    "gene": "MAPK3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  mapk  erk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3399911": {
+    "gene": "CBS",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3425389": {
+    "gene": "PPP5C",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase  protein phosphatase  ser_thr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3430888": {
+    "gene": "RET",
+    "n_components": 2,
+    "classes": [
+      "cytosolic other",
+      "enzyme  kinase  protein kinase  tk  ret"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3438": {
+    "gene": "PRKCZ",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  pkc  iota"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3522": {
+    "gene": "CYP17A1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  cytochrome p450  cyp_17  cyp_17a  cyp_17a1"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3524": {
+    "gene": "HDAC4",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  hdac  hdac class iia"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3535": {
+    "gene": "PDE9A",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphodiesterase  pde_9  pde_9a"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3577": {
+    "gene": "ALDH1A1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3582": {
+    "gene": "PRKCE",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  pkc  eta"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3587": {
+    "gene": "MAP2K1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  ste  ste7"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3621037": {
+    "gene": "ALKBH5",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3629": {
+    "gene": "CSNK2A1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  other  ck2"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3632452": {
+    "gene": "MALT1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3650": {
+    "gene": "FGFR1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  fgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3713355": {
+    "gene": "GALNT2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3714531": {
+    "gene": "NOTUM",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3715": {
+    "gene": "SLC6A12",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc06"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3717": {
+    "gene": "MET",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  met"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3759": {
+    "gene": "HRH4",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  monoamine receptor  histamine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3832742": {
+    "gene": null,
+    "n_components": 0,
+    "classes": [],
+    "is_kinase": false
+  },
+  "CHEMBL3835": {
+    "gene": "NEK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  other  nek"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3864": {
+    "gene": "PTPN11",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase  protein phosphatase  tyr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3883330": {
+    "gene": "ALK",
+    "n_components": 2,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  stkr  type1",
+      "unclassified"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3885525": {
+    "gene": "CTNNB1",
+    "n_components": 2,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3961": {
+    "gene": "MAPK11",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  mapk  p38"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3973": {
+    "gene": "FGFR4",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  fgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL3975": {
+    "gene": "FBP1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL3991501": {
+    "gene": "IDH2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4005": {
+    "gene": "PIK3CA",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4015": {
+    "gene": "CCR2",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  chemokine receptor  cc chemokine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4026": {
+    "gene": "STAT3",
+    "n_components": 1,
+    "classes": [
+      "transcription factor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4079": {
+    "gene": "GRK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  grk  bark"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4105758": {
+    "gene": "BTN3A1",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4105784": {
+    "gene": "RAB7A",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4105786": {
+    "gene": "BCL6",
+    "n_components": 1,
+    "classes": [
+      "transcription factor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4123": {
+    "gene": "NTSR1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  neurotensin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4128": {
+    "gene": "TEK",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  tie"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4142": {
+    "gene": "FGFR2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  fgfr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4147": {
+    "gene": "CAMK2A",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  camk  camk2"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4179": {
+    "gene": "MAPK9",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  cmgc  mapk  jnk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4191": {
+    "gene": "MGLL",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4198": {
+    "gene": "XIAP",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4235": {
+    "gene": "HSD11B1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4247": {
+    "gene": "ALK",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  stkr  type1"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4282": {
+    "gene": "AKT1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  akt"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4295974": {
+    "gene": "RGS17",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4302": {
+    "gene": "ABCB1",
+    "n_components": 1,
+    "classes": [
+      "transporter  ntpase  atp binding cassette  mdr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4308": {
+    "gene": "BDKRB1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  bradykinin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4315": {
+    "gene": "P2RY1",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  nucleotide-like receptor  purine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4338": {
+    "gene": "PNP",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4361": {
+    "gene": "MCL1",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4398": {
+    "gene": "P2RY2",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  smallmol  nucleotide-like receptor  purine receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4429": {
+    "gene": "TACR3",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  neurokinin receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4438": {
+    "gene": "PPP1CC",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase  protein phosphatase  ser_thr"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4439": {
+    "gene": "TGFBR1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  stkr  type1"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4481": {
+    "gene": "NOS2",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4501": {
+    "gene": "RPS6KB1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  rsk  p70"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4506": {
+    "gene": "SIRT1",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  hdac  hdac class iii"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4507": {
+    "gene": "SLC5A7",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc05"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4523344": {
+    "gene": "TET2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4523377": {
+    "gene": "STING1",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4523477": {
+    "gene": "ARHGEF12",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4531": {
+    "gene": "LGALS3",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4581": {
+    "gene": "KIF11",
+    "n_components": 1,
+    "classes": [
+      "cytosolic other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4616": {
+    "gene": "GHSR",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tm1  peptide  short peptide  grp-related receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4617": {
+    "gene": "PNMT",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4625": {
+    "gene": "BCL2L1",
+    "n_components": 1,
+    "classes": [
+      "ion channel  other  misc  bcl-2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4681": {
+    "gene": "AKR1C3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4685": {
+    "gene": "IDO1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4708": {
+    "gene": "STK3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  ste  ste20  mst"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4722": {
+    "gene": "AURKA",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  other  aur"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4769": {
+    "gene": "GGPS1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4801": {
+    "gene": "CASP1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  protease  cysteine  cd  c14"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4816": {
+    "gene": "AKT3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  akt"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL4845623": {
+    "gene": null,
+    "n_components": 0,
+    "classes": [],
+    "is_kinase": false
+  },
+  "CHEMBL4860": {
+    "gene": "BCL2",
+    "n_components": 1,
+    "classes": [
+      "ion channel  other  misc  bcl-2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4879437": {
+    "gene": "WHR1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  transferase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL4879514": {
+    "gene": "MAP1LC3B",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5014": {
+    "gene": "RIPK2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  ripk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5023": {
+    "gene": "MDM2",
+    "n_components": 1,
+    "classes": [
+      "nuclear other"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5122": {
+    "gene": "DDR2",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  ddr"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5145": {
+    "gene": "BRAF",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  raf"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5208": {
+    "gene": "SLC6A11",
+    "n_components": 1,
+    "classes": [
+      "transporter  electrochemical  slc  slc06"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5251": {
+    "gene": "BTK",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  tec"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5465239": {
+    "gene": "LRRK2",
+    "n_components": 2,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  lrrk",
+      "unclassified"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5465393": {
+    "gene": "SOS1",
+    "n_components": 2,
+    "classes": [
+      "enzyme  hydrolase",
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5485": {
+    "gene": "DAO",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5568": {
+    "gene": "ROS1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  sev"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5608": {
+    "gene": "NTRK3",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tk  trk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5678": {
+    "gene": "GRK5",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  agc  grk  grk"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5742": {
+    "gene": "TSPO",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5866": {
+    "gene": "CTNNB1",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5870": {
+    "gene": "CENPE",
+    "n_components": 1,
+    "classes": [
+      "unclassified"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5888": {
+    "gene": "MAP3K14",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  ste  ste-unique"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5896": {
+    "gene": "KDM4A",
+    "n_components": 1,
+    "classes": [
+      "epigenetic regulator  eraser  kdm  jumonji",
+      "epigenetic regulator  reader  methyl-lysine  tudor",
+      "epigenetic regulator  reader  phd"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5903": {
+    "gene": "ACVR1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  kinase  protein kinase  tkl  stkr  stkr1"
+    ],
+    "is_kinase": true
+  },
+  "CHEMBL5905": {
+    "gene": "AKR1C1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5957": {
+    "gene": "NT5E",
+    "n_components": 1,
+    "classes": [
+      "enzyme  phosphatase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5971": {
+    "gene": "SMO",
+    "n_components": 1,
+    "classes": [
+      "membrane receptor  7tmfz  smoothened"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL5983": {
+    "gene": "AKR1B10",
+    "n_components": 1,
+    "classes": [
+      "enzyme  reductase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL6044": {
+    "gene": "BCL2A1",
+    "n_components": 1,
+    "classes": [
+      "ion channel  other  misc  bcl-2"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL6094": {
+    "gene": "RAC1",
+    "n_components": 1,
+    "classes": [
+      "enzyme  hydrolase"
+    ],
+    "is_kinase": false
+  },
+  "CHEMBL6111": {
+    "gene": "PADI4",
+    "n_components": 1,
+    "classes": [
+      "enzyme"
+    ],
+    "is_kinase": false
+  }
+}

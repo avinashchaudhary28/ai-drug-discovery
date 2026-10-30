@@ -1,0 +1,15 @@
+{
+  "targets": 223,
+  "kinase_targets": 63,
+  "lookup_failed": [],
+  "no_classification": [
+    "CHEMBL3832742",
+    "CHEMBL4845623"
+  ],
+  "kinase_pairs": 8530,
+  "non_kinase_pairs": 4675,
+  "kinase_genes": 59,
+  "non_kinase_genes": 158,
+  "kinase_pairs_ddG_ge_1": 2358,
+  "kinase_genes_ddG_ge_1": 40
+}
