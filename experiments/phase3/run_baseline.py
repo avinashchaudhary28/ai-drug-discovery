@@ -109,6 +109,40 @@ def main():
         print(f"  {gene:<8} n={len(test):>5,}  "
               f"({time.time() - t0:.0f}s)", flush=True)
 
+    # ZAROORI JAANCH: task mushkil hai, ya features hi toote hain?
+    # Dono ka nateeja ek jaisa dikhta hai - LOGO pe fail. Farak sirf ye
+    # hai ki random split pe model chalta hai ya nahi. Agar random pe
+    # bhi fail hua to bug hai, task ki baat hi nahi.
+    print("\n[jaanch] random split - features kaam karte hain ya nahi")
+    from sklearn.model_selection import KFold
+    kf = KFold(n_splits=5, shuffle=True, random_state=0)
+    idx = np.arange(len(df))
+    rnd = []
+    for tr_i, te_i in kf.split(idx):
+        tr, te = df.iloc[tr_i], df.iloc[te_i]
+        y = te.ddG.to_numpy(dtype=float)
+        rnd.append(("0 bolo", metrics(y, np.zeros(len(te)))))
+        p_ = fit_model(tr, te, X[tr_i], X[te_i], 0)
+        rnd.append(("XGB", metrics(y, p_)))
+    rd = pd.DataFrame([{"model": m, **v} for m, v in rnd])
+    rsum = rd.groupby("model").agg(mae=("mae", "mean"),
+                                   spearman=("spearman", "mean"))
+    print(rsum.to_string())
+    r_zero = float(rsum.loc["0 bolo", "mae"])
+    r_xgb = float(rsum.loc["XGB", "mae"])
+    r_sp = float(rsum.loc["XGB", "spearman"])
+    print(f"\n  random split pe XGB vs farsh: MAE {r_xgb:.3f} vs "
+          f"{r_zero:.3f}, spearman {r_sp:+.3f}")
+    if r_xgb < r_zero * 0.9 and r_sp > 0.3:
+        print("  => features THEEK hain. Model seekh sakta hai, par "
+              "ANDEKHE GENE pe nahi le ja pata. Yahi asli samasya hai.")
+        feat_ok = True
+    else:
+        print("  => features pe shak. Model random split pe bhi nahi "
+              "chal raha - LOGO ka nateeja task ke baare me kuch nahi "
+              "batata.")
+        feat_ok = False
+
     r = pd.DataFrame(rows)
     # Seeds ka ausat, taaki har gene pe har model ki ek line bane
     per_gene = (r.groupby(["gene", "model"])
@@ -174,6 +208,9 @@ def main():
         "floor_broken": bool(best and best["t"] >= 2.0
                              and best["wins"] >= 0.6 * best["genes"]),
         "published_reference": PUBLISHED,
+        "random_split_check": {"mae_zero": r_zero, "mae_xgb": r_xgb,
+                               "spearman_xgb": r_sp,
+                               "features_ok": bool(feat_ok)},
         "note": ("Ikai gene hai, row nahi. Published aankde seedhe "
                  "comparable nahi hain."),
     }
