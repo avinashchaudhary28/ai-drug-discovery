@@ -122,14 +122,33 @@ if not tsv:
           "jo aaj do baar ho chuki hai.")
     sys.exit(1)
 
-url = tsv[0]
 print(f"\n{'=' * 70}\n2) file ka size aur Range chalta hai kya\n{'=' * 70}")
-print(f"  {url}")
-info = head(url)
-print(f"  {json.dumps(info)}")
-if not info.get("accept_ranges"):
-    print("  !! Range nahi chalta - poori file utaarni padegi. Aaj nahi.")
+
+# Do ummeedwaar. Pehla wo jo page pe mila (SDFdownload.jsp wrapper), aur
+# doosra uske andar likha SEEDHA path - wo link ke query me maujood hai,
+# isliye ye andaza nahi, probe se mila data hai.
+cands = []
+for u in tsv[:3]:
+    cands.append(u)
+    q = urllib.parse.parse_qs(urllib.parse.urlparse(u).query)
+    for f in q.get("download_file", []):
+        if f.startswith("/"):
+            cands.append("https://www.bindingdb.org" + f)
+
+url, info = None, None
+for c in dict.fromkeys(cands):
+    i = head(c)
+    ok = i.get("accept_ranges") and "html" not in (i.get("type") or "")
+    print(f"  {'✓' if ok else '✗'} {c}\n      {json.dumps(i)}")
+    if ok and url is None:
+        url, info = c, i
+
+if url is None:
+    print("\n  !! Kisi bhi raaste pe Range nahi chalta ya zip nahi milti -"
+          "\n     poori file (1-2 GB) utaarni padegi. Ye ek alag faisla hai,"
+          "\n     isliye yahin ruk rahe hain; URL ka andaza nahi lagayenge.")
     sys.exit(1)
+print(f"\n  chuna: {url}")
 
 print(f"\n{'=' * 70}\n3) shuruaat kholo aur columns dekho\n{'=' * 70}")
 blob, st = get_range(url, PROBE_BYTES)
