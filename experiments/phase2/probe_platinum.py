@@ -22,11 +22,12 @@ import urllib.parse
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from probe_bindingdb import get_text, head               # noqa: E402
 
+# /platinum/data probe se mila (home page pe "Data" ka download link
+# wahi jata hai) - ye andaza nahi hai. /download 404 deta hai.
 PAGES = [
+    "https://biosig.lab.uq.edu.au/platinum/data",
     "https://biosig.lab.uq.edu.au/platinum/",
-    "https://biosig.lab.uq.edu.au/platinum/download",
-    "http://biosig.unimelb.edu.au/platinum/",
-    "http://biosig.unimelb.edu.au/platinum/download",
+    "http://biosig.unimelb.edu.au/platinum/data",
 ]
 
 
