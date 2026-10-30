@@ -125,3 +125,59 @@ if FAIL:
     print(f"✗ {len(FAIL)} test fail: {FAIL}")
     sys.exit(1)
 print("✓ saare test paas (adhoori stream ki jaanch ke saath)")
+
+print("\nranged_chunks: tukdon me maangna, aur fail hone pe dobara")
+from scan_bindingdb import ranged_chunks                  # noqa: E402
+
+blob = zip_bytes(text)
+TOTAL = len(blob)
+
+
+def ok_fetch(url, start, end):
+    return blob[start:end + 1]
+
+
+st = {}
+out = b"".join(ranged_chunks("u", st, TOTAL, span=100, fetch=ok_fetch))
+check("tukdon se poori file bani", out, blob)
+check("gintee poori", st.get("http_bytes"), TOTAL)
+
+# Ek tukda do baar fail ho, phir chale
+state = {"fails": 0}
+
+
+def flaky(url, start, end):
+    if start == 100 and state["fails"] < 2:
+        state["fails"] += 1
+        raise OSError("connection reset")
+    return blob[start:end + 1]
+
+
+st = {}
+out = b"".join(ranged_chunks("u", st, TOTAL, span=100, fetch=flaky))
+check("fail hone pe dobara koshish", out, blob)
+check("do baar fail hua tha", state["fails"], 2)
+
+
+def always_fail(url, start, end):
+    raise OSError("connection reset")
+
+
+try:
+    list(ranged_chunks("u", {}, TOTAL, span=100, fetch=always_fail, tries=2))
+    check("hamesha fail ho to RUKNA chahiye", "chala gaya", "RuntimeError")
+except RuntimeError as e:
+    check("hamesha fail ho to RUKNA chahiye", "nahi aaya" in str(e), True)
+
+# Poora raasta: tukdon se scan
+st = {}
+res = scan(ranged_chunks("u", st, TOTAL, span=100, fetch=ok_fetch),
+           progress_every=0, stats=st)
+check("tukdon se scan: saari rows", res["rows"], 300)
+check("tukdon se scan: eof TRUE", st.get("eof"), True)
+
+print()
+if FAIL:
+    print(f"✗ {len(FAIL)} test fail: {FAIL}")
+    sys.exit(1)
+print("✓ saare test paas")

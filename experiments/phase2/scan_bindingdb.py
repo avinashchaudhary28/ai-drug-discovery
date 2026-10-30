@@ -146,6 +146,65 @@ def scan(chunks, progress_every=100_000, stats=None):
             "examples": examples}
 
 
+RANGE_SPAN = 32 * 1024 * 1024
+
+
+def fetch_range(url, start, end):
+    """Ek Range maango -> bytes."""
+    with urllib.request.urlopen(
+            req(url, {"Range": f"bytes={start}-{end}"}), timeout=600) as r:
+        return r.read()
+
+
+def total_size(url, fetch=None):
+    fetch = fetch or fetch_range
+    with urllib.request.urlopen(
+            req(url, {"Range": "bytes=0-0"}), timeout=120) as r:
+        cr = r.headers.get("Content-Range") or ""
+        if "/" in cr:
+            return int(cr.split("/")[-1])
+    raise RuntimeError("file ka size pata nahi chala (Content-Range nahi aaya)")
+
+
+def ranged_chunks(url, stats, total, span=RANGE_SPAN, fetch=None,
+                  tries=5):
+    """File ko tukdon me maango, ek lambi stream ki jagah.
+
+    Ek hi lambe connection pe server ne 594 MB me se sirf 10.5 MB bhej
+    kar connection kaat diya tha - aur generator chup-chaap ruk gaya.
+    Range chalta hai (206 aata hai), isliye tukdon me maangna zyada
+    bharosemand hai: har tukde ki apni koshish, aur aakhir me gintee
+    milayi jati hai.
+    """
+    fetch = fetch or fetch_range
+    stats["content_length"] = total
+    got = 0
+    start = 0
+    while start < total:
+        end = min(start + span, total) - 1
+        last = None
+        for attempt in range(1, tries + 1):
+            try:
+                blob = fetch(url, start, end)
+                if not blob:
+                    raise RuntimeError("khali jawab")
+                break
+            except Exception as e:                        # noqa: BLE001
+                last = e
+                blob = None
+                print(f"    tukda {start:,}-{end:,} koshish {attempt} fail: "
+                      f"{e!r}", flush=True)
+        if blob is None:
+            raise RuntimeError(
+                f"{tries} koshish ke baad bhi tukda {start:,}-{end:,} nahi "
+                f"aaya: {last!r}")
+        got += len(blob)
+        start += len(blob)
+        stats["http_bytes"] = got
+        yield blob
+    stats["http_bytes"] = got
+
+
 def http_chunks(url, stats):
     with urllib.request.urlopen(req(url), timeout=900) as r:
         total = int(r.headers.get("Content-Length") or 0)
@@ -165,7 +224,10 @@ def main():
     RES.mkdir(exist_ok=True)
     print(f"stream: {URL}")
     stats = {}
-    res = scan(http_chunks(URL, stats), stats=stats)
+    total = total_size(URL)
+    print(f"  file ka size: {total:,} byte, "
+          f"{RANGE_SPAN // (1024 * 1024)} MB ke tukdon me maangenge")
+    res = scan(ranged_chunks(URL, stats, total), stats=stats)
     res["stream"] = dict(stats)
 
     # POORI file padhi gayi ya nahi - ye jaanch pehle nahi thi, aur usi
