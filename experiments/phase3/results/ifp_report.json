@@ -1,0 +1,117 @@
+{
+  "folds": [
+    "ABL1",
+    "ACVR1",
+    "ALK",
+    "BTK",
+    "DDR2",
+    "EGFR",
+    "FGFR2",
+    "FGFR3",
+    "FGFR4",
+    "KIT",
+    "NTRK1",
+    "PDGFRA",
+    "RET",
+    "TGFBR1"
+  ],
+  "pairs": 6073,
+  "ifp_coverage": 0.7709534002963939,
+  "summary": [
+    {
+      "model": "har dawa ka ausat",
+      "genes": 14,
+      "mae": 0.8000070452,
+      "rmse": 1.0487806698,
+      "spearman": 0.1299120243
+    },
+    {
+      "model": "XGB + pocket",
+      "genes": 14,
+      "mae": 0.8510168838,
+      "rmse": 1.0925178439,
+      "spearman": 0.1672349953
+    },
+    {
+      "model": "XGB + pocket + IFP",
+      "genes": 14,
+      "mae": 0.862117679,
+      "rmse": 1.1032818092,
+      "spearman": 0.1608660092
+    },
+    {
+      "model": "XGB bina pocket",
+      "genes": 14,
+      "mae": 0.8641525459,
+      "rmse": 1.108322402,
+      "spearman": 0.1708551915
+    },
+    {
+      "model": "training ka ausat",
+      "genes": 14,
+      "mae": 0.8703776051,
+      "rmse": 1.1242484648,
+      "spearman": null
+    },
+    {
+      "model": "0 bolo (farsh)",
+      "genes": 14,
+      "mae": 0.8781605578,
+      "rmse": 1.1397305956,
+      "spearman": null
+    },
+    {
+      "model": "AA badlav ka ausat",
+      "genes": 14,
+      "mae": 0.9419156868,
+      "rmse": 1.1859192315,
+      "spearman": 0.0484068284
+    }
+  ],
+  "comparisons": {
+    "IFP ne pocket me kuch joda?": {
+      "mae": {
+        "n": 14,
+        "mean": -0.01110079518292181,
+        "t": -1.13536092139951,
+        "wins": 5
+      },
+      "spearman": {
+        "n": 14,
+        "mean": -0.006368986157809009,
+        "t": -0.3449732489076878,
+        "wins": 7
+      }
+    },
+    "IFP+pocket vs kuch nahi": {
+      "mae": {
+        "n": 14,
+        "mean": 0.0020348668965323486,
+        "t": 0.11577916425487675,
+        "wins": 5
+      },
+      "spearman": {
+        "n": 14,
+        "mean": -0.009989182285485934,
+        "t": -0.4821746479178514,
+        "wins": 8
+      }
+    },
+    "farsh se": {
+      "mae": {
+        "n": 14,
+        "mean": 0.016042878821306148,
+        "t": 0.15112125514661243,
+        "wins": 5
+      },
+      "spearman": {
+        "n": 0,
+        "mean": NaN,
+        "t": NaN,
+        "wins": 0
+      }
+    }
+  },
+  "ifp_helped": false,
+  "floor_broken": false
+}

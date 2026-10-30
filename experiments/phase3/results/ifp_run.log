@@ -1,0 +1,95 @@
+[1/4] 6,073 jode, 14 folds
+
+[2/4] features (bina pocket / pocket ke saath)
+  bina pocket 1,054 | pocket 1,076 features
+  pocket me mutations: 82%
+
+[3/4] IFP utaro (har gene ki ligand wali structures se)
+  ABL1        40 structures ka IFP  (28s)
+  ACVR1       40 structures ka IFP  (50s)
+  AKT1        40 structures ka IFP  (71s)
+  ALK         40 structures ka IFP  (92s)
+  AURKA       40 structures ka IFP  (113s)
+  AURKB        1 structures ka IFP  (114s)
+  BTK         40 structures ka IFP  (142s)
+  CDK2        40 structures ka IFP  (167s)
+  CSNK2A1     40 structures ka IFP  (189s)
+  DDR2        14 structures ka IFP  (199s)
+  EGFR        40 structures ka IFP  (221s)
+  ERBB2       12 structures ka IFP  (228s)
+  FGFR1       40 structures ka IFP  (250s)
+  FGFR2       40 structures ka IFP  (272s)
+  FGFR3       14 structures ka IFP  (280s)
+  FGFR4       40 structures ka IFP  (300s)
+  KIT         40 structures ka IFP  (323s)
+  MAP2K1      40 structures ka IFP  (343s)
+  MAP3K14     23 structures ka IFP  (356s)
+  MAPK11       7 structures ka IFP  (360s)
+  MAPK14      40 structures ka IFP  (383s)
+  MAPK3       14 structures ka IFP  (391s)
+  MAPK9        7 structures ka IFP  (396s)
+  NEK2        40 structures ka IFP  (416s)
+  NTRK1       40 structures ka IFP  (442s)
+  NTRK3        8 structures ka IFP  (448s)
+  PDGFRA      11 structures ka IFP  (456s)
+  PIK3CA      40 structures ka IFP  (479s)
+  RET         40 structures ka IFP  (502s)
+  ROS1         5 structures ka IFP  (506s)
+  SRC         40 structures ka IFP  (526s)
+  STK3        11 structures ka IFP  (533s)
+  TEK         11 structures ka IFP  (539s)
+  TGFBR1      40 structures ka IFP  (560s)
+
+  IFP feature kitne jodon pe kuch kehta hai: 77%
+
+[4/4] leave-one-gene-out, 3 seeds
+  ABL1       n=1,181  (579s)
+  ACVR1      n=   26  (601s)
+  ALK        n=  815  (620s)
+  BTK        n=   74  (642s)
+  DDR2       n=   26  (664s)
+  EGFR       n=2,376  (681s)
+  FGFR2      n=   74  (703s)
+  FGFR3      n=  133  (724s)
+  FGFR4      n=   38  (746s)
+  KIT        n=  449  (767s)
+  NTRK1      n=  245  (789s)
+  PDGFRA     n=   40  (811s)
+  RET        n=  461  (833s)
+  TGFBR1     n=   29  (855s)
+
+========================================================================
+NATEEJA (ek hi 14 folds pe sab)
+========================================================================
+
+                    genes       mae      rmse  spearman
+model                                                  
+har dawa ka ausat      14  0.800007  1.048781  0.129912
+XGB + pocket           14  0.851017  1.092518  0.167235
+XGB + pocket + IFP     14  0.862118  1.103282  0.160866
+XGB bina pocket        14  0.864153  1.108322  0.170855
+training ka ausat      14  0.870378  1.124248       NaN
+0 bolo (farsh)         14  0.878161  1.139731       NaN
+AA badlav ka ausat     14  0.941916  1.185919  0.048407
+
+  TULNA (dono taraf ek hi folds aur seeds)
+
+    IFP ne pocket me kuch joda?
+      MAE      -0.0111 kam  t= -1.14  jeeta 5/14
+      Spearman -0.0064 zyada t= -0.34  jeeta 7/14
+    IFP+pocket vs kuch nahi
+      MAE      +0.0020 kam  t= +0.12  jeeta 5/14
+      Spearman -0.0100 zyada t= -0.48  jeeta 8/14
+    farsh se
+      MAE      +0.0160 kam  t= +0.15  jeeta 5/14
+      Spearman +nan zyada t=  +nan  jeeta 0/0
+
+========================================================================
+FAISLA
+========================================================================
+  IFP se farak NAHI pada (MAE t=-1.14, Spearman t=-0.34), aur farsh bhi nahi toota.
+  Ye teesri koshish hai. Teen alag tareeke - raw position,
+  aligned pocket position, aur ab 'dawa yahan lagti hai ya nahi' -
+  sabhi andekhe gene pe '0 bolo' se nahi jeet paye.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/ifp_logo.csv, ifp_report.json (855s)
