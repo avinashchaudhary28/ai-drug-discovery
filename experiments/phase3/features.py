@@ -110,3 +110,68 @@ def build(df, n_bits=1024):
                                                                  np.float32)
     names = ([f"fp{i}" for i in range(n_bits)] + DESC_NAMES + MUT_NAMES)
     return X, ok, names
+
+
+# ---------------------------------------------------------- pocket wale
+# KLIFS ke structural hisse. Data se hi aate hain, isliye list yahan
+# fix nahi ki - jo mile wahi istemaal hota hai, aur andekha region
+# "doosra" me chala jata hai.
+POCKET_NAMES = ["in_pocket", "klifs_index", "klifs_index_frac"]
+
+
+def pocket_features(gene, mutation, maps, regions):
+    """-> (numpy array, region ka naam ya None)
+
+    maps: run_klifs_map.py ka banaya hua {gene: {offset, map}}
+    Jo mutation pocket me nahi hai uske liye sab 0 - aur in_pocket=0 se
+    model ko pata chal jata hai ki ye jaankari hai hi nahi. Jhootha
+    index gadhna isse kahin bura hota.
+    """
+    info = maps.get(gene)
+    p = parse_mut_simple(mutation)
+    if info is None or p is None:
+        return np.zeros(len(POCKET_NAMES), dtype=np.float32), None
+    _, pos, _ = p
+    hit = info["map"].get(str(pos + info["offset"]))
+    if hit is None:
+        return np.zeros(len(POCKET_NAMES), dtype=np.float32), None
+    idx = float(hit[0])
+    return (np.array([1.0, idx, idx / 85.0], dtype=np.float32),
+            region_name(hit[1]))
+
+
+def parse_mut_simple(mutation):
+    import re
+    tok = str(mutation).split("+")[0].strip().upper()
+    m = re.match(rf"^([{AA}])(\d{{1,4}})([{AA}])$", tok)
+    return (m.group(1), int(m.group(2)), m.group(3)) if m else None
+
+
+def region_name(klifs_label):
+    import re
+    s = str(klifs_label)
+    m = re.match(r"^(.*?)\.?\d+$", s)
+    return (m.group(1) if m else s) or "?"
+
+
+def build_with_pocket(df, maps, n_bits=1024):
+    """-> (X_bina_pocket, X_pocket_ke_saath, ok_mask, names_dono)"""
+    X0, ok, names0 = build(df, n_bits)
+    d = df[ok]
+    regions = sorted({region_name(h[1])
+                      for info in maps.values()
+                      for h in info["map"].values()})
+    rows, regs = [], []
+    for g, mu in zip(d.gene, d.mutation):
+        v, r = pocket_features(g, mu, maps, regions)
+        rows.append(v)
+        regs.append(r)
+    P = np.vstack(rows).astype(np.float32)
+    R = np.zeros((len(regs), len(regions)), dtype=np.float32)
+    ridx = {r: i for i, r in enumerate(regions)}
+    for i, r in enumerate(regs):
+        if r in ridx:
+            R[i, ridx[r]] = 1.0
+    X1 = np.hstack([X0, P, R]).astype(np.float32)
+    names1 = names0 + POCKET_NAMES + [f"region_{r}" for r in regions]
+    return X0, X1, ok, (names0, names1)

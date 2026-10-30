@@ -50,6 +50,12 @@ jobs:
           set -o pipefail
           python -u experiments/phase3/run_klifs_map.py 2>&1 | tee klifs_map.log
 
+      - name: Pocket feature se farak padta hai ya nahi
+        run: |
+          set -o pipefail
+          python -m pip install -q scikit-learn rdkit xgboost
+          python -u experiments/phase3/run_pocket.py 2>&1 | tee -a klifs_map.log
+
       - name: Summary
         if: always()
         run: |
