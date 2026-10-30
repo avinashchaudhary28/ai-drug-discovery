@@ -1,0 +1,4 @@
+gene,assay_type,drug_key,target_chembl_id,molecules,n_mutations_affected,offset,offset_spread,wt_chembl,wt_davis,chembl_n_measurements,chembl_n_documents,chembl_documents,chembl_wt_median,verdict
+KIT,Kd,ZCBUQCWBWNUWSU,CHEMBL1936,['CHEMBL91829'],5,-1.4368,0.03711872842649655,6.4202,5.0,1,1,['CHEMBL1144455'],6.4202,faisla nahi - sirf 1 paper
+EGFR,Kd,QYZOGCMHVIGURT,CHEMBL203,['CHEMBL215152'],5,0.89086,5.47722557505224e-05,5.4559,6.3468,7,3,"['CHEMBL1150977', 'CHEMBL1908390', 'CHEMBL3991601']",5.4559,ChEMBL khud bata hua (paperon ka spread 0.43) - Davis ko galat kehna theek nahi
+EGFR,Kd,UJIAQDJKSXQLIT,CHEMBL203,['CHEMBL230011'],6,-0.53145,5.477225575049774e-05,5.8239,5.2924,4,1,['CHEMBL1908390'],5.60555,faisla nahi - sirf 1 paper

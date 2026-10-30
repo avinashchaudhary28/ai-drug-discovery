@@ -1,0 +1,73 @@
+{
+  "groups": 3,
+  "pairs_affected": 16,
+  "resolved_chembl_better": 0,
+  "pairs_resolved": 0,
+  "detail": [
+    {
+      "gene": "KIT",
+      "assay_type": "Kd",
+      "drug_key": "ZCBUQCWBWNUWSU",
+      "target_chembl_id": "CHEMBL1936",
+      "molecules": [
+        "CHEMBL91829"
+      ],
+      "n_mutations_affected": 5,
+      "offset": -1.4368,
+      "offset_spread": 0.03711872842649655,
+      "wt_chembl": 6.4202,
+      "wt_davis": 5.0,
+      "chembl_n_measurements": 1,
+      "chembl_n_documents": 1,
+      "chembl_documents": [
+        "CHEMBL1144455"
+      ],
+      "chembl_wt_median": 6.4202,
+      "verdict": "faisla nahi - sirf 1 paper"
+    },
+    {
+      "gene": "EGFR",
+      "assay_type": "Kd",
+      "drug_key": "QYZOGCMHVIGURT",
+      "target_chembl_id": "CHEMBL203",
+      "molecules": [
+        "CHEMBL215152"
+      ],
+      "n_mutations_affected": 5,
+      "offset": 0.89086,
+      "offset_spread": 5.47722557505224e-05,
+      "wt_chembl": 5.4559,
+      "wt_davis": 6.3468,
+      "chembl_n_measurements": 7,
+      "chembl_n_documents": 3,
+      "chembl_documents": [
+        "CHEMBL1150977",
+        "CHEMBL1908390",
+        "CHEMBL3991601"
+      ],
+      "chembl_wt_median": 5.4559,
+      "verdict": "ChEMBL khud bata hua (paperon ka spread 0.43) - Davis ko galat kehna theek nahi"
+    },
+    {
+      "gene": "EGFR",
+      "assay_type": "Kd",
+      "drug_key": "UJIAQDJKSXQLIT",
+      "target_chembl_id": "CHEMBL203",
+      "molecules": [
+        "CHEMBL230011"
+      ],
+      "n_mutations_affected": 6,
+      "offset": -0.53145,
+      "offset_spread": 5.477225575049774e-05,
+      "wt_chembl": 5.8239,
+      "wt_davis": 5.2924,
+      "chembl_n_measurements": 4,
+      "chembl_n_documents": 1,
+      "chembl_documents": [
+        "CHEMBL1908390"
+      ],
+      "chembl_wt_median": 5.60555,
+      "verdict": "faisla nahi - sirf 1 paper"
+    }
+  ]
+}

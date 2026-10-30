@@ -1,27 +1,27 @@
 {
-  "chembl_pairs": 13205,
+  "chembl_pairs": 15303,
   "davis_pairs": 3604,
   "merged_pairs": 14391,
   "genes": 198,
   "mutations": 903,
   "drugs": 6617,
-  "mutation_unparsed_dropped": 950,
+  "mutation_unparsed_dropped": 1145,
   "mutation_unparsed_names": {
-    "UNDEFINED MUTATION": 950
+    "UNDEFINED MUTATION": 1145
   },
   "censored_pairs": 2091,
   "clean_pairs": 12300,
-  "clean_ddG_ge_1": 3288,
+  "clean_ddG_ge_1": 3309,
   "overlap": {
     "n": 1108,
-    "pearson": 0.9112360739064909,
-    "spearman": 0.8558841808279217,
-    "mean_abs_diff": 0.14679399819494587,
+    "pearson": 0.9495622175347472,
+    "spearman": 0.9128897184463651,
+    "mean_abs_diff": 0.10642861010830325,
     "median_abs_diff": 0.0,
-    "disagree_gt_1": 32,
-    "disagree_gt_2": 0,
-    "const_offset_groups": 9,
-    "const_offset_pairs": 50,
+    "disagree_gt_1": 10,
+    "disagree_gt_2": 1,
+    "const_offset_groups": 3,
+    "const_offset_pairs": 16,
     "multi_mutation_groups": 170
   },
   "kinase_pairs": 10201,
