@@ -35,6 +35,22 @@
 ======================================================================
 2) file ka size aur Range chalta hai kya
 ======================================================================
-  https://www.bindingdb.org/rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
-  {"status": 200, "total": null, "accept_ranges": false, "type": "text/html;charset=UTF-8"}
-  !! Range nahi chalta - poori file utaarni padegi. Aaj nahi.
+  ✗ https://www.bindingdb.org/rwd/bind/chemsearch/marvin/SDFdownload.jsp?download_file=/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
+      {"status": 200, "total": null, "accept_ranges": false, "type": "text/html;charset=UTF-8"}
+  ✓ https://www.bindingdb.org/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
+      {"status": 206, "total": "594284548", "accept_ranges": true, "type": "application/zip"}
+
+  chuna: https://www.bindingdb.org/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
+
+======================================================================
+3) shuruaat kholo aur columns dekho
+======================================================================
+  6,291,456 byte utre (HTTP 206)
+Traceback (most recent call last):
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/probe_bindingdb.py", line 156, in <module>
+    name, raw = unzip_head(blob)
+                ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/probe_bindingdb.py", line 75, in unzip_head
+    (_, _, method, _, _, _, _, _, nlen, elen) = struct.unpack(
+                                                ^^^^^^^^^^^^^^
+struct.error: unpack requires a buffer of 28 bytes
