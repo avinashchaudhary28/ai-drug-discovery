@@ -1,112 +1,59 @@
   8,110 jode, 56 genes (22 me 20+ jode)
-    ABL1: purani cache (consensus nahi) - dobara
   ABL1       ✓ offset +19  pocket me  14/20   wt match 93%  (theek)
-    ACVR1: purani cache (consensus nahi) - dobara
   ACVR1      ✓ offset  +0  pocket me   2/5    wt match 100%  (theek)
-    AKT1: purani cache (consensus nahi) - dobara
   AKT1       ✓ offset  +0  pocket me   1/2    wt match 100%  (theek)
-    AKT2: purani cache (consensus nahi) - dobara
   AKT2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
   AKT3       ✗ koi structure nahi
-    ALK: purani cache (consensus nahi) - dobara
   ALK        ✓ offset  +0  pocket me  18/20   wt match 100%  (theek)
-    AURKA: purani cache (consensus nahi) - dobara
   AURKA      ✓ offset  +0  pocket me   3/3    wt match 100%  (theek)
-    AURKB: purani cache (consensus nahi) - dobara
   AURKB      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    BRAF: purani cache (consensus nahi) - dobara
   BRAF       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    BTK: purani cache (consensus nahi) - dobara
   BTK        ✓ offset  +0  pocket me   4/4    wt match 100%  (theek)
-    CAMK2A: purani cache (consensus nahi) - dobara
   CAMK2A     ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    CDK2: purani cache (consensus nahi) - dobara
   CDK2       ✓ offset  +0  pocket me   6/6    wt match 100%  (theek)
-    CDK7: purani cache (consensus nahi) - dobara
   CDK7       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    CHEK2: purani cache (consensus nahi) - dobara
   CHEK2      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    CSNK2A1: purani cache (consensus nahi) - dobara
   CSNK2A1    ✓ offset  -6  pocket me   3/4    wt match 100%  (theek)
-    DDR2: purani cache (consensus nahi) - dobara
   DDR2       ✓ offset +47  pocket me   2/2    wt match 100%  (theek)
-    DYRK1A: purani cache (consensus nahi) - dobara
   DYRK1A     ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    EGFR: purani cache (consensus nahi) - dobara
   EGFR       ✓ offset  +0  pocket me  10/11   wt match 100%  (theek)
-    ERBB2: purani cache (consensus nahi) - dobara
   ERBB2      ✓ offset  +0  pocket me   4/5    wt match 100%  (theek)
-    FGFR1: purani cache (consensus nahi) - dobara
   FGFR1      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    FGFR2: purani cache (consensus nahi) - dobara
   FGFR2      ✓ offset  +0  pocket me   5/6    wt match 100%  (theek)
-    FGFR3: purani cache (consensus nahi) - dobara
   FGFR3      ✓ offset  +0  pocket me   3/8    wt match 100%  (theek)
-    FGFR4: purani cache (consensus nahi) - dobara
   FGFR4      ✓ offset  +0  pocket me   5/5    wt match 100%  (theek)
-    FLT3: purani cache (consensus nahi) - dobara
   FLT3       ✗ offset -24  pocket me   6/7    wt match 67%  (wild-type AA sirf 67% pe mila, 80% chahiye)
-    FYN: purani cache (consensus nahi) - dobara
   FYN        ✗ offset  +0  pocket me   0/3    wt match 0%  (ek bhi mutation pocket me nahi)
-    GRK2: purani cache (consensus nahi) - dobara
   GRK2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    GRK5: purani cache (consensus nahi) - dobara
   GRK5       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    JAK2: purani cache (consensus nahi) - dobara
   JAK2       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    KDR: purani cache (consensus nahi) - dobara
   KDR        ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    KIT: purani cache (consensus nahi) - dobara
   KIT        ✓ offset  +0  pocket me   4/17   wt match 100%  (theek)
-    LRRK2: purani cache (consensus nahi) - dobara
   LRRK2      ✗ offset  +0  pocket me   0/4    wt match 0%  (ek bhi mutation pocket me nahi)
-    MAP2K1: purani cache (consensus nahi) - dobara
   MAP2K1     ✓ offset  -6  pocket me   1/1    wt match 100%  (theek)
-    MAP3K14: purani cache (consensus nahi) - dobara
   MAP3K14    ✓ offset -41  pocket me   1/1    wt match 100%  (theek)
-    MAPK11: purani cache (consensus nahi) - dobara
   MAPK11     ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    MAPK14: purani cache (consensus nahi) - dobara
   MAPK14     ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    MAPK3: purani cache (consensus nahi) - dobara
   MAPK3      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    MAPK9: purani cache (consensus nahi) - dobara
   MAPK9      ✓ offset -47  pocket me   1/1    wt match 100%  (theek)
-    MET: purani cache (consensus nahi) - dobara
   MET        ✗ offset  -6  pocket me   8/12   wt match 62%  (wild-type AA sirf 62% pe mila, 80% chahiye)
-    NEK2: purani cache (consensus nahi) - dobara
   NEK2       ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    NTRK1: purani cache (consensus nahi) - dobara
   NTRK1      ✓ offset  +0  pocket me   3/5    wt match 100%  (theek)
-    NTRK3: purani cache (consensus nahi) - dobara
   NTRK3      ✓ offset  +0  pocket me   1/1    wt match 100%  (theek)
-    PDGFRA: purani cache (consensus nahi) - dobara
   PDGFRA     ✓ offset  -6  pocket me   1/3    wt match 100%  (theek)
-    PDPK1: purani cache (consensus nahi) - dobara
   PDPK1      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    PIK3CA: purani cache (consensus nahi) - dobara
   PIK3CA     ✓ offset  +0  pocket me   1/9    wt match 100%  (theek)
   PRKCE      ✗ koi structure nahi
   PRKCZ      ✗ koi structure nahi
-    RAF1: purani cache (consensus nahi) - dobara
   RAF1       ✗ offset +24  pocket me   4/4    wt match 75%  (wild-type AA sirf 75% pe mila, 80% chahiye)
-    RET: purani cache (consensus nahi) - dobara
   RET        ✓ offset  +0  pocket me  10/14   wt match 100%  (theek)
-    RIPK2: purani cache (consensus nahi) - dobara
   RIPK2      ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    ROS1: purani cache (consensus nahi) - dobara
   ROS1       ✓ offset  +0  pocket me   2/2    wt match 100%  (theek)
-    RPS6KB1: purani cache (consensus nahi) - dobara
   RPS6KB1    ✗ offset  +0  pocket me   0/2    wt match 0%  (ek bhi mutation pocket me nahi)
-    SGK1: purani cache (consensus nahi) - dobara
   SGK1       ✗ offset  +0  pocket me   0/1    wt match 0%  (ek bhi mutation pocket me nahi)
-    SRC: purani cache (consensus nahi) - dobara
   SRC        ✓ offset  +0  pocket me   2/3    wt match 100%  (theek)
-    STK3: purani cache (consensus nahi) - dobara
   STK3       ✓ offset  +0  pocket me   3/3    wt match 100%  (theek)
-    TEK: purani cache (consensus nahi) - dobara
   TEK        ✓ offset +18  pocket me   1/1    wt match 100%  (theek)
-    TGFBR1: purani cache (consensus nahi) - dobara
   TGFBR1     ✓ offset +47  pocket me   1/1    wt match 100%  (theek)
 
 ======================================================================
@@ -155,4 +102,63 @@ FAISLA
 ======================================================================
   Aage badh sakte hain: 14 folds aur 6,073 jode. Ab pocket position ko feature banakar dekhna hai ki farsh toota ya nahi.
 
-  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/klifs_map.json, klifs_verify.csv (86s)
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/klifs_map.json, klifs_verify.csv (0s)
+[1/3] data aur mapping (34 genes ki mapping hai)
+  8,110 -> mapping wale genes pe 6,073 jode
+  LOGO folds: 14  (ABL1, ACVR1, ALK, BTK, DDR2, EGFR, FGFR2, FGFR3, FGFR4, KIT, NTRK1, PDGFRA, RET, TGFBR1)
+
+[2/3] features
+  bina pocket : 1,054 features
+  pocket ke saath: 1,076 features (+22)
+  jin jodon ka mutation pocket me hai: 82%
+
+[3/3] leave-one-gene-out, 3 seeds
+  ABL1       n=1,181  (9s)
+  ACVR1      n=   26  (16s)
+  ALK        n=  815  (23s)
+  BTK        n=   74  (29s)
+  DDR2       n=   26  (36s)
+  EGFR       n=2,376  (41s)
+  FGFR2      n=   74  (48s)
+  FGFR3      n=  133  (55s)
+  FGFR4      n=   38  (62s)
+  KIT        n=  449  (68s)
+  NTRK1      n=  245  (75s)
+  PDGFRA     n=   40  (82s)
+  RET        n=  461  (88s)
+  TGFBR1     n=   29  (95s)
+
+========================================================================
+NATEEJA (ek hi 14 folds pe sab)
+========================================================================
+
+                    genes       mae      rmse  spearman
+model                                                  
+har dawa ka ausat      14  0.800007  1.048781  0.129912
+XGB + pocket           14  0.851017  1.092518  0.167235
+XGB bina pocket        14  0.864153  1.108322  0.170855
+training ka ausat      14  0.870378  1.124248       NaN
+0 bolo (farsh)         14  0.878161  1.139731       NaN
+AA badlav ka ausat     14  0.941916  1.185919  0.048407
+
+  ASLI TULNA - pocket se farak pada ya nahi
+  (dono ek hi folds, ek hi seeds, sirf features ka farak)
+
+    MAE      : +0.0131 kam  t= +0.60  jeeta 9/14 genes
+    Spearman : -0.0036 zyada t= -0.16  jeeta 5/14 genes
+    Spearman: pocket +0.167  vs  bina pocket +0.171
+/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/run_pocket.py:134: RuntimeWarning: Mean of empty slice
+  return t_mae, t_sp, float(np.nanmean(sa)), float(np.nanmean(sb))
+
+  farsh se tulna (pocket model vs '0 bolo'):
+    MAE      : +0.0271  t= +0.27  jeeta 6/14 genes
+
+========================================================================
+FAISLA
+========================================================================
+  Pocket se farak NAHI pada (MAE t=+0.60, Spearman t=-0.16), aur farsh bhi nahi toota.
+  Yaani aligned position akela kaafi nahi hai. Agla sawal: poora mutated pocket sequence (ESM-2, GPU) kuch deta hai ya nahi - par ab wo bhi maan kar nahi, naap kar.
+
+  Yaad rahe: ye 14 genes wo hain jinki mapping jaanch paas kar payi. LRRK2, BRAF, FLT3, MET bahar hain - unke mutations ya to pocket ke bahar hain ya numbering nahi milti. Ye nateeja un genes ke baare me kuch nahi kehta.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/pocket_logo.csv, pocket_report.json (95s)

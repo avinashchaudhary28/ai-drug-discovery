@@ -1,0 +1,90 @@
+{
+  "folds": [
+    "ABL1",
+    "ACVR1",
+    "ALK",
+    "BTK",
+    "DDR2",
+    "EGFR",
+    "FGFR2",
+    "FGFR3",
+    "FGFR4",
+    "KIT",
+    "NTRK1",
+    "PDGFRA",
+    "RET",
+    "TGFBR1"
+  ],
+  "pairs": 6073,
+  "in_pocket_frac": 0.8219990134239197,
+  "n_features_base": 1054,
+  "n_features_pocket": 1076,
+  "summary": [
+    {
+      "model": "har dawa ka ausat",
+      "genes": 14,
+      "mae": 0.8000070452,
+      "rmse": 1.0487806698,
+      "spearman": 0.1299120243
+    },
+    {
+      "model": "XGB + pocket",
+      "genes": 14,
+      "mae": 0.8510168838,
+      "rmse": 1.0925178439,
+      "spearman": 0.1672349953
+    },
+    {
+      "model": "XGB bina pocket",
+      "genes": 14,
+      "mae": 0.8641525459,
+      "rmse": 1.108322402,
+      "spearman": 0.1708551915
+    },
+    {
+      "model": "training ka ausat",
+      "genes": 14,
+      "mae": 0.8703776051,
+      "rmse": 1.1242484648,
+      "spearman": null
+    },
+    {
+      "model": "0 bolo (farsh)",
+      "genes": 14,
+      "mae": 0.8781605578,
+      "rmse": 1.1397305956,
+      "spearman": null
+    },
+    {
+      "model": "AA badlav ka ausat",
+      "genes": 14,
+      "mae": 0.9419156868,
+      "rmse": 1.1859192315,
+      "spearman": 0.0484068284
+    }
+  ],
+  "pocket_vs_nopocket": {
+    "mae": {
+      "n": 14,
+      "mean": 0.013135662079454158,
+      "t": 0.6034004587927976,
+      "wins": 9
+    },
+    "spearman": {
+      "n": 14,
+      "mean": -0.0036201961276769268,
+      "t": -0.1593484420261241,
+      "wins": 5
+    },
+    "spearman_pocket": 0.1672349953262669,
+    "spearman_nopocket": 0.17085519145394387
+  },
+  "pocket_vs_floor_mae": {
+    "n": 14,
+    "mean": 0.027143674004227958,
+    "t": 0.27364721386656693,
+    "wins": 6
+  },
+  "floor_broken": false,
+  "pocket_helped": false
+}
