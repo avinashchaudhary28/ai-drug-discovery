@@ -1,0 +1,89 @@
+{
+  "pairs": 8110,
+  "genes_tested": 22,
+  "min_pairs": 20,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "n_trees": 400,
+  "summary": [
+    {
+      "model": "har dawa ka ausat",
+      "genes": 22,
+      "mae": 0.720368416,
+      "rmse": 0.9795136186,
+      "spearman": 0.0554987034
+    },
+    {
+      "model": "0 bolo (farsh)",
+      "genes": 22,
+      "mae": 0.749880118,
+      "rmse": 1.0168097701,
+      "spearman": null
+    },
+    {
+      "model": "training ka ausat",
+      "genes": 22,
+      "mae": 0.7557321591,
+      "rmse": 1.014769612,
+      "spearman": null
+    },
+    {
+      "model": "XGB (dawa + mutation)",
+      "genes": 22,
+      "mae": 0.7796701851,
+      "rmse": 1.0085516107,
+      "spearman": 0.0694406208
+    },
+    {
+      "model": "AA badlav ka ausat",
+      "genes": 22,
+      "mae": 0.8457024132,
+      "rmse": 1.0759033317,
+      "spearman": 0.0785133966
+    }
+  ],
+  "vs_floor": [
+    {
+      "model": "har dawa ka ausat",
+      "d_mae": 0.029511701918397706,
+      "t": 0.5707364781778022,
+      "wins": 9,
+      "genes": 22,
+      "spearman": 0.05549870341906721
+    },
+    {
+      "model": "training ka ausat",
+      "d_mae": -0.005852041160216007,
+      "t": -0.5692806281965607,
+      "wins": 13,
+      "genes": 22,
+      "spearman": NaN
+    },
+    {
+      "model": "XGB (dawa + mutation)",
+      "d_mae": -0.029790067101947572,
+      "t": -0.47775762091776525,
+      "wins": 8,
+      "genes": 22,
+      "spearman": 0.0694406207972545
+    },
+    {
+      "model": "AA badlav ka ausat",
+      "d_mae": -0.09582229524353414,
+      "t": -1.8170095155790296,
+      "wins": 5,
+      "genes": 22,
+      "spearman": 0.07851339658183133
+    }
+  ],
+  "floor_broken": false,
+  "published_reference": {
+    "TKI-ABL1, 8 inhibitors (best reported)": 0.39,
+    "FEP+ (industry gold standard)": 0.37,
+    "Platinum 10-fold CV (Pearson)": 0.2
+  },
+  "note": "Ikai gene hai, row nahi. Published aankde seedhe comparable nahi hain."
+}
