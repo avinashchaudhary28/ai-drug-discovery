@@ -46,11 +46,46 @@
 3) shuruaat kholo aur columns dekho
 ======================================================================
   6,291,456 byte utre (HTTP 206)
-Traceback (most recent call last):
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/probe_bindingdb.py", line 156, in <module>
-    name, raw = unzip_head(blob)
-                ^^^^^^^^^^^^^^^^
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/probe_bindingdb.py", line 75, in unzip_head
-    (_, _, method, _, _, _, _, _, nlen, elen) = struct.unpack(
-                                                ^^^^^^^^^^^^^^
-struct.error: unpack requires a buffer of 28 bytes
+  zip member: BindingDB_All.tsv
+  1,570 lines khuli (4,000,000 byte)
+
+  columns: 640
+
+  mutation/variant jaise column (0):
+
+  pehle 25 columns:
+    [  0] BindingDB Reactant_set_id
+    [  1] Ligand SMILES
+    [  2] Ligand InChI
+    [  3] Ligand InChI Key
+    [  4] BindingDB MonomerID
+    [  5] BindingDB Ligand Name
+    [  6] Target Name
+    [  7] Target Source Organism According to Curator or DataSource
+    [  8] Ki (nM)
+    [  9] IC50 (nM)
+    [ 10] Kd (nM)
+    [ 11] EC50 (nM)
+    [ 12] kon (M-1-s-1)
+    [ 13] koff (s-1)
+    [ 14] pH
+    [ 15] Temp (C)
+    [ 16] Curation/DataSource
+    [ 17] Article DOI
+    [ 18] BindingDB Entry DOI
+    [ 19] PMID
+    [ 20] PubChem AID
+    [ 21] Patent Number
+    [ 22] Authors
+    [ 23] Date of publication
+    [ 24] Date in BindingDB
+
+  1,568 poori rows namune me
+
+======================================================================
+4) faisla
+======================================================================
+  mutation ka alag column nahi mila ya khali hai.
+  Target name me mutation likha hota hai kya:
+    [6] Target Name: 0/1,568 me mutation jaisa pattern
+  >>> BindingDB is kaam ke liye bekaar hai. Platinum aur published kinase panels pe jaana chahiye.
