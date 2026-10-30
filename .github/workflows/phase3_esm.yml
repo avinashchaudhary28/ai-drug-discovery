@@ -1,0 +1,99 @@
+name: Phase 3 - ESM pocket arm (aakhri koshish)
+
+on:
+  workflow_dispatch:
+    inputs:
+      min_pairs:
+        description: "LOGO fold ke liye kam se kam jode"
+        required: false
+        default: "20"
+      seeds:
+        description: "Seeds, comma se"
+        required: false
+        default: "0,1,2"
+      esm_name:
+        description: "ESM model"
+        required: false
+        default: "facebook/esm2_t33_650M_UR50D"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase3-esm
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas scipy scikit-learn rdkit xgboost tabulate
+          python -m pip install -q "torch>=2.6" --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -q transformers
+          python -c "import torch, transformers, xgboost; from rdkit import Chem; print('ok', torch.__version__)"
+
+      # Pehle ye. Mutation galat index pe lag jaye to sequence galat,
+      # embedding galat, aur error kabhi nahi aayega.
+      - name: Selftest (mutated pocket sequence)
+        run: python -u experiments/phase3/selftest_pocketseq.py
+
+      - name: Selftest (batwara aur farsh)
+        run: python -u experiments/phase3/selftest_logo.py
+
+      - name: Selftest (KLIFS mapping)
+        run: python -u experiments/phase3/selftest_klifs.py
+
+      - name: Zaroori input maujood hai?
+        run: |
+          set -e
+          for f in experiments/phase2/results/mutation_ddg_merged.csv \
+                   experiments/phase3/results/klifs_map.json; do
+            test -s "$f" || { echo "::error::$f nahi mila"; exit 1; }
+            echo "✓ $f"
+          done
+
+      - name: Cache (KLIFS + ESM)
+        uses: actions/cache@v4
+        with:
+          path: |
+            experiments/phase3/work_klifs
+            ~/.cache/huggingface
+          key: phase3-esm-v1-${{ github.run_number }}
+          restore-keys: |
+            phase3-esm-v1-
+            phase3-klifs-v2-
+
+      - name: ESM pocket arm
+        env:
+          MIN_PAIRS: ${{ inputs.min_pairs }}
+          SEEDS: ${{ inputs.seeds }}
+          ESM_NAME: ${{ inputs.esm_name }}
+          TOKENIZERS_PARALLELISM: "false"
+        run: |
+          set -o pipefail
+          python -u experiments/phase3/run_esm_pocket.py 2>&1 | tee esm.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 3 - ESM pocket arm" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -80 esm.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase3/results
+          tail -c 200000 esm.log > experiments/phase3/results/esm_run.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase3: ESM pocket arm (run ${{ github.run_number }})" \
+            experiments/phase3/results
