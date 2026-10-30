@@ -37,6 +37,9 @@ jobs:
       - name: Selftest (mutation naam + drug key)
         run: python -u experiments/phase2/selftest_merge.py
 
+      - name: Selftest (matbhed aur faisla ka niyam)
+        run: python -u experiments/phase2/selftest_conflicts.py
+
       - name: Zaroori input maujood hain?
         run: |
           set -e
@@ -72,6 +75,11 @@ jobs:
           set -o pipefail
           python -u experiments/phase2/merge_davis.py 2>&1 | tee merge.log
 
+      - name: Wild-type jhagde jaancho
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/resolve_conflicts.py 2>&1 | tee wt.log
+
       - name: Summary
         if: always()
         run: |
@@ -82,13 +90,14 @@ jobs:
           echo '```' >> $GITHUB_STEP_SUMMARY
           tail -40 cls.log >> $GITHUB_STEP_SUMMARY || true
           tail -40 merge.log >> $GITHUB_STEP_SUMMARY || true
+          tail -60 wt.log >> $GITHUB_STEP_SUMMARY || true
           echo '```' >> $GITHUB_STEP_SUMMARY
 
       - name: Nateeja repo me commit karo
         if: always()
         run: |
           mkdir -p experiments/phase2/results
-          cat cls.log merge.log > experiments/phase2/results/merge_run.log 2>/dev/null || true
+          cat cls.log merge.log wt.log > experiments/phase2/results/merge_run.log 2>/dev/null || true
           bash .github/commit_results.sh "${{ github.ref_name }}" \
             "phase2: target classify + Davis merge (run ${{ github.run_number }})" \
             experiments/phase2/results

@@ -24,6 +24,7 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from conflicts import const_groups, overlap_table      # noqa: E402
 from mutnorm import drug_key, normalize                  # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -44,6 +45,8 @@ def load_chembl():
     out = pd.DataFrame({
         "source": "chembl",
         "gene": df.gene,
+        # resolve_conflicts.py ko target id chahiye, isliye saath chalta hai
+        "target_id": df.target_chembl_id,
         "mutation_raw": df.mutation,
         "drug_id": df.mol_chembl_id,
         "smiles": df.smiles,
@@ -67,6 +70,7 @@ def load_davis():
     return pd.DataFrame({
         "source": "davis",
         "gene": df.gene,
+        "target_id": None,
         "mutation_raw": df.mutant,
         "drug_id": "davis_" + df.drug_idx.astype(str),
         "smiles": df.smiles,
@@ -131,13 +135,9 @@ def main():
     KEY = ["gene", "mutation", "mut_note", "drug_key", "assay_type"]
 
     print("\n[3/4] dono source ka milaan (yahi asli audit hai)")
-    piv = (df.groupby(KEY + ["source"]).ddG.median().unstack("source"))
-    both = piv.dropna(subset=[c for c in ("chembl", "davis") if c in piv])
-    both = both[both.index.map(lambda _: True)]
-    if "chembl" in piv and "davis" in piv:
-        both = piv[piv.chembl.notna() & piv.davis.notna()]
-    else:
-        both = piv.iloc[0:0]
+    # Niyam conflicts.py me ek hi jagah hai - resolve_conflicts.py wahi
+    # istemaal karta hai, taaki dono kabhi alag jawab na dein.
+    both = overlap_table(df)
 
     overlap = {}
     if len(both):
@@ -171,12 +171,7 @@ def main():
         # ka ddG bilkul utna hi khisak jayega - ek jaisa, na ghat na
         # badh. Yaani ek jaisa farak = wild-type ka jhagda, aur wo ek
         # jagah theek karne se kai jode theek ho jate hain.
-        od = both.assign(diff=both.chembl - both.davis).reset_index()
-        g = (od.groupby(["gene", "drug_key", "assay_type"])
-               .agg(n=("diff", "size"), spread=("diff", "std"),
-                    off=("diff", "mean")))
-        multi = g[g.n >= 3].copy()
-        const = multi[(multi.spread.fillna(0) < 0.1) & (multi.off.abs() >= 0.5)]
+        multi, const = const_groups(both)
         pairs_in_const = int(const.n.sum())
         print(f"\n    matbhed ki jad:")
         print(f"      {len(multi)} (gene, drug) jodiyan jinme 3+ mutations "
@@ -227,7 +222,8 @@ def main():
               f"baki: {len(merged) - len(k):,}")
 
     cols = ["source", "gene", "mutation", "mut_note", "mutation_raw",
-            "drug_key", "drug_id", "smiles", "assay_type", "pK_wt", "pK_mut",
+            "target_id", "drug_key", "drug_id", "smiles", "assay_type",
+            "pK_wt", "pK_mut",
             "ddG", "censored_wt", "censored_mut", "same_doc", "is_kinase",
             "mut_parsed", "in_both_sources"]
     merged[cols].sort_values("ddG").to_csv(
