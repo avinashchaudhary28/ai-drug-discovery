@@ -1,6 +1,6 @@
 **Platinum: 984 ddG jode** (141 proteins, 594 mutations)
 
-- kinase: 0 jode
+- kinase: 16 jode
 - |ddG| >= 1.0: 329
 - sign ki jaanch: 99.7% ek disha me
 

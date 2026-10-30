@@ -30,8 +30,18 @@ NATEEJA
 
   tulna: published SOTA ne Platinum ke 796 jode istemaal kiye
 
-  KINASE: 0 jode, 0 proteins
-  kinase nahi: 984
+  PROTEIN KINASE: 16 jode, 3 proteins
+      AURKA (O14965): 1 jode, 1 mutations
+      ABL1 (P00519): 3 jode, 3 mutations
+      PRKACA (P17612): 12 jode, 6 mutations
+  protein kinase nahi: 968
+
+  naam me 'kinase' par protein kinase NAHI maana (9 jode) - ye metabolic kinase hain:
+      O43252  APS kinase domain of the PAPS synthetase 1  (3 jode)
+      P03176  THYMIDINE KINASE  (1 jode)
+      P07379  Phosphoenolpyruvate carboxykinase, cytosolic [GTP]  (3 jode)
+      P15531  nucleoside diphosphate kinase A  (1 jode)
+      P22983  pyruvate phosphate dikinase  (1 jode)
 
   ddG ka faila: min -5.63  max 3.25  median -0.44  std 1.07
     |ddG| >= 0.5: 574 (58%)

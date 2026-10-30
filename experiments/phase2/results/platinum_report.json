@@ -4,8 +4,14 @@
   "mutations": 594,
   "proteins": 141,
   "ligands": 194,
-  "kinase_pairs": 0,
-  "kinase_proteins": 0,
+  "protein_kinase_pairs": 16,
+  "protein_kinase_proteins": 3,
+  "protein_kinase_list": {
+    "P00519": "ABL1",
+    "O14965": "AURKA",
+    "P17612": "PRKACA"
+  },
+  "name_has_kinase_pairs": 25,
   "ddG_abs_ge_1": 329,
   "dropped": {
     "k_wt ya k_mt nahi mila / <=0": 22,
