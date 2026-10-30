@@ -1,0 +1,26 @@
+{
+  "chembl_pairs": 13205,
+  "davis_pairs": 3604,
+  "merged_pairs": 14391,
+  "genes": 198,
+  "mutations": 903,
+  "drugs": 6617,
+  "mutation_unparsed_dropped": 950,
+  "mutation_unparsed_names": {
+    "UNDEFINED MUTATION": 950
+  },
+  "censored_pairs": 2091,
+  "clean_pairs": 12300,
+  "clean_ddG_ge_1": 3288,
+  "overlap": {
+    "n": 1108,
+    "pearson": 0.9112360739064909,
+    "spearman": 0.8558841808279217,
+    "mean_abs_diff": 0.14679399819494587,
+    "median_abs_diff": 0.0,
+    "disagree_gt_1": 32,
+    "disagree_gt_2": 0
+  },
+  "kinase_pairs": 10201,
+  "kinase_genes": 56
+}

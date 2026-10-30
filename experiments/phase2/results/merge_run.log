@@ -1,5 +1,5 @@
 [1/3] ChEMBL ki classification list
-  classifications: 905
+  classifications cache se: 905
 
 [2/3] tareeke ki jaanch (kinase aur non-kinase, dono pe)
   ✓ EGFR -> kinase  (enzyme  kinase  protein kinase  tk  egfr)
@@ -7,16 +7,7 @@
   ✓ SRD5A2 (reductase) -> kinase nahi  (enzyme  reductase)
 
 [3/3] 223 targets chhanna
-  0 cache me, 223 baaki
-    25/223
-    50/223
-    75/223
-    100/223
-    125/223
-    150/223
-    175/223
-    200/223
-    223/223
+  223 cache me, 0 baaki
 
 ====================================================================
 NATEEJA
@@ -51,26 +42,38 @@ NATEEJA
   mutation parse: 15,859 theek, 950 samajh nahi aaye
     (inhe 'RAW:' nishaan mila - ye kisi doosri entry se nahi judenge)
         950  UNDEFINED MUTATION
-  drug key: 7,314 alag SMILES -> InChIKey skeleton
+  samajh na aane wale 950 jode hata diye (point mutation dataset me unka koi roop nahi banta)
+  drug key: 6,899 alag SMILES -> InChIKey skeleton
     39 jode gire (drug key nahi bani)
 
 [3/4] dono source ka milaan (yahi asli audit hai)
-Traceback (most recent call last):
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/merge_davis.py", line 234, in <module>
-    sys.exit(main())
-             ^^^^^^
-  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/merge_davis.py", line 139, in main
-    "spearman": float(both.chembl.corr(both.davis, method="spearman")),
-                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/series.py", line 3101, in corr
-    result = nanops.nancorr(
-             ^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/nanops.py", line 91, in _f
-    return f(*args, **kwargs)
-           ^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/nanops.py", line 2025, in nancorr
-    f = get_corr_func(method)
-        ^^^^^^^^^^^^^^^^^^^^^
-  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/nanops.py", line 2040, in get_corr_func
-    from scipy.stats import spearmanr
-ModuleNotFoundError: No module named 'scipy'
+  dono me maujood: 1,108 (gene, mutation, drug, assay) jode
+    Pearson  : 0.911
+    Spearman : 0.856
+    |farak|  : mean 0.15, median 0.00
+    1.0 se zyada farak: 32 (3%)
+    2.0 se zyada farak: 0
+
+    sabse bada matbhed:
+source                                               chembl   davis    diff
+gene mutation    mut_note drug_key       assay_type                        
+ABL1 E255K                HKSZLNNOFSGOKW Kd         -1.4318  0.2258 -1.6576
+     M351T                ODPGGGTTYSGTGO Kd         -0.0442 -1.6990  1.6548
+     Q252H                WJEOLQLKVOPQFV Kd          1.0776 -0.4559  1.5335
+     E255K                OMZCMEYTWSXEPZ Kd         -0.6778  0.8451 -1.5229
+KIT  D816V                ZCBUQCWBWNUWSU Kd         -0.3840  1.1192 -1.5032
+     L576P                ZCBUQCWBWNUWSU Kd         -1.3178  0.1024 -1.4202
+     D816H                ZCBUQCWBWNUWSU Kd         -0.5963  0.8239 -1.4202
+     A829P                ZCBUQCWBWNUWSU Kd         -1.0330  0.3872 -1.4202
+     T670I+V559D          ZCBUQCWBWNUWSU Kd         -1.4114  0.0088 -1.4202
+ABL1 F317I                WJEOLQLKVOPQFV Kd          0.8373 -0.5809  1.4182
+
+[4/4] final dataset
+  15,820 jode -> 14,391 (dohrai hatane ke baad)
+  source: chembl 11,895, davis 2,496
+  genes 198  |  mutations 903  |  drugs 6617
+  censored (Davis ki 5.0 chhat): 2,091 - ye number ki tarah nahi, nishaan ke saath rakhe hain
+  saaf jode: 12,300  |  |ddG|>=1.0: 3,288 (135 genes)
+  kinase: 10,201 jode, 56 genes  |  baki: 4,190
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/results/mutation_ddg_merged.csv, merge_report.json
