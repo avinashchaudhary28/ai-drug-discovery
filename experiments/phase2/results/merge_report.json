@@ -19,7 +19,10 @@
     "mean_abs_diff": 0.14679399819494587,
     "median_abs_diff": 0.0,
     "disagree_gt_1": 32,
-    "disagree_gt_2": 0
+    "disagree_gt_2": 0,
+    "const_offset_groups": 9,
+    "const_offset_pairs": 50,
+    "multi_mutation_groups": 170
   },
   "kinase_pairs": 10201,
   "kinase_genes": 56

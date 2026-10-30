@@ -68,6 +68,21 @@ KIT  D816V                ZCBUQCWBWNUWSU Kd         -0.3840  1.1192 -1.5032
      T670I+V559D          ZCBUQCWBWNUWSU Kd         -1.4114  0.0088 -1.4202
 ABL1 F317I                WJEOLQLKVOPQFV Kd          0.8373 -0.5809  1.4182
 
+    matbhed ki jad:
+      170 (gene, drug) jodiyan jinme 3+ mutations dono source me hain
+      inme 9 me farak HAR mutation pe ek jaisa hai (spread < 0.1, |offset| >= 0.5)
+      = 50 jode, jinka matbhed wild-type ke maap se aa raha hai, mutant se nahi
+                                n        spread       off
+gene drug_key       assay_type                           
+KIT  ZCBUQCWBWNUWSU Kd          5  3.711873e-02 -1.436800
+ABL1 WJEOLQLKVOPQFV Kd          7  4.359823e-02  1.434629
+RET  XZXHXSATPCNXJR Kd          3  0.000000e+00 -1.014200
+ABL1 CXQHYVUVSFXTMY Kd          8  4.196249e-17  1.000000
+EGFR QYZOGCMHVIGURT Kd          5  5.477226e-05  0.890860
+ABL1 RAHBGWKEPAQNFF Kd          5  5.477226e-05  0.758560
+FLT3 AXRCEOKUDYDWLF Kd          5  4.472136e-05 -0.661180
+EGFR XXJWYDDUDKYVKI Kd          6  5.163978e-05  0.562567
+
 [4/4] final dataset
   15,820 jode -> 14,391 (dohrai hatane ke baad)
   source: chembl 11,895, davis 2,496
