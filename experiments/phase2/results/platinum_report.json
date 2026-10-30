@@ -1,0 +1,60 @@
+{
+  "rows_raw": 1008,
+  "pairs": 984,
+  "mutations": 594,
+  "proteins": 141,
+  "ligands": 194,
+  "kinase_pairs": 0,
+  "kinase_proteins": 0,
+  "ddG_abs_ge_1": 329,
+  "dropped": {
+    "k_wt ya k_mt nahi mila / <=0": 22,
+    "mutation samajh nahi aaya": 2,
+    "SMILES nahi mila": 0
+  },
+  "sign_check": {
+    "compared": 969,
+    "agree": 966,
+    "disagree": 3,
+    "agree_frac": 0.9969040247678018
+  },
+  "by_unit": {
+    "KD": 547,
+    "Ki": 402,
+    "Km": 35
+  },
+  "by_protein_class": {
+    "OXIDOREDUCTASE": 249,
+    "HYDROLASE": 247,
+    "TRANSFERASE": 245,
+    "TRANSPORT PROTEIN": 42,
+    "ELECTRON TRANSPORT": 32,
+    "CHAPERONE": 24,
+    "TOXIN": 17,
+    "LYASE": 15,
+    "FLAVOPROTEIN": 15,
+    "TRANSCRIPTION": 14,
+    "ISOMERASE": 11,
+    "LIGAND-BINDING PROTEIN": 9,
+    "SUGAR BINDING PROTEIN": 8,
+    "LIGASE": 8,
+    "LIGAND BINDING PROTEIN": 7,
+    "SIGNALING PROTEIN": 6,
+    "UNKNOWN FUNCTION": 5,
+    "BINDING PROTEIN": 5,
+    "MEMBRANE PROTEIN": 4,
+    "ENDOCYTOSIS": 3,
+    "AMINO-ACID BIOSYNTHESIS, LYSINE BIOSYNTH": 3,
+    "PLASMA PROTEIN": 3,
+    "DE NOVO PROTEIN": 2,
+    "CHOLINE-BINDING PROTEIN": 2,
+    "DIOXYGENASE": 2,
+    "NUCLEAR RECEPTOR": 2,
+    "HORMONE/GROWTH FACTOR RECEPTOR": 1,
+    "LIPID BINDING PROTEIN": 1,
+    "IMMUNE SYSTEM": 1,
+    "GLUCONEOGENESIS": 1
+  },
+  "hold_out_only": true,
+  "note": "Platinum published SOTA ka test set hai. Ispe train nahi karna - sirf evaluation, unke hi protocol pe."
+}

@@ -1,5 +1,7 @@
-**Merged: 14,391 ddG jode** (198 genes, 903 mutations, 6617 drugs)
+**Platinum: 984 ddG jode** (141 proteins, 594 mutations)
 
-- chembl 15,303 + davis 3,604 -> 14,391
-- saaf (censored nahi): 12,300; |ddG|>=1.0: 3,309
-- dono source me saajha: 1,108 jode, Pearson 0.950, |farak| median 0.00
+- kinase: 0 jode
+- |ddG| >= 1.0: 329
+- sign ki jaanch: 99.7% ek disha me
+
+**Sirf evaluation ke liye** - ye published SOTA ka test set hai.
