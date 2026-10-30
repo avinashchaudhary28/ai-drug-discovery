@@ -4,3 +4,4 @@ experiments/*/work/
 run.log
 experiments/*/results/*.npz
 experiments/*/work_cls/
+experiments/*/work_plat/
