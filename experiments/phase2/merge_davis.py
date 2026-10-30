@@ -104,6 +104,15 @@ def main():
         for k, v in ex.items():
             print(f"      {v:>5,}  {k}")
 
+    # Jo mutation samajh nahi aaya use rakhna khatarnak hai, aur ek wajah
+    # se: ChEMBL me 950 rows ka naam hi "UNDEFINED MUTATION" hai. Wo sab
+    # ek hi key banayengi, chahe asli mutation alag ho - aur phir unka
+    # median lena alag-alag mutations ko mila dena hoga. Jaankari hi
+    # maujood nahi hai, isliye hataate hain, gintee chhap kar.
+    df = df[df.mut_parsed].copy()
+    print(f"  samajh na aane wale {len(bad):,} jode hata diye "
+          f"(point mutation dataset me unka koi roop nahi banta)")
+
     uniq = df.smiles.dropna().unique()
     print(f"  drug key: {len(uniq):,} alag SMILES -> InChIKey skeleton")
     keys = {s: drug_key(s) for s in uniq}
@@ -204,7 +213,9 @@ def main():
         "genes": int(merged.gene.nunique()),
         "mutations": int(merged.mutation.nunique()),
         "drugs": int(merged.drug_key.nunique()),
-        "mutation_unparsed": int((~df.mut_parsed).sum()),
+        "mutation_unparsed_dropped": int(len(bad)),
+        "mutation_unparsed_names": {str(k): int(v) for k, v in
+                                    bad.mutation_raw.value_counts().head(20).items()},
         "censored_pairs": int(len(cen)),
         "clean_pairs": int(len(clean)),
         "clean_ddG_ge_1": int(len(big)),
