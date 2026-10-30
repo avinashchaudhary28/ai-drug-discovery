@@ -1,12 +1,3 @@
 stream: https://www.bindingdb.org/rwd/bind/downloads/BindingDB_All_202610_tsv.zip
-  HTTP 200, 594,284,548 byte
+  file ka size: 594,284,548 byte, 32 MB ke tukdon me maangenge
   columns 640, 'Target Name' index 6 ('Target Name')
-
-  hisaab: 10,516,208 / 594,284,548 byte padhe, deflate eof False, 0.17 GB khuli
-
-!! FILE ADHOORI PADHI GAYI - faisla nahi de rahe:
-     - deflate stream poora khatam nahi hua - 10,516,208 byte padhe the, 594,284,548 declare the (1.8% agar cl sahi hai)
-     - sirf 59,665 rows - BindingDB me lagbhag 28 lakh hain, to ye file adhoori hai
-
-  (jo gina gaya: 59,665 rows, 3,658 target-name hits - ye aankde poore nahi hain)
-  file: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/results/bindingdb_scan.json
