@@ -184,7 +184,10 @@ def main():
                                   "nahi mile"}, indent=2))
         return 0
     res = pd.DataFrame(out)
-    tag = res.verdict.str.split(" - ").str[0].str.split(" (").str[0]
+    # Pehle yahan .str.split(" (") tha. pandas use regex samajhta hai aur
+    # "(" se pattern toot jata hai - run yahin gir gayi thi.
+    tag = (res.verdict.str.split(" - ").str[0]
+              .str.replace(r"\s*\(.*$", "", regex=True))
     print(f"  {len(res)} jhagde jaanche gaye, "
           f"{int(res.n_mutations_affected.sum())} jode inse jude hain")
     for k, n in tag.value_counts().items():

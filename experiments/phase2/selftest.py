@@ -78,12 +78,22 @@ check("median pK = 8.0 (10 nM)", round(M[k]["pK"], 6), 8.0)
 check("teeno docs rakhe", M[k]["docs"], ["D1", "D2", "D3"])
 
 print("\nmake_pairs(): jodi banana")
-mut, _ = clean([row(standard_value="100.0", assay_variant_mutation="T790M")],
-               True)
-wt, _ = clean([row(standard_value="1.0", assay_variant_mutation=None)], False)
-M = median_by(mut, ["mol", "target", "type", "mut"])
-W = median_by(wt, ["mol", "target", "type"])
-pairs, no_wt = make_pairs(M, W, {"CHEMBL203": "EGFR"})
+
+
+def pair(mut_rows, wt_rows, genes=None):
+    """Wahi raasta jo asli script leta hai - doc-aware."""
+    mut, _ = clean(mut_rows, True)
+    wt, _ = clean(wt_rows, False)
+    M = median_by(mut, ["mol", "target", "type", "mut", "doc"])
+    W_doc = median_by(wt, ["mol", "target", "type", "doc"])
+    W_all = median_by(wt, ["mol", "target", "type"])
+    return make_pairs(M, W_doc, W_all, genes or {})
+
+
+pairs, no_wt = pair(
+    [row(standard_value="100.0", assay_variant_mutation="T790M")],
+    [row(standard_value="1.0", assay_variant_mutation=None)],
+    {"CHEMBL203": "EGFR"})
 check("ek jodi bani", len(pairs), 1)
 check("gene naam laga", pairs[0]["gene"], "EGFR")
 # 1 nM -> pK 9, 100 nM -> pK 7, mutation ne 100x kamzor kiya => -2
@@ -91,33 +101,67 @@ check("ddG = -2.0 (100x kamzor)", pairs[0]["ddG"], -2.0)
 check("same_doc True (dono D1 se)", pairs[0]["same_doc"], True)
 
 # Asli test: Kd mutant ko IC50 WT se JODNA NAHI chahiye
-mut, _ = clean([row(standard_type="Kd", standard_value="100.0")], True)
-wt, _ = clean([row(standard_type="IC50", standard_value="1.0",
-                   assay_variant_mutation=None)], False)
-M = median_by(mut, ["mol", "target", "type", "mut"])
-W = median_by(wt, ["mol", "target", "type"])
-pairs, no_wt = make_pairs(M, W, {})
+pairs, no_wt = pair(
+    [row(standard_type="Kd", standard_value="100.0")],
+    [row(standard_type="IC50", standard_value="1.0",
+         assay_variant_mutation=None)])
 check("Kd x IC50 ki jodi NAHI banti", len(pairs), 0)
 check("aur wo unpaired me gina gaya", no_wt, 1)
 
-# Alag paper se aaye to jodi bane par nishaan lage
-mut, _ = clean([row(standard_value="100.0", document_chembl_id="D9")], True)
-wt, _ = clean([row(standard_value="1.0", document_chembl_id="D1",
-                   assay_variant_mutation=None)], False)
-M = median_by(mut, ["mol", "target", "type", "mut"])
-W = median_by(wt, ["mol", "target", "type"])
-pairs, _ = make_pairs(M, W, {})
-check("alag paper -> jodi banti hai", len(pairs), 1)
-check("alag paper -> same_doc False", pairs[0]["same_doc"], False)
-
 # Alag drug ki jodi nahi banni chahiye
-mut, _ = clean([row(molecule_chembl_id="CHEMBL1")], True)
-wt, _ = clean([row(molecule_chembl_id="CHEMBL2",
-                   assay_variant_mutation=None)], False)
-M = median_by(mut, ["mol", "target", "type", "mut"])
-W = median_by(wt, ["mol", "target", "type"])
-pairs, _ = make_pairs(M, W, {})
+pairs, _ = pair(
+    [row(molecule_chembl_id="CHEMBL1")],
+    [row(molecule_chembl_id="CHEMBL2", assay_variant_mutation=None)])
 check("alag drug ki jodi NAHI banti", len(pairs), 0)
+
+print("\nUSI PAPER ka wild-type pehle (yahi asli sudhaar hai)")
+# Mutant D1 me hai. WT dono me: D1 me 1 nM (pK 9), D2 me 1000 nM (pK 6).
+# Usi paper ka WT (D1) lena chahiye, dono ka median nahi.
+pairs, _ = pair(
+    [row(standard_value="100.0", document_chembl_id="D1")],
+    [row(standard_value="1.0", document_chembl_id="D1",
+         assay_variant_mutation=None),
+     row(standard_value="1000.0", document_chembl_id="D2",
+         assay_variant_mutation=None)])
+check("ek jodi bani", len(pairs), 1)
+check("usi paper ka WT liya (ddG -2.0, median wala -0.5 nahi)",
+      pairs[0]["ddG"], -2.0)
+check("same_doc True", pairs[0]["same_doc"], True)
+
+# Ek hi paper me kai WT maap - unka median theek hai, kyunki ek hi lab
+pairs, _ = pair(
+    [row(standard_value="100.0", document_chembl_id="D1")],
+    [row(standard_value="1.0", document_chembl_id="D1",
+         assay_variant_mutation=None),
+     row(standard_value="10.0", document_chembl_id="D1",
+         assay_variant_mutation=None),
+     row(standard_value="100.0", document_chembl_id="D1",
+         assay_variant_mutation=None)])
+check("ek hi paper ke 3 maapon ka median (pK 8) -> ddG -1.0",
+      pairs[0]["ddG"], -1.0)
+
+print("\nusi paper ka WT na ho to nishaan ke saath doosre paper se")
+pairs, _ = pair(
+    [row(standard_value="100.0", document_chembl_id="D9")],
+    [row(standard_value="1.0", document_chembl_id="D1",
+         assay_variant_mutation=None)])
+check("jodi banti hai", len(pairs), 1)
+check("same_doc False (nishaan lagta hai)", pairs[0]["same_doc"], False)
+check("ddG -2.0", pairs[0]["ddG"], -2.0)
+
+print("\ndo paper = do SWATANTRA maap, ek nahi")
+pairs, _ = pair(
+    [row(standard_value="100.0", document_chembl_id="D1"),
+     row(standard_value="10.0", document_chembl_id="D2")],
+    [row(standard_value="1.0", document_chembl_id="D1",
+         assay_variant_mutation=None),
+     row(standard_value="1.0", document_chembl_id="D2",
+         assay_variant_mutation=None)])
+check("do alag jode bane", len(pairs), 2)
+check("dono same_doc", all(p["same_doc"] for p in pairs), True)
+check("ddG alag-alag (-2.0 aur -1.0)",
+      sorted(p["ddG"] for p in pairs), [-2.0, -1.0])
+check("doc column darj hua", sorted(p["doc"] for p in pairs), ["D1", "D2"])
 
 print("\ncache ka resume (adhoora download poora na dikhe)")
 import json as _json                                        # noqa: E402

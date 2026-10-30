@@ -291,16 +291,31 @@ def median_by(rows, keys):
     return out
 
 
-def make_pairs(M, W, genes):
-    """Mutant maap ko usi (drug, target, assay-type) ke WT maap se jodo.
+def make_pairs(M, W_doc, W_all, genes):
+    """Mutant maap ko WT se jodo - pehli pasand USI PAPER ka WT.
+
+    Pehle ye poore ChEMBL ka WT median leta tha. Wo galat tha, aur galti
+    chhoti nahi thi: ek hi paper (CHEMBL1908390) me EGFR ke chaar WT maap
+    hain - 5.29, 5.39, 5.82, 6.10. Unka median lena ek naqli farak banata
+    hai, aur phir aisa lagta hai ki Davis galat hai, jabki Davis ka number
+    (5.29) usi paper me maujood hai.
+
+    ddG ka matlab hi tab hai jab dono number EK HI jagah se aaye hon -
+    ek lab, ek protocol, ek din. Isliye:
+      - pehle usi document ka WT dhoondo
+      - na mile to poore ChEMBL ka median, par nishaan (same_doc=False)
+        ke saath, taaki baad me chhaana ja sake
 
     Jodi SIRF ek hi assay type ke andar banti hai - Kd ko IC50 se jodna
     numbers ko mithe dikhata hai aur nateeja bekaar kar deta hai.
     """
     pairs = []
     no_wt = 0
-    for (mol, tgt, typ, mu), m in M.items():
-        w = W.get((mol, tgt, typ))
+    for (mol, tgt, typ, mu, doc), m in M.items():
+        w = W_doc.get((mol, tgt, typ, doc))
+        same_doc = w is not None
+        if w is None:
+            w = W_all.get((mol, tgt, typ))
         if w is None:
             no_wt += 1
             continue
@@ -316,7 +331,8 @@ def make_pairs(M, W, genes):
             "ddG": round(m["pK"] - w["pK"], 4),
             "n_meas_wt": w["n_meas"],
             "n_meas_mut": m["n_meas"],
-            "same_doc": bool(set(m["docs"]) & set(w["docs"])),
+            "doc": doc,
+            "same_doc": same_doc,
         })
     return pairs, no_wt
 
@@ -345,10 +361,14 @@ def main():
     genes = gene_names(tids)
 
     print("\n[4/5] jodi banana")
-    M = median_by(mut, ["mol", "target", "type", "mut"])
-    W = median_by(wt, ["mol", "target", "type"])
+    # Mutant ka grouping me 'doc' bhi hai: ek hi mutation do paperon me
+    # naapa gaya ho to wo do SWATANTRA maap hain, ek nahi. Unka median
+    # lena do labon ko mila dena hota.
+    M = median_by(mut, ["mol", "target", "type", "mut", "doc"])
+    W_doc = median_by(wt, ["mol", "target", "type", "doc"])
+    W_all = median_by(wt, ["mol", "target", "type"])
 
-    pairs, no_wt = make_pairs(M, W, genes)
+    pairs, no_wt = make_pairs(M, W_doc, W_all, genes)
 
     df = pd.DataFrame(pairs)
     if df.empty:
