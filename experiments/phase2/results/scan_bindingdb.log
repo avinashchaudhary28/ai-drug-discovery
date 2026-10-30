@@ -2,45 +2,11 @@ stream: https://www.bindingdb.org/rwd/bind/downloads/BindingDB_All_202610_tsv.zi
   HTTP 200, 594,284,548 byte
   columns 640, 'Target Name' index 6 ('Target Name')
 
-====================================================================
-NATEEJA
-====================================================================
+  hisaab: 10,516,208 / 594,284,548 byte padhe, deflate eof False, 0.17 GB khuli
 
-  rows                        : 73,036
-  Target Name me mutation     : 3,941
-  kisi bhi column me mutation : 4,156
+!! FILE ADHOORI PADHI GAYI - faisla nahi de rahe:
+     - deflate stream poora khatam nahi hua - 10,516,208 byte padhe the, 594,284,548 declare the (1.8% agar cl sahi hai)
+     - sirf 59,665 rows - BindingDB me lagbhag 28 lakh hain, to ye file adhoori hai
 
-  namune (60 alag naam):
-       315  Gag-Pol polyprotein [600-1027,R876K]/[600-1155]
-       216  Cyclin-dependent kinase 4/G1/S-specific cyclin-D1 [L188C]
-       172  Gag-Pol polyprotein [588-1127,Y768C]/[588-1147,Y768C]
-       156  Gag-Pol polyprotein [600-1027,Y780C]/[600-1155,Y780C]
-       135  Dimer of Gag-Pol polyprotein [501-599,Q508K,L534I,L564I,C568A,C596A]
-        84  Gag-Pol polyprotein [588-1027,K690N]/[588-1147,K690N]
-        77  Dimer of Gag-Pol polyprotein [489-587,Q496K]
-        59  Gag-Pol polyprotein [600-1027,Y787L]/[600-1155,Y787L]
-        52  Gag-Pol polyprotein [588-1127,L687I]/[588-1147,L687I]
-        43  Gag-Pol polyprotein [588-1027,P823L]/[588-1147,P823L]
-        30  Genome polyprotein [1027-1206,R1052K]/[1678-1691]
-        27  Dimer of Gag-Pol polyprotein [489-587,Q496K,L499I,M525I,N526D,M535I,R546K,L552P,A560V,G562S,I573V,L579M,I582L]
-        15  Dimer of Gag-Pol polyprotein [489-587,Q496K,L499I,M535I,I543V,Q547E,L552P,I553V,V566I,V571F,I573V,L579M,I582L]
-        11  Gag-Pol polyprotein [484-582,Q491K,I497V,V499I,E519D,G532V,I538V,R541K,D544E,L547P,Q553K,V566A,L573M]
-        11  Gag-Pol polyprotein [484-582,Q491K,I497V,V499I,E519D,R541K,D544E,L547P,Q553K,A555V,G557S,I568V,L573M,L574M]
-        11  Gag-Pol polyprotein [484-582,Q491K,I494L,I497V,V499I,E519D,I534V,R541K,D544E,Q553K,A555V,L573M]
-        11  Dimer of Gag-Pol polyprotein [491-589,Q7K,L33I,C67B,C95B]
-        11  Dimer of Gag-Pol polyprotein [489-587,Q496K,L499I,N526S,R530K,M535I,I543V,I551V,L552P,A560V,V566I,V571A,L579M,I582L]
-        11  Gag-Pol polyprotein [600-1027,K702N,Y780C]/[600-1155,K702N,Y780C]
-        10  Gag-Pol polyprotein [600-1027,K702N]/[600-1155,K702N]
-        10  Gag-Pol polyprotein [600-1027,P835L]/[600-1155,P835L]
-         9  Dual specificity mitogen-activated protein kinase kinase 1 [2-31,52-393,S218E,S222D]
-         9  Gag-Pol polyprotein [600-1027,V705A]/[600-1155,V705A]
-         9  Gag-Pol polyprotein [600-1027,G789A]/[600-1155,G789A]
-         7  Dimer of Gag-Pol polyprotein [501-599,Q508K,L534I,L564I,C568A,C596A,D531N]
-
-====================================================================
-FAISLA
-====================================================================
-  Target Name me sirf 3,941 rows (5.396%) pe mutation jaisa kuch hai.
-  >>> Itna kam hai ki alag source banane layak nahi. Platinum aur published kinase panels pe jaana chahiye.
-
+  (jo gina gaya: 59,665 rows, 3,658 target-name hits - ye aankde poore nahi hain)
   file: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/results/bindingdb_scan.json

@@ -1,9 +1,9 @@
 {
-  "rows": 73036,
+  "rows": 59665,
   "columns": 640,
   "target_name_index": 6,
-  "hits_in_target_name": 3941,
-  "hits_anywhere_in_row": 4156,
+  "hits_in_target_name": 3658,
+  "hits_anywhere_in_row": 3823,
   "examples": {
     "Gag-Pol polyprotein [484-582,Q491K,I497V,V499I,E519D,G532V,I538V,R541K,D544E,L547P,Q553K,V566A,L573M]": 11,
     "Gag-Pol polyprotein [484-582,Q491K,I497V,V499I,E519D,R541K,D544E,L547P,Q553K,A555V,G557S,I568V,L573M,L574M]": 11,
@@ -66,5 +66,16 @@
     "Endochitinase B1 [R301K]": 1,
     "Endochitinase B1 [T138A]": 1
   },
-  "verdict": "too_sparse"
+  "stream": {
+    "bytes_in": 10516208,
+    "bytes_out": 172277704,
+    "eof": false,
+    "content_length": 594284548,
+    "http_bytes": 10516208
+  },
+  "verdict": "ADHOORA - faisla nahi",
+  "problems": [
+    "deflate stream poora khatam nahi hua - 10,516,208 byte padhe the, 594,284,548 declare the (1.8% agar cl sahi hai)",
+    "sirf 59,665 rows - BindingDB me lagbhag 28 lakh hain, to ye file adhoori hai"
+  ]
 }
