@@ -1,0 +1,68 @@
+name: Phase 3 - KLIFS mapping aur jaanch
+
+on:
+  workflow_dispatch:
+    inputs:
+      min_pairs:
+        description: "LOGO fold ke liye kam se kam jode"
+        required: false
+        default: "20"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase3-klifs
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas tabulate
+
+      # Pehle ye. Galat numbering ka nateeja sabse chup-chaap hota hai:
+      # har mutation galat pocket position pe baith jayega, model kuch
+      # na kuch seekh hi lega, aur error kabhi nahi aayega.
+      - name: Selftest (mapping aur uski jaanch)
+        run: python -u experiments/phase3/selftest_klifs.py
+
+      - name: Cache (KLIFS ke jawab)
+        uses: actions/cache@v4
+        with:
+          path: experiments/phase3/work_klifs
+          key: phase3-klifs-v1-${{ github.run_number }}
+          restore-keys: |
+            phase3-klifs-v1-
+
+      - name: Mapping
+        env:
+          MIN_PAIRS: ${{ inputs.min_pairs }}
+        run: |
+          set -o pipefail
+          python -u experiments/phase3/run_klifs_map.py 2>&1 | tee klifs_map.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 3 - KLIFS mapping" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -80 klifs_map.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase3/results
+          cp klifs_map.log experiments/phase3/results/klifs_map.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase3: KLIFS mapping aur jaanch (run ${{ github.run_number }})" \
+            experiments/phase3/results
