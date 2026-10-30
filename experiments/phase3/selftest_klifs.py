@@ -146,3 +146,26 @@ if FAIL:
     print(f"✗ {len(FAIL)} test fail: {FAIL}")
     sys.exit(1)
 print("✓ saare test paas")
+
+print("\nconsensus_pocket: ek mutant structure se jaanch na toote")
+from klifs_map import consensus_pocket                      # noqa: E402
+
+WT = "H" * 85
+MUT = "H" * 44 + "I" + "H" * 40          # position 45 pe mutant
+check("sab wild-type -> wahi",
+      consensus_pocket([{"pocket": WT}] * 3), WT)
+check("3 wild-type + 1 mutant -> wild-type jeetta",
+      consensus_pocket([{"pocket": WT}] * 3 + [{"pocket": MUT}]), WT)
+check("ulta: 3 mutant -> mutant jeetta",
+      consensus_pocket([{"pocket": MUT}] * 3 + [{"pocket": WT}]), MUT)
+check("galat lambai wale chhoot jate hain",
+      consensus_pocket([{"pocket": "HH"}, {"pocket": WT}]), WT)
+check("ek bhi theek na ho -> khali",
+      consensus_pocket([{"pocket": "HH"}]), "")
+check("khali list -> khali", consensus_pocket([]), "")
+
+print()
+if FAIL:
+    print(f"✗ {len(FAIL)} test fail: {FAIL}")
+    sys.exit(1)
+print("✓ saare test paas")

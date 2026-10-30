@@ -87,6 +87,30 @@ def pick_structure(rows):
     return sorted(rows, key=key)[0]
 
 
+def consensus_pocket(structs, top_n=25):
+    """Kai structures ke pocket se har position ka sabse aam residue.
+
+    Kyun zaroori: KLIFS ke bahut se structures KHUD mutant protein ke
+    hote hain (jaise ABL1 T315I ka structure). Ek hi structure ka pocket
+    wild-type maan lena galat hai - us position pe mutant residue baitha
+    hoga aur jaanch bekaar me fail hogi. FLT3 (67%) aur MET (62%) ke
+    saath shayad yahi hua.
+
+    Sab structures ek hi KLIFS numbering pe aligned hain (85 positions,
+    har jagah ek hi matlab), isliye position-wise consensus theek hai.
+    """
+    import collections
+    pockets = [str(s.get("pocket") or "") for s in structs[:top_n]]
+    pockets = [p for p in pockets if len(p) == 85]
+    if not pockets:
+        return ""
+    out = []
+    for i in range(85):
+        c = collections.Counter(p[i] for p in pockets if p[i] not in "-_ ")
+        out.append(c.most_common(1)[0][0] if c else "?")
+    return "".join(out)
+
+
 def fetch_gene(gene):
     """-> dict ya None. Cache disk pe."""
     WORK.mkdir(exist_ok=True)
@@ -115,6 +139,10 @@ def fetch_gene(gene):
         "quality_score": st.get("quality_score"),
         "missing_residues": st.get("missing_residues"),
         "structure_pocket": st.get("pocket"),
+        # Jaanch ke liye kai structures ka consensus - ek akela
+        # structure khud mutant ka ho sakta hai
+        "consensus_pocket": consensus_pocket(structs),
+        "n_structures": len(structs),
         "residues": [{"index": int(r["index"]),
                       "xray": str(r.get("Xray_position") or ""),
                       "klifs": str(r.get("KLIFS_position") or "")}
@@ -138,7 +166,11 @@ def build_map(info):
     pocket_aa structure ke apne pocket sequence se aata hai, kinase ke
     aam pocket se nahi - kyunki numbering bhi usi structure se hai.
     """
-    pocket = info.get("structure_pocket") or info.get("pocket") or ""
+    # Pehli pasand consensus: ek akela structure khud mutant protein ka
+    # ho sakta hai, aur tab us position pe mutant residue dikhta hai
+    # aur wild-type ki jaanch bekaar me fail hoti hai.
+    pocket = (info.get("consensus_pocket") or info.get("structure_pocket")
+              or info.get("pocket") or "")
     out = {}
     for r in info.get("residues", []):
         x = r["xray"]
