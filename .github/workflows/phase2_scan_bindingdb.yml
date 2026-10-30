@@ -1,0 +1,49 @@
+name: Phase 2 - BindingDB poora scan (faisla)
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      # Pehle test. Scan ka code galat ho to wo chup-chaap zero hits
+      # dega aur hum keh denge "BindingDB bekaar hai" - jo poora faisla
+      # galat kar dega.
+      - name: Selftest (zip padhna)
+        run: python -u experiments/phase2/selftest_zip.py
+
+      - name: Selftest (scan ka tareeka)
+        run: python -u experiments/phase2/selftest_scan.py
+
+      # 594 MB stream hoti hai, disk pe kuch nahi rakha jata. Sirf
+      # gintee - dataset abhi nahi banta. Faisla pehle, mehnat baad me.
+      - name: Scan
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/scan_bindingdb.py 2>&1 | tee scan.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -80 scan.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase2/results
+          tail -c 100000 scan.log > experiments/phase2/results/scan_bindingdb.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase2: BindingDB poora scan (run ${{ github.run_number }})" \
+            experiments/phase2/results
