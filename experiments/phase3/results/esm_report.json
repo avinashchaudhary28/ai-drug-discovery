@@ -1,0 +1,101 @@
+{
+  "pairs": 6073,
+  "esm_model": "facebook/esm2_t33_650M_UR50D",
+  "pocket_seq_coverage": 0.8233163181294253,
+  "gate": {
+    "t": 2.0,
+    "win_frac": 0.6
+  },
+  "summary": [
+    {
+      "model": "har dawa ka ausat",
+      "genes": 14,
+      "mae": 0.8000070452,
+      "rmse": 1.0487806698,
+      "spearman": 0.1299120243
+    },
+    {
+      "model": "XGB + pocket + ESM",
+      "genes": 14,
+      "mae": 0.8034053389,
+      "rmse": 1.027479219,
+      "spearman": 0.1668773451
+    },
+    {
+      "model": "XGB + pocket",
+      "genes": 14,
+      "mae": 0.8510168838,
+      "rmse": 1.0925178439,
+      "spearman": 0.1672349953
+    },
+    {
+      "model": "XGB + pocket + ESM-PCA32",
+      "genes": 14,
+      "mae": 0.8585181123,
+      "rmse": 1.0852631592,
+      "spearman": 0.1299323163
+    },
+    {
+      "model": "XGB bina pocket",
+      "genes": 14,
+      "mae": 0.8641525459,
+      "rmse": 1.108322402,
+      "spearman": 0.1708551915
+    },
+    {
+      "model": "training ka ausat",
+      "genes": 14,
+      "mae": 0.8703776051,
+      "rmse": 1.1242484648,
+      "spearman": null
+    },
+    {
+      "model": "0 bolo (farsh)",
+      "genes": 14,
+      "mae": 0.8781605578,
+      "rmse": 1.1397305956,
+      "spearman": null
+    },
+    {
+      "model": "AA badlav ka ausat",
+      "genes": 14,
+      "mae": 0.9419156868,
+      "rmse": 1.1859192315,
+      "spearman": 0.0484068284
+    }
+  ],
+  "arms": {
+    "XGB + pocket + ESM": {
+      "vs_floor_mae": {
+        "n": 14,
+        "mean": 0.07475521893283056,
+        "t": 1.119531615747618,
+        "wins": 8
+      },
+      "vs_nopocket_spearman": {
+        "n": 14,
+        "mean": -0.003977846365458208,
+        "t": -0.09877169153433456,
+        "wins": 8
+      },
+      "passed": false
+    },
+    "XGB + pocket + ESM-PCA32": {
+      "vs_floor_mae": {
+        "n": 14,
+        "mean": 0.01964244546653967,
+        "t": 0.3725373620764367,
+        "wins": 8
+      },
+      "vs_nopocket_spearman": {
+        "n": 14,
+        "mean": -0.04092287516402997,
+        "t": -0.9473475163335014,
+        "wins": 5
+      },
+      "passed": false
+    }
+  },
+  "passed": [],
+  "gate_passed": false
+}

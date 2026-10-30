@@ -1,0 +1,89 @@
+[1/5] 6,073 jode, 14 folds
+
+[2/5] mutated pocket sequences
+  ban payi: 5,000/6,073 (82%)
+      5,000  ok
+        890  koi mutation pocket me nahi
+        139  mutation parse nahi hua
+         43  D382N: us jagah F hai, D nahi
+          1  Q940H: us jagah K hai, Q nahi
+
+[3/5] ESM-2 embeddings
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/534 [00:00<?, ?it/s]Loading weights: 100%|██████████| 534/534 [00:00<00:00, 8163.28it/s]
+[transformers] [1mEsmModel LOAD REPORT[0m from: facebook/esm2_t33_650M_UR50D
+Key                       | Status     | 
+--------------------------+------------+-
+lm_head.layer_norm.weight | UNEXPECTED | 
+lm_head.layer_norm.bias   | UNEXPECTED | 
+lm_head.dense.weight      | UNEXPECTED | 
+lm_head.dense.bias        | UNEXPECTED | 
+lm_head.bias              | UNEXPECTED | 
+pooler.dense.weight       | MISSING    | 
+pooler.dense.bias         | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  facebook/esm2_t33_650M_UR50D on cpu, 148 sequences
+    8/148 (6s)
+    88/148 (61s)
+  antar ka vector: 1280 dims, 82% jodon pe kuch hai
+
+[4/5] baki features
+  bina pocket 1054 | pocket 1076 | +ESM 2356
+
+[5/5] leave-one-gene-out, 3 seeds
+  ABL1       n=1,181  (248s)
+  ACVR1      n=   26  (313s)
+  ALK        n=  815  (369s)
+  BTK        n=   74  (433s)
+  DDR2       n=   26  (499s)
+  EGFR       n=2,376  (551s)
+  FGFR2      n=   74  (614s)
+  FGFR3      n=  133  (679s)
+  FGFR4      n=   38  (743s)
+  KIT        n=  449  (806s)
+  NTRK1      n=  245  (870s)
+  PDGFRA     n=   40  (935s)
+  RET        n=  461  (996s)
+  TGFBR1     n=   29  (1061s)
+
+========================================================================
+NATEEJA
+========================================================================
+
+                          genes       mae      rmse  spearman
+model                                                        
+har dawa ka ausat            14  0.800007  1.048781  0.129912
+XGB + pocket + ESM           14  0.803405  1.027479  0.166877
+XGB + pocket                 14  0.851017  1.092518  0.167235
+XGB + pocket + ESM-PCA32     14  0.858518  1.085263  0.129932
+XGB bina pocket              14  0.864153  1.108322  0.170855
+training ka ausat            14  0.870378  1.124248       NaN
+0 bolo (farsh)               14  0.878161  1.139731       NaN
+AA badlav ka ausat           14  0.941916  1.185919  0.048407
+
+  GATE: farsh se MAE t>=2.0 aur 60%+ genes pe jeet, YA bina-pocket se Spearman t>=2.0
+
+    XGB + pocket + ESM
+      farsh se MAE   +0.0748  t= +1.12  jeeta 8/14
+      Spearman vs bina-pocket -0.0040  t= -0.10  jeeta 8/14
+      >>> gate fail
+    XGB + pocket + ESM-PCA32
+      farsh se MAE   +0.0196  t= +0.37  jeeta 8/14
+      Spearman vs bina-pocket -0.0409  t= -0.95  jeeta 5/14
+      >>> gate fail
+
+========================================================================
+FAISLA
+========================================================================
+  GATE FAIL. Ye chauthi koshish thi:
+    1. mutation position + AA properties
+    2. + KLIFS aligned pocket position
+    3. + ligand contact frequency (IFP)
+    4. + mutated pocket ka ESM-2 embedding (poora aur PCA)
+  Chaaron andekhe gene pe '0 bolo' se nahi jeet paye.
+  Dono ESM arm fail hone ka matlab: jaankari 1280 dims me dabi nahi thi - wo thi hi nahi.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/esm_logo.csv, esm_report.json (1061s)
