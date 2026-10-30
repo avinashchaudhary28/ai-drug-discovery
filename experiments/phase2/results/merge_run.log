@@ -63,9 +63,9 @@ ABL1 E255K                HKSZLNNOFSGOKW Kd         -1.4318  0.2258 -1.6576
      E255K                OMZCMEYTWSXEPZ Kd         -0.6778  0.8451 -1.5229
 KIT  D816V                ZCBUQCWBWNUWSU Kd         -0.3840  1.1192 -1.5032
      L576P                ZCBUQCWBWNUWSU Kd         -1.3178  0.1024 -1.4202
-     D816H                ZCBUQCWBWNUWSU Kd         -0.5963  0.8239 -1.4202
      A829P                ZCBUQCWBWNUWSU Kd         -1.0330  0.3872 -1.4202
      T670I+V559D          ZCBUQCWBWNUWSU Kd         -1.4114  0.0088 -1.4202
+     D816H                ZCBUQCWBWNUWSU Kd         -0.5963  0.8239 -1.4202
 ABL1 F317I                WJEOLQLKVOPQFV Kd          0.8373 -0.5809  1.4182
 
     matbhed ki jad:
@@ -92,3 +92,126 @@ EGFR XXJWYDDUDKYVKI Kd          6  5.163978e-05  0.562567
   kinase: 10,201 jode, 56 genes  |  baki: 4,190
 
   files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/results/mutation_ddg_merged.csv, merge_report.json
+[1/3] dataset banao (merge wala hi tareeka)
+  saajha jode 1,108  |  3+ mutation wale groups 170  |  ek jaisa farak wale 9
+
+[2/3] har jhagde ka wild-type ChEMBL se poocho
+    CHEMBL1936/CHEMBL91829 (n=1): 1 rows
+
+  KIT  Kd  offset -1.437  (5 mutations)
+    wild-type pK: chembl 6.42  |  davis 5.0
+    ChEMBL maap: 1, paper: 1, median pK 6.42
+        pK    6.42         380.0 nM  CHEMBL1144455  CHEMBL860918
+    >>> faisla nahi - sirf 1 paper
+    CHEMBL1862/CHEMBL1908391 (n=3): 3 rows
+
+  ABL1  Kd  offset +1.435  (7 mutations)
+    wild-type pK: chembl 7.26  |  davis 8.68
+    ChEMBL maap: 3, paper: 2, median pK 7.26
+        pK    6.23         593.0 nM  CHEMBL3991601  CHEMBL3991603
+        pK    7.26          55.0 nM  CHEMBL1908390  CHEMBL1908689
+        pK    8.68           2.1 nM  CHEMBL1908390  CHEMBL1908688
+    >>> ChEMBL khud bata hua (paperon ka spread 1.00) - Davis ko galat kehna theek nahi
+    CHEMBL2041/CHEMBL502835 (n=2): 2 rows
+
+  RET  Kd  offset -1.014  (3 mutations)
+    wild-type pK: chembl 8.52  |  davis 7.51
+    ChEMBL maap: 2, paper: 2, median pK 8.02
+        pK    7.51          31.0 nM  CHEMBL1908390  CHEMBL1908818
+        pK    8.52           3.0 nM  CHEMBL3991601  CHEMBL3991867
+    >>> ChEMBL khud bata hua (paperon ka spread 0.51) - Davis ko galat kehna theek nahi
+    CHEMBL1862/CHEMBL1230609 (n=3): 3 rows
+
+  ABL1  Kd  offset +1.000  (8 mutations)
+    wild-type pK: chembl 7.25  |  davis 8.25
+    ChEMBL maap: 3, paper: 2, median pK 7.25
+        pK    6.98         104.0 nM  CHEMBL3991601  CHEMBL3991603
+        pK    7.25          56.0 nM  CHEMBL1908390  CHEMBL1908689
+        pK    8.25           5.6 nM  CHEMBL1908390  CHEMBL1908688
+    >>> ChEMBL khud bata hua (paperon ka spread 0.55) - Davis ko galat kehna theek nahi
+    CHEMBL203/CHEMBL215152 (n=7): 7 rows
+
+  EGFR  Kd  offset +0.891  (5 mutations)
+    wild-type pK: chembl 5.46  |  davis 6.35
+    ChEMBL maap: 7, paper: 3, median pK 5.46
+        pK    5.28       5,200.0 nM  CHEMBL1150977  CHEMBL1050839
+        pK    5.28       5,200.0 nM  CHEMBL1908390  CHEMBL1908703
+        pK    5.46       3,500.0 nM  CHEMBL1150977  CHEMBL1051285
+        pK    5.46       3,500.0 nM  CHEMBL1908390  CHEMBL1908699
+        pK    5.65       2,255.0 nM  CHEMBL3991601  CHEMBL3991696
+        pK    6.35         450.0 nM  CHEMBL1150977  CHEMBL1060182
+    >>> ChEMBL khud bata hua (paperon ka spread 0.43) - Davis ko galat kehna theek nahi
+    CHEMBL1862/CHEMBL572881 (n=3): 3 rows
+
+  ABL1  Kd  offset +0.759  (5 mutations)
+    wild-type pK: chembl 5.41  |  davis 6.17
+    ChEMBL maap: 3, paper: 2, median pK 5.41
+        pK    5.17       6,700.0 nM  CHEMBL1908390  CHEMBL1908689
+        pK    5.41       3,900.0 nM  CHEMBL1150977  CHEMBL1061129
+        pK    6.17         680.0 nM  CHEMBL1908390  CHEMBL1908688
+    >>> ChEMBL khud bata hua (paperon ka spread 0.42) - Davis ko galat kehna theek nahi
+    CHEMBL1974/CHEMBL300138 (n=2): 2 rows
+
+  FLT3  Kd  offset -0.661  (5 mutations)
+    wild-type pK: chembl 7.14  |  davis 6.48
+    ChEMBL maap: 2, paper: 2, median pK 6.81
+        pK    6.48         330.0 nM  CHEMBL1908390  CHEMBL1908631
+        pK    7.14          72.0 nM  CHEMBL5212743  CHEMBL5214806
+    >>> ChEMBL khud bata hua (paperon ka spread 0.33) - Davis ko galat kehna theek nahi
+    CHEMBL203/CHEMBL491473 (n=5): 5 rows
+
+  EGFR  Kd  offset +0.563  (6 mutations)
+    wild-type pK: chembl 6.08  |  davis 6.64
+    ChEMBL maap: 5, paper: 2, median pK 6.08
+        pK    5.56       2,733.0 nM  CHEMBL3991601  CHEMBL3991696
+        pK    5.82       1,500.0 nM  CHEMBL1908390  CHEMBL1908703
+        pK    6.08         840.0 nM  CHEMBL1908390  CHEMBL1908699
+        pK    6.36         440.0 nM  CHEMBL1908390  CHEMBL1908694
+        pK    6.64         230.0 nM  CHEMBL1908390  CHEMBL1908693
+    >>> ChEMBL khud bata hua (paperon ka spread 0.38) - Davis ko galat kehna theek nahi
+    CHEMBL203/CHEMBL230011 (n=4): 4 rows
+
+  EGFR  Kd  offset -0.531  (6 mutations)
+    wild-type pK: chembl 5.82  |  davis 5.29
+    ChEMBL maap: 4, paper: 1, median pK 5.61
+        pK    5.29       5,100.0 nM  CHEMBL1908390  CHEMBL1908693
+        pK    5.39       4,100.0 nM  CHEMBL1908390  CHEMBL1908694
+        pK    5.82       1,500.0 nM  CHEMBL1908390  CHEMBL1908699
+        pK    6.10         800.0 nM  CHEMBL1908390  CHEMBL1908703
+    >>> faisla nahi - sirf 1 paper
+
+[3/3] nateeja
+Traceback (most recent call last):
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/resolve_conflicts.py", line 213, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase2/resolve_conflicts.py", line 187, in main
+    tag = res.verdict.str.split(" - ").str[0].str.split(" (").str[0]
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/strings/accessor.py", line 142, in wrapper
+    return func(self, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/strings/accessor.py", line 939, in split
+    result = self._data.array._str_split(pat, n, expand, regex)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/site-packages/pandas/core/strings/object_array.py", line 380, in _str_split
+    new_pat = re.compile(pat)
+              ^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/__init__.py", line 227, in compile
+    return _compile(pattern, flags)
+           ^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/__init__.py", line 294, in _compile
+    p = _compiler.compile(pattern, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/_compiler.py", line 745, in compile
+    p = _parser.parse(p, flags)
+        ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/_parser.py", line 989, in parse
+    p = _parse_sub(source, state, flags & SRE_FLAG_VERBOSE, 0)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/_parser.py", line 464, in _parse_sub
+    itemsappend(_parse(source, state, verbose, nested + 1,
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/hostedtoolcache/Python/3.11.17/x64/lib/python3.11/re/_parser.py", line 874, in _parse
+    raise source.error("missing ), unterminated subpattern",
+re.error: missing ), unterminated subpattern at position 1
