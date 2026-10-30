@@ -1,0 +1,94 @@
+name: Phase 2 - target classify + Davis merge
+
+on:
+  workflow_dispatch:
+    inputs:
+      cache_version:
+        description: "Classification cache ki chaabi"
+        required: false
+        default: "v1"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: phase2-merge
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas tabulate rdkit
+          python -c "from rdkit import Chem; from rdkit.Chem import inchi; print('rdkit ok')"
+
+      # Pehle ye. Mutation parser ki galti poore dataset ko kharab karti
+      # hai, aur chup-chaap - isliye lambe kaam se pehle jaanch.
+      - name: Selftest (mutation naam + drug key)
+        run: python -u experiments/phase2/selftest_merge.py
+
+      - name: Zaroori input maujood hain?
+        run: |
+          set -e
+          for f in experiments/phase2/results/chembl_ddg.csv \
+                   experiments/mutants/results/davis_ddg.csv; do
+            test -s "$f" || { echo "::error::$f nahi mila ya khali hai"; exit 1; }
+            echo "✓ $f ($(wc -l < "$f") lines)"
+          done
+
+      - name: Classification cache restore
+        if: always()
+        uses: actions/cache/restore@v4
+        with:
+          path: experiments/phase2/work_cls
+          key: phase2-cls-${{ inputs.cache_version }}-${{ github.run_number }}
+          restore-keys: |
+            phase2-cls-${{ inputs.cache_version }}-
+
+      - name: Targets chhanno (kinase ya nahi)
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/classify_targets.py 2>&1 | tee cls.log
+
+      - name: Classification cache save
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: experiments/phase2/work_cls
+          key: phase2-cls-${{ inputs.cache_version }}-${{ github.run_number }}
+
+      - name: Davis ke saath merge
+        run: |
+          set -o pipefail
+          python -u experiments/phase2/merge_davis.py 2>&1 | tee merge.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 2 - classify + merge" >> $GITHUB_STEP_SUMMARY
+          if [ -f experiments/phase2/results/RESULT.md ]; then
+            cat experiments/phase2/results/RESULT.md >> $GITHUB_STEP_SUMMARY
+          fi
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -40 cls.log >> $GITHUB_STEP_SUMMARY || true
+          tail -40 merge.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja repo me commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase2/results
+          cat cls.log merge.log > experiments/phase2/results/merge_run.log 2>/dev/null || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase2: target classify + Davis merge (run ${{ github.run_number }})" \
+            experiments/phase2/results
