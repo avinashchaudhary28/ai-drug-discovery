@@ -1,0 +1,57 @@
+gene,usable,offset,n_mutations,n_in_pocket,n_wt_matched,match_rate,reason,is_fold,n_pairs,pdb,uniprot,pocket_len
+ABL1,True,19.0,20.0,14.0,13.0,0.9285714285714286,theek,True,1181,6xr7,P00519,85.0
+ACVR1,True,0.0,5.0,2.0,2.0,1.0,theek,True,26,6szm,Q04771,85.0
+AKT1,True,0.0,2.0,1.0,1.0,1.0,theek,False,2,4gv1,P31749,85.0
+AKT2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,1o6l,P31751,85.0
+AKT3,False,,,,,,koi structure nahi,False,1,,,
+ALK,True,0.0,20.0,18.0,18.0,1.0,theek,True,815,4z55,Q9UM73,85.0
+AURKA,True,0.0,3.0,3.0,3.0,1.0,theek,False,8,6vpm,O14965,85.0
+AURKB,True,0.0,1.0,1.0,1.0,1.0,theek,False,2,4af3,Q96GD4,85.0
+BRAF,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,431,6nyb,P15056,85.0
+BTK,True,0.0,4.0,4.0,4.0,1.0,theek,True,74,6di1,Q06187,85.0
+CAMK2A,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,7kl1,Q9UQM7,85.0
+CDK2,True,0.0,6.0,6.0,6.0,1.0,theek,False,10,1jvp,P24941,85.0
+CDK7,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,6o9l,P50613,85.0
+CHEK2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,2ycf,O96017,85.0
+CSNK2A1,True,-6.0,4.0,3.0,3.0,1.0,theek,False,6,5zn0,P68400,85.0
+DDR2,True,47.0,2.0,2.0,2.0,1.0,theek,True,26,6fer,Q16832,85.0
+DYRK1A,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,6s14,Q13627,85.0
+EGFR,True,0.0,11.0,10.0,10.0,1.0,theek,True,2376,2ity,P00533,85.0
+ERBB2,True,0.0,5.0,4.0,4.0,1.0,theek,False,13,7pcd,P04626,85.0
+FGFR1,True,0.0,1.0,1.0,1.0,1.0,theek,False,16,5ew8,P11362,85.0
+FGFR2,True,0.0,6.0,5.0,5.0,1.0,theek,True,74,4j99,P21802,85.0
+FGFR3,True,0.0,8.0,3.0,3.0,1.0,theek,True,133,8udu,P22607,85.0
+FGFR4,False,0.0,5.0,5.0,3.0,0.6,"wild-type AA sirf 60% pe mila, 80% chahiye",True,38,7dtz,P22455,85.0
+FLT3,False,-24.0,7.0,6.0,4.0,0.6666666666666666,"wild-type AA sirf 67% pe mila, 80% chahiye",True,531,4xuf,P36888,85.0
+FYN,False,0.0,3.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,15,2dq7,P06241,85.0
+GRK2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,23,3v5w,P25098,85.0
+GRK5,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,4,4tnd,P34947,85.0
+JAK2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,66,7ree,O60674,85.0
+KDR,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,4,3vhe,P35968,85.0
+KIT,True,0.0,17.0,4.0,4.0,1.0,theek,True,449,8pqd,P10721,85.0
+LRRK2,False,0.0,4.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,677,7li4,Q5S007,57.0
+MAP2K1,True,-6.0,1.0,1.0,1.0,1.0,theek,False,5,6nyb,Q02750,85.0
+MAP3K14,True,-41.0,1.0,1.0,1.0,1.0,theek,False,3,6z1t,Q99558,85.0
+MAPK11,True,0.0,1.0,1.0,1.0,1.0,theek,False,1,3gc9,Q15759,85.0
+MAPK14,True,0.0,1.0,1.0,1.0,1.0,theek,False,2,2lgc,Q16539,85.0
+MAPK3,True,0.0,1.0,1.0,1.0,1.0,theek,False,1,4qtb,P27361,85.0
+MAPK9,True,-47.0,1.0,1.0,1.0,1.0,theek,False,3,7n8t,P45984,85.0
+MET,False,-6.0,12.0,8.0,5.0,0.625,"wild-type AA sirf 62% pe mila, 80% chahiye",True,204,3q6w,P08581,85.0
+NEK2,True,0.0,1.0,1.0,1.0,1.0,theek,False,1,5m53,P51955,85.0
+NTRK1,True,0.0,5.0,3.0,3.0,1.0,theek,True,245,4yne,P04629,85.0
+NTRK3,True,0.0,1.0,1.0,1.0,1.0,theek,False,5,6kzc,Q16288,85.0
+PDGFRA,True,0.0,3.0,1.0,1.0,1.0,theek,True,40,6jol,P16234,85.0
+PDPK1,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,2,1uu3,O15530,85.0
+PIK3CA,True,0.0,9.0,1.0,1.0,1.0,theek,False,9,8exl,P42336,85.0
+PRKCE,False,,,,,,koi structure nahi,False,2,,,
+PRKCZ,False,,,,,,koi structure nahi,False,7,,,
+RAF1,False,24.0,4.0,4.0,3.0,0.75,"wild-type AA sirf 75% pe mila, 80% chahiye",True,23,9mmq,P04049,85.0
+RET,True,0.0,14.0,10.0,10.0,1.0,theek,True,461,7dua,P07949,85.0
+RIPK2,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,1,5ng3,O43353,85.0
+ROS1,True,0.0,2.0,2.0,2.0,1.0,theek,False,10,4uxl,P08922,85.0
+RPS6KB1,False,0.0,2.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,True,32,3wf7,P23443,85.0
+SGK1,False,0.0,1.0,0.0,0.0,0.0,ek bhi mutation pocket me nahi,False,9,2r5t,O00141,85.0
+SRC,True,0.0,3.0,2.0,2.0,1.0,theek,False,5,9ns0,P12931,85.0
+STK3,True,0.0,3.0,3.0,3.0,1.0,theek,False,3,4lgd,Q13188,85.0
+TEK,True,18.0,1.0,1.0,1.0,1.0,theek,False,1,1fvr,Q02763,85.0
+TGFBR1,True,47.0,1.0,1.0,1.0,1.0,theek,True,29,4x2f,P36897,85.0
