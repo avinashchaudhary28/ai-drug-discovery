@@ -1,0 +1,82 @@
+======================================================================
+1) API ka spec milta hai kya (paths andaze se nahi, spec se)
+======================================================================
+  ✓ https://klifs.net/swagger_v2/swagger.json
+      host='klifs.net' basePath='/api_v2', 23 paths
+        /bioactivity_list_id   [get]
+        /bioactivity_list_pdb   [get]
+        /drug_list   [get]
+        /interactions_get_IFP   [get]
+        /interactions_get_types   [get]
+        /interactions_match_residues   [get]
+        /kinase_ID   [get]
+        /kinase_families   [get]
+        /kinase_groups   [get]
+        /kinase_information   [get]
+        /kinase_names   [get]
+        /ligands_list   [get]
+        /ligands_list_structures   [get]
+        /structure_conformation   [get]
+        /structure_get_complex   [get]
+        /structure_get_ligand   [get]
+        /structure_get_pdb_complex   [get]
+        /structure_get_pocket   [get]
+        /structure_get_protein   [get]
+        /structure_list   [get]
+        /structure_modified_residues   [get]
+        /structures_list   [get]
+        /structures_pdb_list   [get]
+
+======================================================================
+2) kinase dhundho (ABL1, EGFR) - jo paths mile unhi se
+======================================================================
+  kinase wale paths: ['/kinase_ID', '/kinase_families', '/kinase_groups', '/kinase_information', '/kinase_names']
+  ✓ https://klifs.net/api_v2/kinase_ID?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_ID ---
+  [{"kinase_ID": 392, "name": "ABL1", "gene_name": "ABL1", "family": "Abl", "group": "TK", "subfamily": "", "species": "Human", "full_name": "ABL proto-oncogene 1, non-receptor tyrosine kinase", "uniprot": "P00519", "iuphar": 1923, "pocket": "HKLGGGQYGEVYEVAVKTLEFLKEAAVMKEIKPNLVQLLGVYIITEFMTYGNLLDYLREYLEKKNFIHRDLAARNCLVVADFGLS"}]
+  list of 1, pehli row ke fields: ['family', 'full_name', 'gene_name', 'group', 'iuphar', 'kinase_ID', 'name', 'pocket', 'species', 'subfamily', 'uniprot']
+  ✓ https://klifs.net/api_v2/kinase_families?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_families ---
+  ["A6", "ABC1", "AKT", "ALK", "AUR", "Abl", "Ack", "Akt", "Alk", "Alpha", "Aur", "Axl", "BCR", "BRD", "BUB", "Bud32", "CAMK-Unique", "CAMK1", "CAMK2", "CAMKK", "CAMKL", "CASK", "CCK4", "CDC7", "CDK", "CDKL", "CK1", "CK2", "CLK", "Csk", "DAPK", "DCAMKL", "DDR", "DMPK", "DYRK", "EGFR", "Eph", "FAK", "FAST", "FGFR", "Fer", "G11", "GRK", "GSK", "H11", "Haspin", "IKK", "IRAK", "IRE", "InsR", "JakA", "JakB", "KIS", "LISK", "LRRK", "Lmr", "MAPK", "MAPKAPK", "MAST", "MLCK", "MLK", "MOS", "Met", "Musk", "
+  ✓ https://klifs.net/api_v2/kinase_groups?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_groups ---
+  ["AGC", "CAMK", "CK1", "CMGC", "Other", "STE", "TK", "TKL"]
+  ✓ https://klifs.net/api_v2/kinase_information?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_information ---
+  (JSON nahi) [{"kinase_ID":1,"name":"AKT1","gene_name":"AKT1","family":"Akt","group":"AGC","subfamily":"","species":"Human","full_name":"v-akt murine thymoma viral oncogene homolog 1","uniprot":"P31749","iuphar":1479,"pocket":"KLLGKGTFGKVILYAMKILHTLTENRVLQNSRPFLTALKYSCFVMEYANGGELFFHLSRLHSEKNVVYRDLKLENLMLITDFGLC"
+  ✓ https://klifs.net/api_v2/kinase_names?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_names ---
+  (JSON nahi) [{"kinase_ID":277,"name":"AAK1","gene_name":"AAK1","accession":"Q2M2I8","full_name":"AP2 associated kinase 1","species":"Human"},{"kinase_ID":443,"name":"LMR1","gene_name":"AATK","accession":"Q6ZMQ8","full_name":"apoptosis-associated tyrosine kinase","species":"Human"},{"kinase_ID":392,"name":"ABL1"
+  ✓ https://klifs.net/api_v2/kinase_ID?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_ID ---
+  [{"kinase_ID": 392, "name": "ABL1", "gene_name": "ABL1", "family": "Abl", "group": "TK", "subfamily": "", "species": "Human", "full_name": "ABL proto-oncogene 1, non-receptor tyrosine kinase", "uniprot": "P00519", "iuphar": 1923, "pocket": "HKLGGGQYGEVYEVAVKTLEFLKEAAVMKEIKPNLVQLLGVYIITEFMTYGNLLDYLREYLEKKNFIHRDLAARNCLVVADFGLS"}]
+  list of 1, pehli row ke fields: ['family', 'full_name', 'gene_name', 'group', 'iuphar', 'kinase_ID', 'name', 'pocket', 'species', 'subfamily', 'uniprot']
+  ✓ https://klifs.net/api_v2/kinase_families?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_families ---
+  ["A6", "ABC1", "AKT", "ALK", "AUR", "Abl", "Ack", "Akt", "Alk", "Alpha", "Aur", "Axl", "BCR", "BRD", "BUB", "Bud32", "CAMK-Unique", "CAMK1", "CAMK2", "CAMKK", "CAMKL", "CASK", "CCK4", "CDC7", "CDK", "CDKL", "CK1", "CK2", "CLK", "Csk", "DAPK", "DCAMKL", "DDR", "DMPK", "DYRK", "EGFR", "Eph", "FAK", "FAST", "FGFR", "Fer", "G11", "GRK", "GSK", "H11", "Haspin", "IKK", "IRAK", "IRE", "InsR", "JakA", "JakB", "KIS", "LISK", "LRRK", "Lmr", "MAPK", "MAPKAPK", "MAST", "MLCK", "MLK", "MOS", "Met", "Musk", "
+  ✓ https://klifs.net/api_v2/kinase_groups?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_groups ---
+  ["AGC", "CAMK", "CK1", "CMGC", "Other", "STE", "TK", "TKL"]
+  ✓ https://klifs.net/api_v2/kinase_information?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_information ---
+  (JSON nahi) [{"kinase_ID":1,"name":"AKT1","gene_name":"AKT1","family":"Akt","group":"AGC","subfamily":"","species":"Human","full_name":"v-akt murine thymoma viral oncogene homolog 1","uniprot":"P31749","iuphar":1479,"pocket":"KLLGKGTFGKVILYAMKILHTLTENRVLQNSRPFLTALKYSCFVMEYANGGELFFHLSRLHSEKNVVYRDLKLENLMLITDFGLC"
+  ✓ https://klifs.net/api_v2/kinase_names?kinase_name=ABL1&species=HUMAN  -> 200
+
+--- /kinase_names ---
+  (JSON nahi) [{"kinase_ID":277,"name":"AAK1","gene_name":"AAK1","accession":"Q2M2I8","full_name":"AP2 associated kinase 1","species":"Human"},{"kinase_ID":443,"name":"LMR1","gene_name":"AATK","accession":"Q6ZMQ8","full_name":"apoptosis-associated tyrosine kinase","species":"Human"},{"kinase_ID":392,"name":"ABL1"
+
+======================================================================
+3) pocket / numbering wale paths
+======================================================================
+  ['/interactions_get_IFP', '/interactions_get_types', '/interactions_match_residues', '/ligands_list_structures', '/structure_conformation', '/structure_get_complex', '/structure_get_ligand', '/structure_get_pdb_complex', '/structure_get_pocket', '/structure_get_protein', '/structure_list', '/structure_modified_residues', '/structures_list', '/structures_pdb_list']
+
+  (inhe agle kadam me aazmayenge, jab kinase ID mil jayegi - ID ke bina inhe aazmana andaza hoga)
