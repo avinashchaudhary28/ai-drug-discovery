@@ -1,0 +1,139 @@
+
+==================================================================
+EGFR (kinase)  CHEMBL203
+==================================================================
+
+--- /target ---
+keys: ['cross_references', 'organism', 'pref_name', 'species_group_flag', 'target_chembl_id', 'target_components', 'target_type', 'tax_id']
+  target_type = "SINGLE PROTEIN"
+  pref_name = "Epidermal growth factor receptor"
+
+  components: 1
+
+--- target_components[0] ---
+keys: ['accession', 'component_description', 'component_id', 'component_type', 'relationship', 'target_component_synonyms', 'target_component_xrefs']
+  accession = "P00533"
+  component_id = 147
+  component_type = "PROTEIN"
+
+  xrefs: 919
+    AlphaFoldDB: ['P00533']
+    ExpressionAtlas: ['P00533']
+    GoComponent: ['GO:0005768', 'GO:0005886', 'GO:0009925', 'GO:0032587', 'GO:0000139', 'GO:0005576'] ...
+    GoFunction: ['GO:0005006', 'GO:0001618', 'GO:0003682', 'GO:0003690', 'GO:0004714', 'GO:0004888'] ...
+    GoProcess: ['GO:0007166', 'GO:0007173', 'GO:0008284', 'GO:0000165', 'GO:0000902', 'GO:0001503'] ...
+    HGNC: ['HGNC:3236']
+    IntAct: ['P00533']
+    InterPro: ['IPR006211', 'IPR006212', 'IPR032778', 'IPR009030', 'IPR011009', 'IPR000719'] ...
+    PANTHER: ['PTHR24416:SF91', 'PTHR24416']
+    PDB: ['1IVO', '1M14', '1M17', '1MOX', '1NQL', '1XKK'] ...
+    PDBe: ['4WRG', '5SX5', '5SX4', '6JRX', '9FRD', '5JEB'] ...
+    Pfam: ['PF00757', 'PF14843', 'PF07714', 'PF01030', 'PF21314']
+    PharmGKB: ['PA7360']
+    Pharos: ['P00533']
+    Reactome: ['R-HSA-1227986', 'R-HSA-1236382', 'R-HSA-1236394', 'R-HSA-1250196', 'R-HSA-1251932', 'R-HSA-1257604'] ...
+    UniProt: ['O00688', 'O00732', 'P06268', 'Q14225', 'Q68GS5', 'Q92795'] ...
+
+--- /target_component/147 ---
+keys: ['accession', 'component_id', 'component_type', 'description', 'go_slims', 'organism', 'protein_classifications', 'sequence', 'target_component_synonyms', 'target_component_xrefs', 'targets', 'tax_id']
+  protein_classifications: [{"protein_classification_id": 149}]
+
+--- /protein_classification/149 ---
+keys: ['class_level', 'definition', 'parent_id', 'pref_name', 'protein_class_desc', 'protein_class_id', 'replaced_by', 'short_name', 'sort_order']
+
+==================================================================
+GNRHR (kinase NAHI)  CHEMBL1856
+==================================================================
+
+--- /target ---
+keys: ['cross_references', 'organism', 'pref_name', 'species_group_flag', 'target_chembl_id', 'target_components', 'target_type', 'tax_id']
+  target_type = "SINGLE PROTEIN"
+  pref_name = "3-oxo-5-alpha-steroid 4-dehydrogenase 2"
+
+  components: 1
+
+--- target_components[0] ---
+keys: ['accession', 'component_description', 'component_id', 'component_type', 'relationship', 'target_component_synonyms', 'target_component_xrefs']
+  accession = "P31213"
+  component_id = 164
+  component_type = "PROTEIN"
+
+  xrefs: 47
+    AlphaFoldDB: ['P31213']
+    GoComponent: ['GO:0005783', 'GO:0005789', 'GO:0016020', 'GO:0043025', 'GO:0070852']
+    GoFunction: ['GO:0003865', 'GO:0005515', 'GO:0016491', 'GO:0030283', 'GO:0047751']
+    GoProcess: ['GO:0006629', 'GO:0006694', 'GO:0006702', 'GO:0006706', 'GO:0007267', 'GO:0007548'] ...
+    HGNC: ['HGNC:11285']
+    IntAct: ['P31213']
+    InterPro: ['IPR001104', 'IPR016636', 'IPR039357']
+    PANTHER: ['PTHR10556', 'PTHR10556:SF37']
+    PDB: ['7BW1']
+    PDBe: ['7BW1']
+    Pfam: ['PF02544']
+    PharmGKB: ['PA36113']
+    Pharos: ['P31213']
+    Reactome: ['R-HSA-193048']
+    UniProt: ['B2RE87', 'P31213', 'Q2M1R4', 'Q9BYE6']
+
+--- /target_component/164 ---
+keys: ['accession', 'component_id', 'component_type', 'description', 'go_slims', 'organism', 'protein_classifications', 'sequence', 'target_component_synonyms', 'target_component_xrefs', 'targets', 'tax_id']
+  protein_classifications: [{"protein_classification_id": 10}]
+
+--- /protein_classification/10 ---
+keys: ['class_level', 'definition', 'parent_id', 'pref_name', 'protein_class_desc', 'protein_class_id', 'replaced_by', 'short_name', 'sort_order']
+
+==================================================================
+ABL1 (kinase)  CHEMBL1862
+==================================================================
+
+--- /target ---
+keys: ['cross_references', 'organism', 'pref_name', 'species_group_flag', 'target_chembl_id', 'target_components', 'target_type', 'tax_id']
+  target_type = "SINGLE PROTEIN"
+  pref_name = "Tyrosine-protein kinase ABL1"
+
+  components: 1
+
+--- target_components[0] ---
+keys: ['accession', 'component_description', 'component_id', 'component_type', 'relationship', 'target_component_synonyms', 'target_component_xrefs']
+  accession = "P00519"
+  component_id = 173
+  component_type = "PROTEIN"
+
+  xrefs: 369
+    AlphaFoldDB: ['P00519']
+    ExpressionAtlas: ['P00519']
+    GoComponent: ['GO:0005886', 'GO:0001726', 'GO:0005634', 'GO:0005654', 'GO:0005730', 'GO:0005737'] ...
+    GoFunction: ['GO:0097100', 'GO:0000287', 'GO:0000400', 'GO:0000405', 'GO:0001784', 'GO:0003677'] ...
+    GoProcess: ['GO:0006979', 'GO:0007204', 'GO:0030845', 'GO:0051444', 'GO:0000278', 'GO:0001843'] ...
+    HGNC: ['HGNC:76']
+    IntAct: ['P00519']
+    InterPro: ['IPR035837', 'IPR015015', 'IPR011009', 'IPR050198', 'IPR000719', 'IPR017441'] ...
+    PANTHER: ['PTHR24418']
+    PDB: ['1AB2', '1AWO', '1BBZ', '1JU5', '1OPL', '1ZZP'] ...
+    PDBe: ['3UYO', '2FO0', '3UE4', '2O88', '7DT2', '2HZI'] ...
+    Pfam: ['PF08919', 'PF07714', 'PF00017', 'PF00018']
+    PharmGKB: ['PA24413']
+    Pharos: ['P00519']
+    Reactome: ['R-HSA-2029482', 'R-HSA-428890', 'R-HSA-525793', 'R-HSA-5663213', 'R-HSA-5685938', 'R-HSA-5693565'] ...
+    UniProt: ['A3KFJ3', 'Q13869', 'Q13870', 'Q16133', 'Q17R61', 'Q45F09'] ...
+
+--- /target_component/173 ---
+keys: ['accession', 'component_id', 'component_type', 'description', 'go_slims', 'organism', 'protein_classifications', 'sequence', 'target_component_synonyms', 'target_component_xrefs', 'targets', 'tax_id']
+  protein_classifications: [{"protein_classification_id": 130}]
+
+--- /protein_classification/130 ---
+keys: ['class_level', 'definition', 'parent_id', 'pref_name', 'protein_class_desc', 'protein_class_id', 'replaced_by', 'short_name', 'sort_order']
+
+==================================================================
+endpoint maujood hain ya nahi
+==================================================================
+  ✓ /protein_classification.json  -> ['protein_classifications'], total 905
+      row keys: ['class_level', 'definition', 'parent_id', 'pref_name', 'protein_class_desc', 'protein_class_id', 'replaced_by', 'short_name', 'sort_order']
+      row: {"class_level": 0, "definition": "Root of the ChEMBL protein family classification", "parent_id": null, "pref_name": "Protein class", "protein_class_desc": "protein class", "protein_class_id": 0, "replaced_by": null, "short_name": "Protein class", "sort_order": null}
+  ✗ /protein_class.json  HTTP 404 for https://www.ebi.ac.uk/chembl/api/data/protein_class.json?limit=1
+  ✓ /target_component.json  -> ['target_components'], total 12986
+      row keys: ['accession', 'component_id', 'component_type', 'description', 'go_slims', 'organism', 'protein_classifications', 'sequence', 'target_component_synonyms', 'target_component_xrefs', 'targets', 'tax_id']
+      row: {"accession": "O09028", "component_id": 1, "component_type": "PROTEIN", "description": "Gamma-aminobutyric acid receptor subunit pi", "go_slims": [{"go_id": "GO:0003674"}, {"go_id": "GO:0005575"}, {"go_id": "GO:0005886"}, {"go_id": "GO:0006810"}, {"go_id": "GO:0016020"}, {"go_id": "GO:0022857"}, {"g
+  ✓ /mechanism.json  -> ['mechanisms'], total 7561
+      row keys: ['action_type', 'binding_site_comment', 'direct_interaction', 'disease_efficacy', 'max_phase', 'mec_id', 'mechanism_comment', 'mechanism_of_action', 'mechanism_refs', 'molecular_mechanism', 'molecule_chembl_id', 'parent_molecule_chembl_id', 'record_id', 'selectivity_comment', 'site_id', 'target_chembl_id', 'variant_sequence']
+      row: {"action_type": "INHIBITOR", "binding_site_comment": null, "direct_interaction": 1, "disease_efficacy": 1, "max_phase": 4, "mec_id": 13, "mechanism_comment": null, "mechanism_of_action": "Carbonic anhydrase VII inhibitor", "mechanism_refs": [{"ref_id": "setid=8e162b6d-8fa6-45f6-80d8-5132d94c1207", "
