@@ -58,14 +58,37 @@ def main():
 
     links = list(dict.fromkeys(links))
     if not links:
-        print("\n!! Koi data file ka link nahi mila. URL ka andaza nahi "
-              "lagayenge - page ka HTML dekh kar aage badhna hoga.")
+        # Pehli koshish me regex sirf file-extension wale link dhundh raha
+        # tha. Platinum ka download link bina extension ka ho sakta hai
+        # (jaise /platinum/download_all), isliye ab SAARE link dekhte hain
+        # aur 'download' shabd wali lines bhi. URL ka andaza nahi.
+        print("\n  Extension wala link nahi mila - saare link dekhte hain")
         for page in PAGES:
-            txt, status = get_text(page, limit=4000)
-            if not txt.startswith("__ERR__") and txt:
-                print(f"\n  --- {page} ka shuruaati HTML ---")
-                print(txt[:2500])
-                break
+            txt, status = get_text(page)
+            if txt.startswith("__ERR__") or not txt or status != 200:
+                continue
+            print(f"\n  --- {page} ---")
+            hrefs = sorted(set(re.findall(r'href=["\']([^"\']+)["\']', txt)))
+            hrefs = [h for h in hrefs
+                     if not re.search(r"\.(css|js|png|jpg|gif|ico|svg)$", h,
+                                      re.I)]
+            print(f"  {len(hrefs)} link (css/js/image hata kar):")
+            for h in hrefs[:60]:
+                mark = " <<<" if re.search(r"down|data|file|releas|ftp|get",
+                                           h, re.I) else ""
+                print(f"      {h}{mark}")
+            dl = [l.strip() for l in txt.split("\n")
+                  if re.search(r"download", l, re.I)]
+            print(f"\n  'download' wali {len(dl)} lines:")
+            for l in dl[:25]:
+                print(f"      {l[:220]}")
+            forms = re.findall(r"<form[^>]*>", txt, re.I)
+            if forms:
+                print(f"\n  {len(forms)} form mile:")
+                for f in forms[:10]:
+                    print(f"      {f[:220]}")
+        print("\n!! Yahan se aage link dekh kar faisla karna hai. Andaza "
+              "lagakar URL banana wahi galti hogi jo aaj do baar hui.")
         return 1
 
     print(f"\n{'=' * 70}\n2) kaun si file khulti hai aur kitni badi hai\n"
