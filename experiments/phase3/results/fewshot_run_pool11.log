@@ -1,0 +1,78 @@
+[1/3] features
+  8,110 jode, 56 genes, 1,054 features
+
+  test_frac=0.5, max k=50
+  POORA curve sirf un genes pe jinme 100+ jode hain: 11
+  (ABL1, ALK, BRAF, EGFR, FGFR3, FLT3, KIT, LRRK2, MET, NTRK1, RET)
+
+[2/3] curve: k = [0, 5, 10, 20, 50], 5 seeds
+  ABL1       n=1,181  (82s)
+  ALK        n=  815  (167s)
+  BRAF       n=  431  (255s)
+  EGFR       n=2,376  (327s)
+  FGFR3      n=  133  (415s)
+  FLT3       n=  531  (501s)
+  KIT        n=  449  (587s)
+  LRRK2      n=  677  (674s)
+  MET        n=  204  (761s)
+  NTRK1      n=  245  (848s)
+  RET        n=  461  (935s)
+
+========================================================================
+CURVE (11 genes, har gene ek ikai)
+========================================================================
+
+Spearman (gene ke andar ranking - yahi asli cheez hai):
+model  XGB (+shots)  XGB (+shots, cal)  pooled: apna maap + doosre genes  shots se har dawa ka ausat
+k                                                                                                   
+0             0.126              0.126                             0.085                       0.085
+5             0.189              0.189                             0.091                       0.052
+10            0.229              0.229                             0.092                       0.054
+20            0.304              0.304                             0.105                       0.077
+50            0.437              0.437                             0.136                       0.120
+
+MAE:
+model  0 bolo  XGB (+shots)  XGB (+shots, cal)  pooled: apna maap + doosre genes  shots ka ausat  shots se har dawa ka ausat
+k                                                                                                                           
+0       0.694         0.754              0.754                             0.701           0.702                       0.701
+5       0.694         0.702              0.668                             0.703           0.739                       0.740
+10      0.694         0.667              0.645                             0.704           0.701                       0.703
+20      0.694         0.623              0.622                             0.703           0.687                       0.689
+50      0.694         0.562              0.592                             0.706           0.679                       0.684
+
+Shrink factor `a` (shots se nikla, 1.0 = koi badlaav nahi):
+        a
+k        
+0   1.000
+5   0.448
+10  0.462
+20  0.443
+50  0.436
+  `a` farsh (0.05) pe aaya: 88/275 baar   <- itni baar model ke paas maatra ki jaankari nahi thi
+
+========================================================================
+GATE (k=20, model: XGB (+shots))
+========================================================================
+
+  Spearman k=20 pe: +0.304  (chahiye >= 0.3)
+  vs 0 bolo                       MAE +0.072 t= +1.59 jeeta 7/11  (ranking nahi - ye baseline ek hi number deta hai)
+                                  jackknife: FGFR3 hatane pe t= +1.15
+  vs shots ka ausat               MAE +0.064 t= +1.53 jeeta 6/11  (ranking nahi - ye baseline ek hi number deta hai)
+                                  jackknife: FGFR3 hatane pe t= +1.10
+  vs pooled: apna maap + doosre genes dSpearman +0.199 t= +4.02 jeeta 10/11   <- sabse kathin
+                                  jackknife: RET hatane pe t= +3.53
+
+  k=0 se k=20 tak sudhaar: +0.178  t= +4.11  jeeta 11/11
+
+  (jaankari ke liye - gate ISPE NAHI hai) XGB (+shots, cal): Spearman +0.304
+    vs 0 bolo                       MAE +0.073 t= +1.88 jeeta 8/11
+    vs shots ka ausat               MAE +0.065 t= +1.74 jeeta 8/11
+    vs pooled: apna maap + doosre genes MAE +0.081 t= +2.75 jeeta 11/11
+
+========================================================================
+FAISLA
+========================================================================
+  GATE FAIL: '0 bolo' se nahi jeeta; 'shots ka ausat' se nahi jeeta
+  Agar model un k numbers se hi nahi jeeta, to faida model ka nahi - un numbers ka hai.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/fewshot_curve_pool11.csv, fewshot_report_pool11.json (935s)
