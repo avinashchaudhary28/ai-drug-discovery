@@ -17,8 +17,8 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from fewshot import (eligible, shots_drug_mean, shots_mean,   # noqa: E402
-                     split_gene, take_shots)
+from fewshot import (A_FLOOR, A_GRID, eligible, fit_shrink,   # noqa: E402
+                     shots_drug_mean, shots_mean, split_gene, take_shots)
 
 FAIL = []
 
@@ -126,6 +126,29 @@ check("andekhi dawa -> shots ka ausat (99 nahi)",
 
 p = shots_drug_mean(pd.DataFrame({"drug_key": [], "ddG": []}), test, train)
 check("shots na hon -> training se", float(p[0]), 99.0)
+
+print("\nfit_shrink - maatra ki calibration")
+y = np.array([1.0, -2.0, 0.5, 3.0, -1.5])
+check("prediction bilkul sahi -> a = 1", fit_shrink(y, y), 1.0)
+check("prediction 2 guna bada -> a = 0.5", fit_shrink(2 * y, y), 0.5)
+check("prediction aadha -> a >= 1.3 (grid ka chhor)",
+      fit_shrink(0.5 * y, y) >= 1.3, True)
+check("prediction bilkul bekaar (sab 0) -> a koi bhi, crash nahi",
+      np.isfinite(fit_shrink(np.zeros(5), y)), True)
+check("shots na hon -> a = 1", fit_shrink([], []), 1.0)
+check("a kabhi grid se bahar nahi", fit_shrink(3 * y, y) in set(A_GRID), True)
+check("a kabhi farsh se neeche nahi (0 pe model = 0 bolo)",
+      fit_shrink(-y, y) >= A_FLOOR, True)
+check("grid me 0 NAHI hai", 0.0 in set(A_GRID), False)
+# NaN prediction aaye to chup-chaap 0 jaisa bartav nahi - a=1 (koi badlaav
+# nahi), kyunki galat sikudan MAE bigad degi aur error nahi aayega
+check("NaN prediction -> a = 1 (chup-chaap 0 nahi)",
+      fit_shrink(np.array([1.0, np.nan, 2.0, 1.0, 1.0]), y), 1.0)
+
+print("\nfit_shrink: shrink se RANKING nahi badalni chahiye")
+p = np.array([-3.0, -1.0, 0.4, 2.0, 5.0])
+for a in (A_FLOOR, 0.5, 1.0, 1.3):
+    check(f"a={a}: kram wahi", list(np.argsort(a * p)), list(np.argsort(p)))
 
 print()
 if FAIL:

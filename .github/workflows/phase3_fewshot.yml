@@ -19,6 +19,14 @@ on:
         description: "Output files ka suffix, jaise _k20. Khali = purana naam"
         required: false
         default: ""
+      objective:
+        description: "reg:absoluteerror (gate MAE naapta hai) ya reg:squarederror"
+        required: false
+        default: "reg:absoluteerror"
+      gate_model:
+        description: "Gate kis model pe - NUMBER DEKHNE SE PEHLE tay karo"
+        required: false
+        default: "XGB (+shots, cal)"
 
 permissions:
   contents: write
@@ -50,6 +58,12 @@ jobs:
       - name: Selftest (batwara aur farsh)
         run: python -u experiments/phase3/selftest_logo.py
 
+      # Poora raasta nakli xgboost/features se - index, dict lookup,
+      # column ka naam, gate ka lookup. Ye bugs warna 25 minute baad
+      # milte hain.
+      - name: Dry run (nakli model, poora raasta)
+        run: python -u experiments/phase3/dryrun_fewshot.py
+
       - name: Zaroori input maujood hai?
         run: |
           set -e
@@ -63,6 +77,8 @@ jobs:
           SEEDS: ${{ inputs.seeds }}
           TEST_FRAC: ${{ inputs.test_frac }}
           TAG: ${{ inputs.tag }}
+          OBJECTIVE: ${{ inputs.objective }}
+          GATE_MODEL: ${{ inputs.gate_model }}
         run: |
           set -o pipefail
           python -u experiments/phase3/run_fewshot.py 2>&1 | tee fewshot.log

@@ -29,8 +29,8 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from features import build                                # noqa: E402
-from fewshot import (eligible, shots_drug_mean, shots_mean,  # noqa: E402
-                     split_gene, take_shots)
+from fewshot import (A_FLOOR, eligible, fit_shrink,          # noqa: E402
+                     shots_drug_mean, shots_mean, split_gene, take_shots)
 from logo import metrics, paired_t                        # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -45,17 +45,34 @@ N_TREES = int(os.environ.get("N_TREES", "400"))
 TEST_FRAC = float(os.environ.get("TEST_FRAC", "0.5"))
 TAG = os.environ.get("TAG", "")  # files ko alag naam, purana nateeja bacha rahe
 
+# Gate MAE naapta hai par model squared error pe seekhta tha - wo
+# outliers ke peeche bhaagta hai. Jo naapa jaa raha hai, wahi seekho.
+OBJECTIVE = os.environ.get("OBJECTIVE", "reg:absoluteerror")
+
 GATE_K = 20
 GATE_SPEARMAN = 0.30
 GATE_T = 2.0
+# Gate KIS model pe lagega - ye NUMBER DEKHNE SE PEHLE tay hota hai,
+# launch ke waqt. Do model me se baad me behtar chun lena do mauke lena
+# hai, ek nahi - aur khareedaar ke saamne wo nahi tikta. Dono ke number
+# report me likhe jate hain taaki kuch chhupa na rahe.
+GATE_MODEL = os.environ.get("GATE_MODEL", "XGB (+shots, cal)")
+
+MAIN = "XGB (+shots)"
+CAL = "XGB (+shots, cal)"
+
+
+def _mk(seed):
+    import xgboost as xgb
+    return xgb.XGBRegressor(
+        n_estimators=N_TREES, max_depth=6, learning_rate=0.06,
+        subsample=0.8, colsample_bytree=0.6, reg_lambda=1.0,
+        objective=OBJECTIVE,
+        tree_method="hist", max_bin=128, random_state=seed, n_jobs=0)
 
 
 def fit(Xtr, ytr, Xte, seed):
-    import xgboost as xgb
-    m = xgb.XGBRegressor(
-        n_estimators=N_TREES, max_depth=6, learning_rate=0.06,
-        subsample=0.8, colsample_bytree=0.6, reg_lambda=1.0,
-        tree_method="hist", max_bin=128, random_state=seed, n_jobs=0)
+    m = _mk(seed)
     m.fit(Xtr, ytr)
     return m.predict(Xte)
 
@@ -101,12 +118,33 @@ def main():
             pool, test = split_gene(gidx, seed, test_frac=TEST_FRAC)
             te = df.loc[test]
             y = te.ddG.to_numpy(dtype=float)
+
+            # Calibration ka model: SIRF doosre genes pe. Isne is gene ki
+            # ek bhi row nahi dekhi, isliye pool pe iski prediction sach
+            # me bahar ki hai - aur usi se `a` nikalna imaandaar hai.
+            # Ye k pe nirbhar nahi hai, to ek baar - saare k ke liye.
+            cal_m = _mk(seed + 777)
+            cal_m.fit(X[other], df.loc[other].ddG.to_numpy(dtype=float))
+            pool_oos = cal_m.predict(X[pool])
+            oos_of = dict(zip(pool.tolist(), pool_oos.tolist()))
+
             for k in KS:
                 shots = take_shots(pool, k, seed)
                 tr_idx = np.concatenate([other, shots])
                 tr = df.loc[tr_idx]
                 sh = df.loc[shots]
                 ytr = tr.ddG.to_numpy(dtype=float)
+
+                main = fit(X[tr_idx], ytr, X[test], seed)
+
+                # Shots se shrink factor. k=0 pe shots nahi hain, to
+                # a=1 - aur ye sahi hai: bina maap calibration ka koi
+                # aadhaar nahi. Yahi kahani bhi hai: maap do, faida lo.
+                if len(shots):
+                    a = fit_shrink([oos_of[i] for i in shots.tolist()],
+                                   sh.ddG.to_numpy(dtype=float))
+                else:
+                    a = 1.0
 
                 preds = {
                     "0 bolo": np.zeros(len(te)),
@@ -115,18 +153,21 @@ def main():
                                             ytr)),
                     "shots se har dawa ka ausat": shots_drug_mean(
                         sh, te, df.loc[other]),
-                    "XGB (+shots)": fit(X[tr_idx], ytr, X[test], seed),
+                    MAIN: main,
+                    CAL: a * main,
                 }
                 for nm, p in preds.items():
                     recs.append({"gene": gene, "k": k, "seed": seed,
-                                 "model": nm, **metrics(y, p)})
+                                 "model": nm, "a": a if nm == CAL else np.nan,
+                                 **metrics(y, p)})
         print(f"  {gene:<10} n={len(gidx):>5,}  ({time.time()-t0:.0f}s)",
               flush=True)
 
     r = pd.DataFrame(recs)
     per = (r.groupby(["gene", "k", "model"])
              .agg(n=("n", "first"), mae=("mae", "mean"),
-                  spearman=("spearman", "mean")).reset_index())
+                  spearman=("spearman", "mean"), a=("a", "mean"))
+             .reset_index())
     per.to_csv(RES / f"fewshot_curve{TAG}.csv", index=False)
 
     print(f"\n{'=' * 72}\nCURVE ({len(genes)} genes, har gene ek ikai)\n"
@@ -138,14 +179,26 @@ def main():
     print("\nMAE:")
     print(piv_m.round(3).to_string())
 
+    sh_a = (per[per.model == CAL].pivot_table(index="k", values="a")
+            .round(3))
+    print("\nShrink factor `a` (shots se nikla, 1.0 = koi badlaav nahi):")
+    print(sh_a.to_string())
+    ar = r[r.model == CAL]
+    floor = int((ar.a <= A_FLOOR + 1e-9).sum())
+    print(f"  `a` farsh ({A_FLOOR}) pe aaya: {floor}/{len(ar)} baar"
+          + ("   <- itni baar model ke paas maatra ki jaankari nahi thi"
+             if floor else ""))
+
     # Gate
     hard = "shots se har dawa ka ausat"
     gk = per[per.k == GATE_K]
-    A = gk[gk.model == "XGB (+shots)"].set_index("gene")
+    A = gk[gk.model == GATE_MODEL].set_index("gene")
+    if A.empty:
+        raise RuntimeError(f"GATE_MODEL '{GATE_MODEL}' nateeje me nahi mila")
     out = {}
-    print(f"\n{'=' * 72}\nGATE (k={GATE_K})\n{'=' * 72}\n")
+    print(f"\n{'=' * 72}\nGATE (k={GATE_K}, model: {GATE_MODEL})\n{'=' * 72}\n")
     sp = float(A.spearman.mean())
-    print(f"  XGB ka Spearman k={GATE_K} pe: {sp:+.3f}  "
+    print(f"  Spearman k={GATE_K} pe: {sp:+.3f}  "
           f"(chahiye >= {GATE_SPEARMAN})")
     ok_sp = sp >= GATE_SPEARMAN
     ok_all = ok_sp
@@ -176,12 +229,29 @@ def main():
         ok_all = ok_all and beat
 
     # Zero-shot se kitna upar - yahi "shots ka faida" hai
-    z = per[(per.k == 0) & (per.model == "XGB (+shots)")].set_index("gene")
+    z = per[(per.k == 0) & (per.model == GATE_MODEL)].set_index("gene")
     c = A.index.intersection(z.index)
     lift = paired_t((A.loc[c, "spearman"] - z.loc[c, "spearman"]).to_numpy())
-    print(f"\n  k=0 se k={GATE_K} tak XGB ka sudhaar: "
+    print(f"\n  k=0 se k={GATE_K} tak sudhaar: "
           f"{lift['mean']:+.3f}  t={lift['t']:+6.2f}  "
           f"jeeta {lift['wins']}/{lift['n']}")
+
+    # Doosra model bhi likho - gate usse nahi juda, par chhupana nahi hai
+    alt_nm = MAIN if GATE_MODEL == CAL else CAL
+    alt = gk[gk.model == alt_nm].set_index("gene")
+    alt_out = {}
+    if not alt.empty:
+        print(f"\n  (jaankari ke liye - gate ISPE NAHI hai) {alt_nm}: "
+              f"Spearman {alt.spearman.mean():+.3f}")
+        for b in ("0 bolo", "shots ka ausat", hard):
+            B = gk[gk.model == b].set_index("gene")
+            c2 = alt.index.intersection(B.index)
+            tm2 = paired_t((B.loc[c2, "mae"] - alt.loc[c2, "mae"]).to_numpy())
+            ts2 = paired_t((alt.loc[c2, "spearman"]
+                            - B.loc[c2, "spearman"]).to_numpy())
+            alt_out[b] = {"spearman": ts2, "mae": tm2}
+            print(f"    vs {b:<28} MAE {tm2['mean']:+.3f} t={tm2['t']:+6.2f} "
+                  f"jeeta {tm2['wins']}/{tm2['n']}")
 
     print(f"\n{'=' * 72}\nFAISLA\n{'=' * 72}")
     if ok_all:
@@ -205,7 +275,10 @@ def main():
         "ks": KS, "seeds": SEEDS, "test_frac": TEST_FRAC, "tag": TAG,
         "note": ("gene set max(ks) aur test_frac se banta hai; dono me se "
                  "kuch badla to doosre run se seedhi tulna galat hogi"),
-        "gate": {"k": GATE_K, "spearman": GATE_SPEARMAN, "t": GATE_T},
+        "gate": {"k": GATE_K, "spearman": GATE_SPEARMAN, "t": GATE_T,
+                 "model": GATE_MODEL, "objective": OBJECTIVE},
+        "alt_model": {"name": alt_nm, "checks": alt_out},
+        "shrink_a": json.loads(sh_a.to_json()),
         "spearman_curve": json.loads(piv_s.to_json()),
         "mae_curve": json.loads(piv_m.to_json()),
         "gate_checks": out, "zero_to_k_lift": lift,

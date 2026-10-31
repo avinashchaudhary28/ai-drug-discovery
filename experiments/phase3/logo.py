@@ -117,6 +117,19 @@ def paired_t(deltas):
         return {"n": int(len(d)), "mean": float("nan"), "t": float("nan"),
                 "wins": 0}
     se = d.std(ddof=1) / np.sqrt(len(d))
-    return {"n": int(len(d)), "mean": float(d.mean()),
-            "t": float(d.mean() / se) if se > 0 else float("inf"),
+    m = float(d.mean())
+    # se == 0 ka matlab saare delta BILKUL ek jaise hain. Pehle yahan
+    # seedhe +inf lautta tha - mean ka chinh dekhe bina. Yaani agar
+    # saare delta 0 hote (koi farak hi nahi) ya saare RINATMAK hote
+    # (model har gene pe HAARTA), tab bhi t = +inf aata aur gate ka
+    # `t >= 2.0` chup-chaap paas ho jata. Koi error kahin nahi.
+    if se > 0:
+        t = m / se
+    elif m > 0:
+        t = float("inf")       # har gene pe barabar jeet - sach me +inf
+    elif m < 0:
+        t = float("-inf")      # har gene pe barabar haar
+    else:
+        t = float("nan")       # koi farak hi nahi - t ka matlab nahi
+    return {"n": int(len(d)), "mean": m, "t": t,
             "wins": int((d > 0).sum())}

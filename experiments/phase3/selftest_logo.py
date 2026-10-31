@@ -153,6 +153,23 @@ check("NaN hat jata hai", t["n"], 2)
 t = paired_t([0.5])
 check("ek hi gene -> t nahi banta", bool(np.isnan(t["t"])), True)
 
+# SE = 0 ki haalat: saare delta bilkul ek jaise. Pehle yahan mean ka
+# chinh dekhe BINA +inf lautta tha, to "koi farak nahi" aur "har gene
+# pe haar" dono gate ka t >= 2.0 chup-chaap paas kar jate the.
+print("\npaired_t: saare delta ek jaise (SE = 0) - chinh maayne rakhta hai")
+t = paired_t([0.0, 0.0, 0.0, 0.0])
+check("koi farak hi nahi -> t = NaN, +inf NAHI", bool(np.isnan(t["t"])), True)
+check("koi farak nahi -> jeet 0", t["wins"], 0)
+t = paired_t([-0.3, -0.3, -0.3])
+check("har gene pe HAAR -> t = -inf", t["t"], float("-inf"))
+check("haar me jeet 0", t["wins"], 0)
+t = paired_t([0.3, 0.3, 0.3])
+check("har gene pe JEET -> t = +inf", t["t"], float("inf"))
+check("jeet me teeno", t["wins"], 3)
+for d, nm in (([0.0] * 4, "sab shunya"), ([-0.3] * 3, "sab rinatmak")):
+    check(f"{nm}: gate ka t >= 2.0 PAAS nahi hona chahiye",
+          bool(paired_t(d)["t"] >= 2.0), False)
+
 print("\nsaare baseline chalte hain")
 df = make({"EGFR": 30, "ABL1": 25, "KIT": 22},
           ddg=lambda g, j: float(j % 5) - 2)

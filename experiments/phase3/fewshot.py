@@ -61,6 +61,44 @@ def eligible(df, ks, test_frac=0.5):
     return sorted(vc[vc >= need].index), need
 
 
+# ------------------------------------------------------------ calibration
+# Model ranking me jeet raha hai par MAE pe nahi - matlab kram sahi hai,
+# MAATRA bada-chhota hai. To prediction ko 0 ki taraf ek factor `a` se
+# sikodo. Ranking bilkul nahi badalti (a > 0 se kram wahi), MAE girta hai.
+#
+# JAAL YAHAN HAI: shots training ke andar hote hain, to main model ki
+# unpe prediction pehle se overfit hai - usse `a` fit karein to `a ≈ 1`
+# aayega aur calibration ka koi faida nahi, jabki code chalta rahega aur
+# koi error nahi aayega.
+#
+# Isliye `a` ek ALAG model se nikalta hai jo shots ko DEKHA HI NAHI -
+# sirf doosre genes pe fit. Uski shots pe prediction sach me bahar ki
+# hai. Test set dono haalat me nahi chhua jata.
+#
+# Grid 0 se NAHI shuru hota, 0.05 se. Wajah: a=0 pe prediction bilkul
+# `0 bolo` baseline ban jati hai - tab "baseline se jeeta" ka koi matlab
+# nahi rehta, aur ek hi number hone se Spearman undefined ho jata hai.
+# Ye chup-chaap hota aur mean Spearman kharab kar deta. a ka farsh pe
+# aa jana KHUD ek nateeja hai - ki model ke paas maatra ki jaankari nahi -
+# aur run_fewshot ginta hai kitni baar aisa hua.
+A_FLOOR = 0.05
+A_GRID = np.round(np.arange(A_FLOOR, 1.31, 0.05), 3)
+
+
+def fit_shrink(pred_oos, y_true, grid=A_GRID):
+    """-> a: wo factor jo `a * pred` ka MAE sabse kam kare.
+
+    MAE ka closed form nahi hota, isliye grid. pred_oos wo prediction
+    hai jo shots ko dekhe BINA bani ho - warna a bemaani hai.
+    """
+    pred_oos = np.asarray(pred_oos, dtype=float)
+    y_true = np.asarray(y_true, dtype=float)
+    if len(y_true) == 0 or not np.isfinite(pred_oos).all():
+        return 1.0
+    mae = [np.mean(np.abs(y_true - a * pred_oos)) for a in grid]
+    return float(grid[int(np.argmin(mae))])
+
+
 # ------------------------------------------------- shots wale baseline
 def shots_mean(shots_y, train_y):
     """Shots ka ausat. Shots na hon to training ka."""
