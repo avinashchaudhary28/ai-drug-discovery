@@ -18,7 +18,8 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from fewshot import (A_FLOOR, A_GRID, eligible, fit_shrink,   # noqa: E402
-                     shots_drug_mean, shots_mean, split_gene, take_shots)
+                     pooled_drug_mean, shots_drug_mean, shots_mean,
+                     split_gene, take_shots)
 
 FAIL = []
 
@@ -126,6 +127,31 @@ check("andekhi dawa -> shots ka ausat (99 nahi)",
 
 p = shots_drug_mean(pd.DataFrame({"drug_key": [], "ddG": []}), test, train)
 check("shots na hon -> training se", float(p[0]), 99.0)
+
+print("\npooled_drug_mean - ASLI sabse kathin baseline")
+# Purana baseline k badhne pe bigadta tha: k=0 pe training ke per-dawa
+# ausat, k=20 pe sirf 20 shots ke. Naya dono jodta hai.
+shots2 = pd.DataFrame({"drug_key": ["D1", "D1"], "ddG": [2.0, 4.0]})
+test2 = pd.DataFrame({"drug_key": ["D1", "D2", "D9"]})
+train2 = pd.DataFrame({"drug_key": ["D2", "D2", "D3"],
+                       "ddG": [-1.0, -3.0, 5.0]})
+p2 = pooled_drug_mean(shots2, test2, train2)
+check("apna maap ho -> wahi (D1 -> 3)", float(p2[0]), 3.0)
+check("apna maap na ho -> training ka (D2 -> -2)", float(p2[1]), -2.0)
+check("kahin na ho -> kul ausat (D9 -> 1/3)",
+      round(float(p2[2]), 6), round((-1 - 3 + 5) / 3, 6))
+
+# Sabse zaroori: shots badhne pe ye KAMZOR na ho. Purana baseline
+# training ko chhod deta tha; ye nahi chhodta.
+p0 = pooled_drug_mean(pd.DataFrame({"drug_key": [], "ddG": []}),
+                      test2, train2)
+check("k=0 pe bhi D2 ko training ka ausat milta", float(p0[1]), -2.0)
+check("k=20 pe bhi D2 ko training ka ausat milta", float(p2[1]), -2.0)
+# purana baseline yahan D2 ko SHOTS ka ausat (3.0) de deta tha - galat
+old = shots_drug_mean(shots2, test2, train2)
+check("purana baseline D2 ko training ka ausat NAHI deta tha",
+      float(old[1]) != -2.0, True)
+check("  (wo shots ka ausat deta tha)", float(old[1]), 3.0)
 
 print("\nfit_shrink - maatra ki calibration")
 y = np.array([1.0, -2.0, 0.5, 3.0, -1.5])

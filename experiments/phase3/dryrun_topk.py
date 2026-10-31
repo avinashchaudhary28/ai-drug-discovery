@@ -114,9 +114,11 @@ ck("jackknife bhara", "worst_gene" in rep["jackknife"], True)
 ck("random_hit 0 se bada", bool(rep["random_hit"] > 0), True)
 
 print("\nraw")
-ck("paanch model", sorted(raw.model.unique()),
-   sorted(["0 bolo", "shots ka ausat", T.HARD, T.MODEL,
+ck("chhe model (purana baseline bhi tulna ke liye)",
+   sorted(raw.model.unique()),
+   sorted(["0 bolo", "shots ka ausat", T.HARD, T.OLD_HARD, T.MODEL,
            "XGB (+shots, cal)"]))
+ck("gate NAYE pooled baseline pe hai", T.HARD.startswith("pooled"), True)
 ck("hit sirf 0 ya 1", sorted(raw.hit.unique()), [0.0, 1.0])
 ck("overlap 0..1", bool(raw.overlap.between(0, 1).all()), True)
 ck("n >= top+1 har jagah", bool((raw.n >= T.TOP + 1).all()), True)

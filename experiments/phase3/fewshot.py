@@ -110,8 +110,16 @@ def shots_mean(shots_y, train_y):
 def shots_drug_mean(shots_df, test_df, train_df):
     """Har dawa ka ausat, SIRF shots se.
 
-    Yahi sabse kathin baseline hai: agar model isse nahi jeeta, to faida
-    model ka nahi, un k numbers ka hai - aur tab bechne ko kuch nahi.
+    Maine isko "sabse kathin baseline" kaha tha. Wo GALAT tha, aur
+    top-3 ke run me pakda gaya: ye k badhne pe BIGADTA hai. k=0 pe ye
+    poore training data ke per-dawa ausat use karta hai (hit@3 0.275),
+    par k=20 pe sirf 20 shots ke - aur 20 shots ~16 dawaiyon pe bante
+    hue bahut shor bhare hain (hit@3 0.192). To gate ke bindu pe hi ye
+    sabse kamzor ho jata hai, aur model ki jeet bada-chadha kar dikhti
+    hai.
+
+    Isko waisa hi rakha hai (purane nateeje isse jude hain), par ab
+    `pooled_drug_mean` hi asli kathin baseline hai.
     """
     if len(shots_df):
         m = shots_df.groupby("drug_key").ddG.mean()
@@ -120,3 +128,25 @@ def shots_drug_mean(shots_df, test_df, train_df):
         m = train_df.groupby("drug_key").ddG.mean()
         fallback = float(train_df.ddG.mean())
     return test_df.drug_key.map(m).fillna(fallback).to_numpy(dtype=float)
+
+
+def pooled_drug_mean(shots_df, test_df, train_df):
+    """ASLI sabse kathin baseline: bina model, samajhdaar aadmi kya karta.
+
+    Jis dawa ka apna maap hai, uska apna ausat lo; jiska nahi hai, use
+    doosre genes ka per-dawa ausat do; wo bhi na ho to kul ausat. Ye
+    dono me se kisi bhi akele se behtar hai, aur k badhne pe BIGADTA
+    nahi - sirf sudhar sakta hai.
+
+    Agar model ISSE nahi jeeta, to bechne ko kuch nahi.
+    """
+    tr = train_df.groupby("drug_key").ddG.mean()
+    glob = float(train_df.ddG.mean()) if len(train_df) else 0.0
+    if len(shots_df):
+        sh = shots_df.groupby("drug_key").ddG.mean()
+        # pehli pasand apna maap, phir doosre genes ka, phir kul ausat
+        out = test_df.drug_key.map(sh)
+        out = out.fillna(test_df.drug_key.map(tr))
+    else:
+        out = test_df.drug_key.map(tr)
+    return out.fillna(glob).to_numpy(dtype=float)

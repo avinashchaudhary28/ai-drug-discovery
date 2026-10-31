@@ -17,7 +17,7 @@ GATE PEHLE SE TAY, CODE ME LIKHA - RUN SE PEHLE COMMIT:
 
     paas = k=20 pe
       (a) hit@3 >= 0.60 (nirpeksh), AUR
-      (b) `shots se har dawa ka ausat` se upar, paired t >= 2.0
+      (b) `pooled: apna maap + doosre genes` se upar, paired t >= 2.0
           (gene hi ikai), AUR
       (c) jackknife-majboot: kisi EK gene ko hatane pe wo t 2.0 se
           neeche na gire
@@ -50,8 +50,8 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from features import build                                  # noqa: E402
-from fewshot import (eligible, fit_shrink, shots_drug_mean,  # noqa: E402
-                     shots_mean, split_gene, take_shots)
+from fewshot import (eligible, fit_shrink, pooled_drug_mean,  # noqa: E402
+                     shots_drug_mean, shots_mean, split_gene, take_shots)
 from logo import jackknife_t, paired_t                      # noqa: E402
 from topk import MIN_GROUP, TOP, group_scores               # noqa: E402
 
@@ -69,7 +69,14 @@ TAG = os.environ.get("TAG", "")
 GATE_K = 20
 GATE_HIT = 0.60
 GATE_T = 2.0
-HARD = "shots se har dawa ka ausat"
+# Pehle HARD = "shots se har dawa ka ausat" tha. Wo GALAT chunav tha:
+# wo k badhne pe BIGADTA hai (k=0 pe poora training data, k=20 pe sirf
+# 20 shots), to theek gate ke bindu pe sabse kamzor ho jata hai aur
+# model ki jeet bada-chadha kar dikhti hai - pehle run me hit@3 0.275
+# se 0.192 gir gaya tha. Ab asli kathin baseline: apna maap ho to wahi,
+# warna doosre genes ka per-dawa ausat. Ye k ke saath bigadta nahi.
+HARD = "pooled: apna maap + doosre genes"
+OLD_HARD = "shots se har dawa ka ausat"
 MODEL = "XGB (+shots)"
 CONST = ("0 bolo", "shots ka ausat")
 
@@ -151,6 +158,9 @@ def main():
 
                 sm = shots_mean(sh.ddG.to_numpy(dtype=float), ytr)
                 hard_p = dict(zip(test.tolist(),
+                                  pooled_drug_mean(sh, te,
+                                                   df.loc[other]).tolist()))
+                oldh_p = dict(zip(test.tolist(),
                                   shots_drug_mean(sh, te,
                                                   df.loc[other]).tolist()))
                 for mut, rows in grp.items():
@@ -160,6 +170,7 @@ def main():
                         "0 bolo": np.zeros(len(rows)),
                         "shots ka ausat": np.full(len(rows), sm),
                         HARD: np.array([hard_p[i] for i in rows]),
+                        OLD_HARD: np.array([oldh_p[i] for i in rows]),
                         MODEL: mdl,
                         "XGB (+shots, cal)": a * mdl,
                     }
