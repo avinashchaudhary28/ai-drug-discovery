@@ -133,3 +133,34 @@ def paired_t(deltas):
         t = float("nan")       # koi farak hi nahi - t ka matlab nahi
     return {"n": int(len(d)), "mean": m, "t": t,
             "wins": int((d > 0).sum())}
+
+
+def jackknife_t(deltas, labels, thresh=2.0):
+    """Ek-ek gene hata kar `t` phir se naapo.
+
+    KYUN: `t` ek ausat hai, aur ausat ek bade gene se khind sakta hai.
+    15-gene run me gate paas hua tha, par todne pe pata chala ki PDGFRA
+    akela usko kheench raha tha - uska asar baaki genes se teen guna
+    bada tha, aur uske kul 40 jode the. Ye haath se todna pada; agar
+    main na todta, "GATE PASSED" waise hi chala jata.
+
+    Isliye ab ye khud chalta hai. Agar KISI EK gene ko hatane se t
+    thresh se neeche gir jata hai, to pass us gene pe tika hai - aur
+    khareedaar ka reviewer yahi todega.
+
+    -> {"min_t", "worst_gene", "fragile", "per_gene": {gene: t_bina_uske}}
+    """
+    pairs = [(lb, x) for lb, x in zip(labels, deltas) if np.isfinite(x)]
+    if len(pairs) < 3:
+        return {"min_t": float("nan"), "worst_gene": None,
+                "fragile": None, "per_gene": {}}
+    per = {}
+    for i, (lb, _) in enumerate(pairs):
+        rest = [x for j, (_, x) in enumerate(pairs) if j != i]
+        per[lb] = paired_t(rest)["t"]
+    worst = min(per, key=lambda g: per[g])
+    full = paired_t([x for _, x in pairs])["t"]
+    return {"min_t": float(per[worst]), "worst_gene": worst,
+            # bhangur = poora t paas tha par ek gene hatane pe fail
+            "fragile": bool(full >= thresh and per[worst] < thresh),
+            "per_gene": {g: float(v) for g, v in per.items()}}

@@ -13,7 +13,7 @@ import pandas as pd
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from logo import (BASELINES, _sub, eligible_genes, logo_splits,  # noqa: E402
-                  metrics, paired_t, predict_drug_mean,
+                  jackknife_t, metrics, paired_t, predict_drug_mean,
                   predict_global_mean, predict_sub_mean, predict_zero)
 
 FAIL = []
@@ -169,6 +169,46 @@ check("jeet me teeno", t["wins"], 3)
 for d, nm in (([0.0] * 4, "sab shunya"), ([-0.3] * 3, "sab rinatmak")):
     check(f"{nm}: gate ka t >= 2.0 PAAS nahi hona chahiye",
           bool(paired_t(d)["t"] >= 2.0), False)
+
+print("\njackknife_t: ek gene gate ko kheench raha ho to pakda jaye")
+# Pehle maine fixture aise banaya tha: das chhote faide + ek bahut bada
+# (jaise PDGFRA ka +1.329). Wo FAIL hua, aur usne meri hi samajh theek
+# ki: ek bada outlier mean ke saath SE bhi badhata hai, isliye t ko
+# kheenchta NAHI. Bhangurta tab hoti hai jab t theek 2.0 ke kinare pe
+# ho aur kai madhyam faide usko sambhal rahe hon - 15-gene run me
+# `0 bolo` wali jaanch bilkul yahi thi (poora t 2.17, JAK2 hatane pe
+# 1.89). Fixture ab us asli haalat ka hai.
+EDGE = [0.09, 0.327, -0.103, 0.177, 0.194, 0.439]
+LB = [f"g{i}" for i in range(len(EDGE))]
+jk = jackknife_t(EDGE, LB, thresh=2.0)
+check("poora t paas tha", bool(paired_t(EDGE)["t"] >= 2.0), True)
+check("use hatane pe t gir gaya", bool(jk["min_t"] < 2.0), True)
+check("BHANGUR nishan laga", jk["fragile"], True)
+check("sabse asar wala gene naam se mila", jk["worst_gene"] in LB, True)
+
+# Aur wahi galat samajh ko test me baandh deta hoon, taaki phir na ho:
+# ek akela bada outlier t ko paas NAHI karata.
+OUT = [0.05] * 10 + [2.0]
+check("ek bada outlier t ko kheenchta NAHI",
+      bool(paired_t(OUT)["t"] >= 2.0), False)
+
+# Jahan faida sab genes pe barabar hai - wahan bhangur NAHI
+EVEN = [0.3, 0.32, 0.28, 0.31, 0.29, 0.30, 0.33, 0.27]
+jk = jackknife_t(EVEN, [f"g{i}" for i in range(8)], thresh=2.0)
+check("barabar faida -> poora t paas", bool(paired_t(EVEN)["t"] >= 2.0), True)
+check("barabar faida -> bhangur NAHI", jk["fragile"], False)
+check("har gene ka t nikla", len(jk["per_gene"]), 8)
+
+# Jo pehle se fail hai wo "bhangur" nahi kehlata - wo bas fail hai
+WEAK = [0.05, -0.02, 0.03, 0.01, -0.04, 0.02]
+jk = jackknife_t(WEAK, [f"g{i}" for i in range(6)], thresh=2.0)
+check("pehle se fail -> poora t fail", bool(paired_t(WEAK)["t"] >= 2.0), False)
+check("pehle se fail -> bhangur nahi kehlata", jk["fragile"], False)
+
+jk = jackknife_t([0.1, 0.2], ["a", "b"], thresh=2.0)
+check("2 se kam gene -> kuch nahi", jk["worst_gene"], None)
+jk = jackknife_t([0.3, float("nan"), 0.3, 0.3], ["a", "b", "c", "d"])
+check("NaN wala gene gina nahi gaya", sorted(jk["per_gene"]), ["a", "c", "d"])
 
 print("\nsaare baseline chalte hain")
 df = make({"EGFR": 30, "ABL1": 25, "KIT": 22},

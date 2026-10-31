@@ -31,7 +31,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from features import build                                # noqa: E402
 from fewshot import (A_FLOOR, eligible, fit_shrink,          # noqa: E402
                      shots_drug_mean, shots_mean, split_gene, take_shots)
-from logo import metrics, paired_t                        # noqa: E402
+from logo import jackknife_t, metrics, paired_t           # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
 RES = HERE / "results"
@@ -196,6 +196,7 @@ def main():
     if A.empty:
         raise RuntimeError(f"GATE_MODEL '{GATE_MODEL}' nateeje me nahi mila")
     out = {}
+    fragile_any = []
     print(f"\n{'=' * 72}\nGATE (k={GATE_K}, model: {GATE_MODEL})\n{'=' * 72}\n")
     sp = float(A.spearman.mean())
     print(f"  Spearman k={GATE_K} pe: {sp:+.3f}  "
@@ -222,11 +223,25 @@ def main():
             beat = t["t"] >= GATE_T if b == hard else t["mean"] > 0
             how = f"dSpearman {t['mean']:+.3f} t={t['t']:+6.2f} " \
                   f"jeeta {t['wins']}/{t['n']}"
+        # Jackknife: ek-ek gene hata kar t phir se. `t` ek ausat hai aur
+        # ek bade-asar wale gene se khind sakta hai - 15-gene run me
+        # theek yahi hua tha (PDGFRA).
+        jd = ((B.loc[c, "mae"] - A.loc[c, "mae"]) if const_pred
+              else (A.loc[c, "spearman"] - B.loc[c, "spearman"]))
+        jk = jackknife_t(jd.to_numpy(), list(c), thresh=GATE_T)
         out[b] = {"spearman": t, "mae": tm, "beaten": bool(beat),
-                  "compared_on": "mae" if const_pred else "spearman"}
+                  "compared_on": "mae" if const_pred else "spearman",
+                  "jackknife": jk}
         print(f"  vs {b:<28} {how}"
               + ("   <- sabse kathin" if b == hard else ""))
+        if jk["worst_gene"]:
+            warn = "   <- BHANGUR: ek gene hatane pe gate GIR jata hai" \
+                   if jk["fragile"] else ""
+            print(f"  {'':<31} jackknife: {jk['worst_gene']} hatane pe "
+                  f"t={jk['min_t']:+6.2f}{warn}")
         ok_all = ok_all and beat
+        if jk["fragile"]:
+            fragile_any.append(f"{b} ({jk['worst_gene']})")
 
     # Zero-shot se kitna upar - yahi "shots ka faida" hai
     z = per[(per.k == 0) & (per.model == GATE_MODEL)].set_index("gene")
@@ -254,9 +269,21 @@ def main():
                   f"jeeta {tm2['wins']}/{tm2['n']}")
 
     print(f"\n{'=' * 72}\nFAISLA\n{'=' * 72}")
-    if ok_all:
+    if ok_all and fragile_any:
+        # Paas, par ek gene pe tika. Isko "paas" bolkar aage badhna wahi
+        # galti hai jo 15-gene run me ho sakti thi.
+        print(f"  GATE PAAS - PAR BHANGUR. Spearman {sp:.3f}, teeno "
+              f"baseline se upar, lekin:")
+        for f in fragile_any:
+            print(f"    {f} - ek gene hatane pe gate GIR jata hai")
+        print(f"  Yaani ye nateeja kuch hi genes pe tika hai, sab pe "
+              f"nahi. Khareedaar ka reviewer theek yahi todega.")
+        print(f"  Bechne se pehle zyada genes chahiye, naye feature nahi.")
+    elif ok_all:
         print(f"  GATE PAAS. k={GATE_K} maap dene par model Spearman "
               f"{sp:.3f} deta hai aur teeno baseline se upar hai.")
+        print(f"  Koi ek gene hatane pe bhi gate nahi girta - nateeja "
+              f"kisi ek gene pe nahi tika.")
         print(f"  Ye ek SAAF offer hai: 'apne target ke {GATE_K} maap do, "
               f"baaki hum batayenge.'")
     else:
@@ -282,7 +309,10 @@ def main():
         "spearman_curve": json.loads(piv_s.to_json()),
         "mae_curve": json.loads(piv_m.to_json()),
         "gate_checks": out, "zero_to_k_lift": lift,
-        "spearman_at_gate_k": sp, "gate_passed": bool(ok_all)}, indent=2))
+        "spearman_at_gate_k": sp, "gate_passed": bool(ok_all),
+        "fragile": fragile_any,
+        "gate_passed_and_robust": bool(ok_all and not fragile_any)},
+        indent=2))
     print(f"\n  files: {RES}/fewshot_curve{TAG}.csv, "
           f"fewshot_report{TAG}.json ({time.time()-t0:.0f}s)")
     return 0
