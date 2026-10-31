@@ -50,6 +50,11 @@ def eligible(df, ks, test_frac=0.5):
     Agar alag-alag k pe alag genes holte, to curve me sudhaar genes
     badalne ka bhi ho sakta hai - aur wo model ka sudhaar jaisa dikhta.
     Isliye sirf wahi genes jinpe POORA curve ban sakta hai.
+
+    SAWDHANI: ye shart max(ks) aur test_frac SE BANTI hai. Dono me se
+    kuch bhi badla to GENE SET badal jata hai, aur tab do run ke number
+    seedhe tulnaa ke laayak NAHI rehte. Isliye run_fewshot gene set aur
+    `need` dono report me likhta hai.
     """
     need = int(np.ceil(max(ks) / (1 - test_frac)))
     vc = df.gene.value_counts()

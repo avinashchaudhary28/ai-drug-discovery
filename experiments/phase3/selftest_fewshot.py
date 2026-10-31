@@ -80,6 +80,32 @@ check("BIG aur MID", genes, ["BIG", "MID"])
 genes, need = eligible(df, [0, 5, 10])
 check("chhote k pe zyada genes", genes, ["BIG", "MID", "SMALL"])
 
+print("\ntest_frac badalne pe: gene set BADA hona chahiye, k ghatane pe bhi")
+# Yahi wo lever hai jisse t ki power badhti hai. Agar ye plumbing tooti
+# ho to run chup-chaap purane 11 genes pe hi chalega aur hum samjhenge
+# ki n badh gaya.
+g50, n50 = eligible(df, [0, 20, 50], test_frac=0.5)
+g20, n20 = eligible(df, [0, 20], test_frac=0.5)
+check("max k 50 -> need 100", n50, 100)
+check("max k 20 -> need 40", n20, 40)
+check("k ghatao -> genes barabar ya zyada", len(g20) >= len(g50), True)
+g33, n33 = eligible(df, [0, 20], test_frac=0.33)
+check("test_frac 0.33, k=20 -> need 30", n33, 30)
+check("test_frac ghatao -> genes barabar ya zyada", len(g33) >= len(g20), True)
+
+print("\ntest_frac=0.33 pe pool me max k ke liye jagah bachni chahiye")
+# need = ceil(k/(1-frac)) ka matlab yahi hai. Agar pool k se chhota ho
+# jaye to take_shots poora pool de dega aur k ka matlab hi badal jayega.
+for frac, ks in ((0.5, [0, 5, 10, 20]), (0.33, [0, 5, 10, 20])):
+    mk = max(ks)
+    need_f = int(np.ceil(mk / (1 - frac)))
+    pl, ts = split_gene(np.arange(need_f), seed=0, test_frac=frac)
+    check(f"frac={frac}: pool >= max k ({len(pl)} >= {mk})", len(pl) >= mk,
+          True)
+    check(f"frac={frac}: k={mk} pe poore {mk} shots mile",
+          len(take_shots(pl, mk, 0)), mk)
+    check(f"frac={frac}: test khali nahi", len(ts) >= 1, True)
+
 print("\nshots_mean")
 check("shots ka ausat", shots_mean(np.array([1.0, 3.0]), np.array([99.0])),
       2.0)

@@ -40,6 +40,10 @@ SRC = HERE.parent / "phase2" / "results" / "mutation_ddg_merged.csv"
 KS = [int(x) for x in os.environ.get("KS", "0,5,10,20,50").split(",")]
 SEEDS = [int(x) for x in os.environ.get("SEEDS", "0,1,2").split(",")]
 N_TREES = int(os.environ.get("N_TREES", "400"))
+# Gene ki ginti hi `t` ki seema hai. max(k) ghatao ya test_frac ghatao,
+# to gene set BADA ho jata hai - par wo gene set ALAG bhi ho jata hai.
+TEST_FRAC = float(os.environ.get("TEST_FRAC", "0.5"))
+TAG = os.environ.get("TAG", "")  # files ko alag naam, purana nateeja bacha rahe
 
 GATE_K = 20
 GATE_SPEARMAN = 0.30
@@ -58,6 +62,14 @@ def fit(Xtr, ytr, Xte, seed):
 
 def main():
     t0 = time.time()
+    # Pehle hi - warna 20 minute chalkar fail hoga
+    if GATE_K not in KS:
+        raise RuntimeError(f"gate k={GATE_K} KS me hona chahiye, mila {KS}")
+    if 0 not in KS:
+        raise RuntimeError(f"k=0 KS me hona chahiye (zero-shot ka aadhaar), "
+                           f"mila {KS}")
+    if not 0.0 < TEST_FRAC < 1.0:
+        raise RuntimeError(f"TEST_FRAC 0 aur 1 ke beech ho, mila {TEST_FRAC}")
     RES.mkdir(exist_ok=True)
     df = pd.read_csv(SRC)
     df = df[(df.is_kinase == True)                         # noqa: E712
@@ -71,8 +83,9 @@ def main():
     print(f"  {len(df):,} jode, {df.gene.nunique()} genes, "
           f"{X.shape[1]:,} features")
 
-    genes, need = eligible(df, KS)
-    print(f"\n  POORA curve sirf un genes pe jinme {need}+ jode hain: "
+    genes, need = eligible(df, KS, test_frac=TEST_FRAC)
+    print(f"\n  test_frac={TEST_FRAC}, max k={max(KS)}")
+    print(f"  POORA curve sirf un genes pe jinme {need}+ jode hain: "
           f"{len(genes)}")
     print(f"  ({', '.join(genes)})")
     if len(genes) < 6:
@@ -85,7 +98,7 @@ def main():
         gidx = df.index[df.gene == gene].to_numpy()
         other = df.index[df.gene != gene].to_numpy()
         for seed in SEEDS:
-            pool, test = split_gene(gidx, seed)
+            pool, test = split_gene(gidx, seed, test_frac=TEST_FRAC)
             te = df.loc[test]
             y = te.ddG.to_numpy(dtype=float)
             for k in KS:
@@ -114,7 +127,7 @@ def main():
     per = (r.groupby(["gene", "k", "model"])
              .agg(n=("n", "first"), mae=("mae", "mean"),
                   spearman=("spearman", "mean")).reset_index())
-    per.to_csv(RES / "fewshot_curve.csv", index=False)
+    per.to_csv(RES / f"fewshot_curve{TAG}.csv", index=False)
 
     print(f"\n{'=' * 72}\nCURVE ({len(genes)} genes, har gene ek ikai)\n"
           f"{'=' * 72}\n")
@@ -187,15 +200,18 @@ def main():
         print(f"  Agar model un k numbers se hi nahi jeeta, to faida "
               f"model ka nahi - un numbers ka hai.")
 
-    (RES / "fewshot_report.json").write_text(json.dumps({
-        "genes": genes, "need_rows": need, "ks": KS, "seeds": SEEDS,
+    (RES / f"fewshot_report{TAG}.json").write_text(json.dumps({
+        "genes": genes, "n_genes": len(genes), "need_rows": need,
+        "ks": KS, "seeds": SEEDS, "test_frac": TEST_FRAC, "tag": TAG,
+        "note": ("gene set max(ks) aur test_frac se banta hai; dono me se "
+                 "kuch badla to doosre run se seedhi tulna galat hogi"),
         "gate": {"k": GATE_K, "spearman": GATE_SPEARMAN, "t": GATE_T},
         "spearman_curve": json.loads(piv_s.to_json()),
         "mae_curve": json.loads(piv_m.to_json()),
         "gate_checks": out, "zero_to_k_lift": lift,
         "spearman_at_gate_k": sp, "gate_passed": bool(ok_all)}, indent=2))
-    print(f"\n  files: {RES}/fewshot_curve.csv, fewshot_report.json "
-          f"({time.time()-t0:.0f}s)")
+    print(f"\n  files: {RES}/fewshot_curve{TAG}.csv, "
+          f"fewshot_report{TAG}.json ({time.time()-t0:.0f}s)")
     return 0
 
 

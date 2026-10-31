@@ -11,6 +11,14 @@ on:
         description: "Seeds, comma se"
         required: false
         default: "0,1,2"
+      test_frac:
+        description: "Test ka hissa (0.5 ya 0.33). Ghatane pe genes badhte hain"
+        required: false
+        default: "0.5"
+      tag:
+        description: "Output files ka suffix, jaise _k20. Khali = purana naam"
+        required: false
+        default: ""
 
 permissions:
   contents: write
@@ -53,6 +61,8 @@ jobs:
         env:
           KS: ${{ inputs.ks }}
           SEEDS: ${{ inputs.seeds }}
+          TEST_FRAC: ${{ inputs.test_frac }}
+          TAG: ${{ inputs.tag }}
         run: |
           set -o pipefail
           python -u experiments/phase3/run_fewshot.py 2>&1 | tee fewshot.log
@@ -69,7 +79,8 @@ jobs:
         if: always()
         run: |
           mkdir -p experiments/phase3/results
-          tail -c 200000 fewshot.log > experiments/phase3/results/fewshot_run.log || true
+          tail -c 200000 fewshot.log \
+            > "experiments/phase3/results/fewshot_run${{ inputs.tag }}.log" || true
           bash .github/commit_results.sh "${{ github.ref_name }}" \
-            "phase3: few-shot curve (run ${{ github.run_number }})" \
+            "phase3: few-shot curve${{ inputs.tag }} (run ${{ github.run_number }})" \
             experiments/phase3/results
