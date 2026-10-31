@@ -90,7 +90,8 @@
         "t": 1.6397351481321956,
         "wins": 7
       },
-      "beaten": false
+      "beaten": false,
+      "compared_on": "mae"
     },
     "shots ka ausat": {
       "spearman": {
@@ -105,7 +106,8 @@
         "t": 1.7897512710747616,
         "wins": 6
       },
-      "beaten": false
+      "beaten": false,
+      "compared_on": "mae"
     },
     "shots se har dawa ka ausat": {
       "spearman": {
@@ -120,7 +122,8 @@
         "t": 1.9029282651851223,
         "wins": 7
       },
-      "beaten": true
+      "beaten": true,
+      "compared_on": "spearman"
     }
   },
   "zero_to_k_lift": {
