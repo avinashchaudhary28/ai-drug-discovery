@@ -141,15 +141,26 @@ def main():
         c = A.index.intersection(B.index)
         t = paired_t((A.loc[c, "spearman"] - B.loc[c, "spearman"]).to_numpy())
         tm = paired_t((B.loc[c, "mae"] - A.loc[c, "mae"]).to_numpy())
-        beat = t["t"] >= GATE_T if b == hard else t["mean"] > 0
-        out[b] = {"spearman": t, "mae": tm, "beaten": bool(beat)}
-        print(f"  vs {b:<28} dSpearman {t['mean']:+.3f} t={t['t']:+6.2f} "
-              f"jeeta {t['wins']}/{t['n']}"
-              + ("   <- sabse kathin" if b == hard else ""))
-        if b == hard:
-            ok_all = ok_all and beat
+        # "0 bolo" aur "shots ka ausat" EK HI number dete hain. Ek hi
+        # number se ranking hoti hi nahi, isliye unka Spearman NaN hai -
+        # aur ye sahi hai. Par pehle gate ne NaN ko "nahi jeeta" gin
+        # liya tha, aur ek paas hone wale nateeje ko FAIL likh diya.
+        # Aise baseline se tulna MAE pe honi chahiye, ranking pe nahi.
+        const_pred = not np.isfinite(t["mean"])
+        if const_pred:
+            beat = tm["mean"] > 0 and tm["t"] >= GATE_T
+            how = f"MAE {tm['mean']:+.3f} t={tm['t']:+6.2f} " \
+                  f"jeeta {tm['wins']}/{tm['n']}  (ranking nahi - ye " \
+                  f"baseline ek hi number deta hai)"
         else:
-            ok_all = ok_all and beat
+            beat = t["t"] >= GATE_T if b == hard else t["mean"] > 0
+            how = f"dSpearman {t['mean']:+.3f} t={t['t']:+6.2f} " \
+                  f"jeeta {t['wins']}/{t['n']}"
+        out[b] = {"spearman": t, "mae": tm, "beaten": bool(beat),
+                  "compared_on": "mae" if const_pred else "spearman"}
+        print(f"  vs {b:<28} {how}"
+              + ("   <- sabse kathin" if b == hard else ""))
+        ok_all = ok_all and beat
 
     # Zero-shot se kitna upar - yahi "shots ka faida" hai
     z = per[(per.k == 0) & (per.model == "XGB (+shots)")].set_index("gene")
