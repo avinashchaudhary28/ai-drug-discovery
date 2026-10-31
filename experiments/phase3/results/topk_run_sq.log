@@ -1,0 +1,62 @@
+[1/3] features
+  8,110 jode | test_frac=0.5, max k=20 -> 40+ jode wale 15 genes
+  (ABL1, ALK, BRAF, BTK, EGFR, FGFR2, FGFR3, FLT3, JAK2, KIT, LRRK2, MET, NTRK1, PDGFRA, RET)
+
+[2/3] top-3 hit rate: k = [0, 5, 10, 20], 5 seeds
+  ABL1       (70s)
+  ALK        (143s)
+  BRAF       (217s)
+  BTK        (292s)
+  EGFR       (355s)
+  FGFR2      (428s)
+  FGFR3      (502s)
+  FLT3       (575s)
+  JAK2       (648s)
+  KIT        (721s)
+  LRRK2      (794s)
+  MET        (869s)
+  NTRK1      (943s)
+  PDGFRA     (1017s)
+  RET        (1088s)
+
+========================================================================
+TOP-3 HIT RATE (15 genes, har gene ek ikai)
+========================================================================
+
+hit@3 - asli sabse-tikne-wali dawa model ke top-3 me:
+model  0 bolo  XGB (+shots)  XGB (+shots, cal)  shots ka ausat  shots se har dawa ka ausat
+k                                                                                         
+0       0.185         0.295              0.295           0.185                       0.275
+5       0.201         0.278              0.278           0.201                       0.230
+10      0.227         0.302              0.302           0.227                       0.260
+20      0.184         0.342              0.342           0.184                       0.192
+
+  mauke se (3/n): 0.190
+
+overlap@3:
+model  0 bolo  XGB (+shots)  XGB (+shots, cal)  shots ka ausat  shots se har dawa ka ausat
+k                                                                                         
+0       0.179         0.254              0.254           0.179                       0.249
+5       0.205         0.262              0.262           0.205                       0.211
+10      0.204         0.278              0.278           0.204                       0.215
+20      0.184         0.302              0.302           0.184                       0.213
+
+SEHAT JAANCH (ek-hi-number model mauke ke paas ho):
+  0 bolo                       hit=0.184  (mauka 0.190)
+  shots ka ausat               hit=0.184  (mauka 0.190)
+
+========================================================================
+GATE (k=20)
+========================================================================
+
+  (a) hit@3 = 0.342   (chahiye >= 0.6)   FAIL
+  (b) vs shots se har dawa ka ausat: +0.150  t=+3.38  jeeta 11/15   PAAS
+  (c) jackknife: FGFR2 hatane pe t=+3.01   PAAS
+
+========================================================================
+FAISLA
+========================================================================
+  FAIL: hit@3 0.342 < 0.6
+  Is dave ko deck me nahi daalna. Dataset asli asset hai.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/topk_sq.csv, topk_report_sq.json (1088s)
