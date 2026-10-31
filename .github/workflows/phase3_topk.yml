@@ -1,0 +1,98 @@
+name: Phase 3 - top-3 hit rate (bikne layak hai ya nahi)
+
+on:
+  workflow_dispatch:
+    inputs:
+      ks:
+        description: "k ki list, comma se (20 hona chahiye)"
+        required: false
+        default: "0,5,10,20"
+      seeds:
+        description: "Seeds, comma se"
+        required: false
+        default: "0,1,2,3,4"
+      test_frac:
+        description: "Test ka hissa"
+        required: false
+        default: "0.5"
+      objective:
+        description: "reg:squarederror (ranking behtar) ya reg:absoluteerror"
+        required: false
+        default: "reg:squarederror"
+      tag:
+        description: "Output files ka suffix, jaise _sq"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  # Tag group me hona chahiye - warna ek group me do pending run hon to
+  # purana CANCEL ho jata hai (few-shot me yahi hua tha)
+  group: phase3-topk-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas scipy scikit-learn rdkit xgboost tabulate
+
+      # Pehle ye. Do cheezein chup-chaap jhootha nateeja deti hain:
+      # disha ulti lag jana, aur barabar values ka kram tay hona.
+      - name: Selftest (top-k, disha aur ties)
+        run: python -u experiments/phase3/selftest_topk.py
+
+      - name: Selftest (few-shot batwara)
+        run: python -u experiments/phase3/selftest_fewshot.py
+
+      - name: Selftest (batwara aur farsh)
+        run: python -u experiments/phase3/selftest_logo.py
+
+      - name: Dry run (nakli model, poora raasta)
+        run: python -u experiments/phase3/dryrun_topk.py
+
+      - name: Zaroori input maujood hai?
+        run: |
+          set -e
+          f=experiments/phase2/results/mutation_ddg_merged.csv
+          test -s "$f" || { echo "::error::$f nahi mila"; exit 1; }
+          echo "✓ $f"
+
+      - name: Top-3 hit rate
+        env:
+          KS: ${{ inputs.ks }}
+          SEEDS: ${{ inputs.seeds }}
+          TEST_FRAC: ${{ inputs.test_frac }}
+          OBJECTIVE: ${{ inputs.objective }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -o pipefail
+          python -u experiments/phase3/run_topk.py 2>&1 | tee topk.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 3 - top-3 hit rate" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -60 topk.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase3/results
+          tail -c 200000 topk.log \
+            > "experiments/phase3/results/topk_run${{ inputs.tag }}.log" || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase3: top-3 hit rate${{ inputs.tag }} (run ${{ github.run_number }})" \
+            experiments/phase3/results
