@@ -1,0 +1,142 @@
+{
+  "genes": [
+    "ABL1",
+    "ALK",
+    "BRAF",
+    "BTK",
+    "EGFR",
+    "FGFR2",
+    "FGFR3",
+    "FGFR4",
+    "FLT3",
+    "JAK2",
+    "KIT",
+    "LRRK2",
+    "MET",
+    "NTRK1",
+    "PDGFRA",
+    "RET",
+    "RPS6KB1"
+  ],
+  "n_genes": 17,
+  "need_rows": 30,
+  "ks": [
+    0,
+    5,
+    10,
+    20
+  ],
+  "seeds": [
+    0,
+    1,
+    2,
+    3,
+    4
+  ],
+  "test_frac": 0.33,
+  "tag": "_k20f33",
+  "note": "gene set max(ks) aur test_frac se banta hai; dono me se kuch badla to doosre run se seedhi tulna galat hogi",
+  "gate": {
+    "k": 20,
+    "spearman": 0.3,
+    "t": 2.0
+  },
+  "spearman_curve": {
+    "XGB (+shots)": {
+      "0": 0.1408137568,
+      "5": 0.2060061525,
+      "10": 0.2662898459,
+      "20": 0.3403224767
+    },
+    "shots se har dawa ka ausat": {
+      "0": 0.0515550274,
+      "5": 0.0368496013,
+      "10": 0.069773272,
+      "20": 0.0790266832
+    }
+  },
+  "mae_curve": {
+    "0 bolo": {
+      "0": 0.8006939002,
+      "5": 0.8006939002,
+      "10": 0.8006939002,
+      "20": 0.8006939002
+    },
+    "XGB (+shots)": {
+      "0": 0.7854222672,
+      "5": 0.7177278109,
+      "10": 0.6745653281,
+      "20": 0.6210235448
+    },
+    "shots ka ausat": {
+      "0": 0.7955498746,
+      "5": 0.7352153998,
+      "10": 0.6901258435,
+      "20": 0.6832488057
+    },
+    "shots se har dawa ka ausat": {
+      "0": 0.7494435918,
+      "5": 0.7422569018,
+      "10": 0.7019850882,
+      "20": 0.7058172485
+    }
+  },
+  "gate_checks": {
+    "0 bolo": {
+      "spearman": {
+        "n": 0,
+        "mean": NaN,
+        "t": NaN,
+        "wins": 0
+      },
+      "mae": {
+        "n": 17,
+        "mean": 0.17967035543186224,
+        "t": 2.127677374962938,
+        "wins": 12
+      },
+      "beaten": true,
+      "compared_on": "mae"
+    },
+    "shots ka ausat": {
+      "spearman": {
+        "n": 0,
+        "mean": NaN,
+        "t": NaN,
+        "wins": 0
+      },
+      "mae": {
+        "n": 17,
+        "mean": 0.0622252609064389,
+        "t": 2.206938764128077,
+        "wins": 10
+      },
+      "beaten": true,
+      "compared_on": "mae"
+    },
+    "shots se har dawa ka ausat": {
+      "spearman": {
+        "n": 16,
+        "mean": 0.2649564583570817,
+        "t": 7.012209700304926,
+        "wins": 16
+      },
+      "mae": {
+        "n": 17,
+        "mean": 0.0847937036910638,
+        "t": 2.990947277353885,
+        "wins": 12
+      },
+      "beaten": true,
+      "compared_on": "spearman"
+    }
+  },
+  "zero_to_k_lift": {
+    "n": 17,
+    "mean": 0.19950871987497165,
+    "t": 4.323731938797722,
+    "wins": 16
+  },
+  "spearman_at_gate_k": 0.34032247671153243,
+  "gate_passed": true
+}

@@ -1,0 +1,64 @@
+[1/3] features
+  8,110 jode, 56 genes, 1,054 features
+
+  test_frac=0.33, max k=20
+  POORA curve sirf un genes pe jinme 30+ jode hain: 17
+  (ABL1, ALK, BRAF, BTK, EGFR, FGFR2, FGFR3, FGFR4, FLT3, JAK2, KIT, LRRK2, MET, NTRK1, PDGFRA, RET, RPS6KB1)
+
+[2/3] curve: k = [0, 5, 10, 20], 5 seeds
+  ABL1       n=1,181  (41s)
+  ALK        n=  815  (82s)
+  BRAF       n=  431  (125s)
+  BTK        n=   74  (168s)
+  EGFR       n=2,376  (203s)
+  FGFR2      n=   74  (246s)
+  FGFR3      n=  133  (290s)
+  FGFR4      n=   38  (333s)
+  FLT3       n=  531  (374s)
+  JAK2       n=   66  (417s)
+  KIT        n=  449  (459s)
+  LRRK2      n=  677  (501s)
+  MET        n=  204  (543s)
+  NTRK1      n=  245  (586s)
+  PDGFRA     n=   40  (628s)
+  RET        n=  461  (670s)
+  RPS6KB1    n=   32  (713s)
+
+========================================================================
+CURVE (17 genes, har gene ek ikai)
+========================================================================
+
+Spearman (gene ke andar ranking - yahi asli cheez hai):
+model  XGB (+shots)  shots se har dawa ka ausat
+k                                              
+0             0.141                       0.052
+5             0.206                       0.037
+10            0.266                       0.070
+20            0.340                       0.079
+
+MAE:
+model  0 bolo  XGB (+shots)  shots ka ausat  shots se har dawa ka ausat
+k                                                                      
+0       0.801         0.785           0.796                       0.749
+5       0.801         0.718           0.735                       0.742
+10      0.801         0.675           0.690                       0.702
+20      0.801         0.621           0.683                       0.706
+
+========================================================================
+GATE (k=20)
+========================================================================
+
+  XGB ka Spearman k=20 pe: +0.340  (chahiye >= 0.3)
+  vs 0 bolo                       MAE +0.180 t= +2.13 jeeta 12/17  (ranking nahi - ye baseline ek hi number deta hai)
+  vs shots ka ausat               MAE +0.062 t= +2.21 jeeta 10/17  (ranking nahi - ye baseline ek hi number deta hai)
+  vs shots se har dawa ka ausat   dSpearman +0.265 t= +7.01 jeeta 16/16   <- sabse kathin
+
+  k=0 se k=20 tak XGB ka sudhaar: +0.200  t= +4.32  jeeta 16/17
+
+========================================================================
+FAISLA
+========================================================================
+  GATE PAAS. k=20 maap dene par model Spearman 0.340 deta hai aur teeno baseline se upar hai.
+  Ye ek SAAF offer hai: 'apne target ke 20 maap do, baaki hum batayenge.'
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/fewshot_curve_k20f33.csv, fewshot_report_k20f33.json (713s)
