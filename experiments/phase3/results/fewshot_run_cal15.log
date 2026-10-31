@@ -1,0 +1,79 @@
+[1/3] features
+  8,110 jode, 56 genes, 1,054 features
+
+  test_frac=0.5, max k=20
+  POORA curve sirf un genes pe jinme 40+ jode hain: 15
+  (ABL1, ALK, BRAF, BTK, EGFR, FGFR2, FGFR3, FLT3, JAK2, KIT, LRRK2, MET, NTRK1, PDGFRA, RET)
+
+[2/3] curve: k = [0, 5, 10, 20], 5 seeds
+  ABL1       n=1,181  (76s)
+  ALK        n=  815  (155s)
+  BRAF       n=  431  (236s)
+  BTK        n=   74  (319s)
+  EGFR       n=2,376  (386s)
+  FGFR2      n=   74  (470s)
+  FGFR3      n=  133  (551s)
+  FLT3       n=  531  (632s)
+  JAK2       n=   66  (715s)
+  KIT        n=  449  (796s)
+  LRRK2      n=  677  (876s)
+  MET        n=  204  (958s)
+  NTRK1      n=  245  (1040s)
+  PDGFRA     n=   40  (1122s)
+  RET        n=  461  (1202s)
+
+========================================================================
+CURVE (15 genes, har gene ek ikai)
+========================================================================
+
+Spearman (gene ke andar ranking - yahi asli cheez hai):
+model  XGB (+shots)  XGB (+shots, cal)  shots se har dawa ka ausat
+k                                                                 
+0             0.150              0.150                       0.106
+5             0.213              0.213                       0.059
+10            0.257              0.257                       0.062
+20            0.314              0.314                       0.085
+
+MAE:
+model  0 bolo  XGB (+shots)  XGB (+shots, cal)  shots ka ausat  shots se har dawa ka ausat
+k                                                                                         
+0       0.825         0.785              0.785           0.818                       0.751
+5       0.825         0.744              0.720           0.756                       0.762
+10      0.825         0.720              0.702           0.722                       0.734
+20      0.825         0.682              0.674           0.710                       0.727
+
+Shrink factor `a` (shots se nikla, 1.0 = koi badlaav nahi):
+        a
+k        
+0   1.000
+5   0.666
+10  0.617
+20  0.608
+  `a` farsh (0.05) pe aaya: 71/300 baar   <- itni baar model ke paas maatra ki jaankari nahi thi
+
+========================================================================
+GATE (k=20, model: XGB (+shots, cal))
+========================================================================
+
+  Spearman k=20 pe: +0.314  (chahiye >= 0.3)
+  vs 0 bolo                       MAE +0.151 t= +1.97 jeeta 13/15  (ranking nahi - ye baseline ek hi number deta hai)
+                                  jackknife: FGFR2 hatane pe t= +1.75
+  vs shots ka ausat               MAE +0.036 t= +2.03 jeeta 11/15  (ranking nahi - ye baseline ek hi number deta hai)
+                                  jackknife: FGFR3 hatane pe t= +1.65   <- BHANGUR: ek gene hatane pe gate GIR jata hai
+  vs shots se har dawa ka ausat   dSpearman +0.229 t= +5.01 jeeta 14/15   <- sabse kathin
+                                  jackknife: RET hatane pe t= +4.57
+
+  k=0 se k=20 tak sudhaar: +0.164  t= +4.91  jeeta 15/15
+
+  (jaankari ke liye - gate ISPE NAHI hai) XGB (+shots): Spearman +0.314
+    vs 0 bolo                       MAE +0.144 t= +2.14 jeeta 12/15
+    vs shots ka ausat               MAE +0.028 t= +1.16 jeeta 9/15
+    vs shots se har dawa ka ausat   MAE +0.045 t= +1.93 jeeta 9/15
+
+========================================================================
+FAISLA
+========================================================================
+  GATE FAIL: '0 bolo' se nahi jeeta
+  Agar model un k numbers se hi nahi jeeta, to faida model ka nahi - un numbers ka hai.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/fewshot_curve_cal15.csv, fewshot_report_cal15.json (1202s)
