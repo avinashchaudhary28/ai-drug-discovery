@@ -32,7 +32,14 @@ permissions:
   contents: write
 
 concurrency:
-  group: phase3-fewshot
+  # Tag group me HONA chahiye. Pehle group sirf "phase3-fewshot" tha, aur
+  # GitHub ek group me sirf EK pending run rakhta hai - to jab maine do
+  # run queue kiye jabki ek chal raha tha, purana pending run CANCEL ho
+  # gaya (aur wahi sabse zaroori tha). cancel-in-progress: false isse
+  # nahi bachata; wo sirf chalte hue run ko bachata hai, pending ko nahi.
+  # Alag tag alag files likhte hain, aur commit_results.sh push race pe
+  # dobara koshish karta hai - to parallel chalna surakshit hai.
+  group: phase3-fewshot-${{ inputs.tag }}
   cancel-in-progress: false
 
 jobs:
