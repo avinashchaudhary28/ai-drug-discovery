@@ -1,0 +1,59 @@
+[1/3] features
+  8,110 jode, 56 genes, 1,054 features
+
+  POORA curve sirf un genes pe jinme 100+ jode hain: 11
+  (ABL1, ALK, BRAF, EGFR, FGFR3, FLT3, KIT, LRRK2, MET, NTRK1, RET)
+
+[2/3] curve: k = [0, 5, 10, 20, 50], 3 seeds
+  ABL1       n=1,181  (43s)
+  ALK        n=  815  (87s)
+  BRAF       n=  431  (131s)
+  EGFR       n=2,376  (168s)
+  FGFR3      n=  133  (212s)
+  FLT3       n=  531  (255s)
+  KIT        n=  449  (299s)
+  LRRK2      n=  677  (342s)
+  MET        n=  204  (386s)
+  NTRK1      n=  245  (430s)
+  RET        n=  461  (473s)
+
+========================================================================
+CURVE (11 genes, har gene ek ikai)
+========================================================================
+
+Spearman (gene ke andar ranking - yahi asli cheez hai):
+model  XGB (+shots)  shots se har dawa ka ausat
+k                                              
+0             0.120                       0.077
+5             0.203                       0.044
+10            0.233                       0.060
+20            0.312                       0.073
+50            0.442                       0.120
+
+MAE:
+model  0 bolo  XGB (+shots)  shots ka ausat  shots se har dawa ka ausat
+k                                                                      
+0         0.7         0.756           0.708                       0.710
+5         0.7         0.695           0.747                       0.751
+10        0.7         0.664           0.709                       0.714
+20        0.7         0.620           0.702                       0.708
+50        0.7         0.563           0.692                       0.698
+
+========================================================================
+GATE (k=20)
+========================================================================
+
+  XGB ka Spearman k=20 pe: +0.312  (chahiye >= 0.3)
+  vs 0 bolo                       dSpearman +nan t=  +nan jeeta 0/0
+  vs shots ka ausat               dSpearman +nan t=  +nan jeeta 0/0
+  vs shots se har dawa ka ausat   dSpearman +0.239 t= +4.42 jeeta 10/11   <- sabse kathin
+
+  k=0 se k=20 tak XGB ka sudhaar: +0.192  t= +4.27  jeeta 11/11
+
+========================================================================
+FAISLA
+========================================================================
+  GATE FAIL: '0 bolo' se nahi jeeta; 'shots ka ausat' se nahi jeeta
+  Agar model un k numbers se hi nahi jeeta, to faida model ka nahi - un numbers ka hai.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/fewshot_curve.csv, fewshot_report.json (473s)
