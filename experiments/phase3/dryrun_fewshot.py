@@ -128,9 +128,11 @@ ck("k=0 pe a = 1 (shots nahi)", rep["shrink_a"]["a"]["0"], 1.0)
 ck("gate_checks teen baseline", len(rep["gate_checks"]), 3)
 
 print("\ncurve ki jaanch")
-ck("paanch model", sorted(cur.model.unique()),
+ck("chhe model (purana baseline bhi tulna ke liye)",
+   sorted(cur.model.unique()),
    sorted(["0 bolo", "shots ka ausat", "shots se har dawa ka ausat",
-           R.MAIN, R.CAL]))
+           R.HARD, R.MAIN, R.CAL]))
+ck("gate NAYE pooled baseline pe hai", R.HARD.startswith("pooled"), True)
 ck("a sirf cal model pe",
    bool(cur[cur.model != R.CAL].a.isna().all()), True)
 ck("cal model pe a bhara", bool(cur[cur.model == R.CAL].a.notna().all()),
@@ -138,7 +140,7 @@ ck("cal model pe a bhara", bool(cur[cur.model == R.CAL].a.notna().all()),
 ck("a farsh se neeche nahi",
    bool((cur[cur.model == R.CAL].a >= R.A_FLOOR - 1e-9).all()), True)
 ck("har gene har k", len(cur),
-   len(rep["genes"]) * len(R.KS) * 5)
+   len(rep["genes"]) * len(R.KS) * 6)
 
 # Sabse zaroori: cal aur main ki RANKING ek jaisi honi chahiye (a>0)
 s_main = cur[cur.model == R.MAIN].set_index(["gene", "k"]).spearman

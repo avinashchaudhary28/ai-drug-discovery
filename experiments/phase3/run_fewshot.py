@@ -10,7 +10,7 @@ jo khareedaar poochta hai.
 
 GATE PEHLE SE TAY, CODE ME LIKHA:
     paas = k=20 pe Spearman >= 0.30, AUR teeno baseline se saaf upar
-           (0 bolo | shots ka ausat | shots se har dawa ka ausat),
+           (0 bolo | shots ka ausat | pooled: apna maap + doosre genes),
            jisme sabse kathin wale se t >= 2.0
 
 Teesra baseline hi asli imtihan hai. Agar model usse nahi jeeta, to
@@ -30,7 +30,8 @@ import pandas as pd
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from features import build                                # noqa: E402
 from fewshot import (A_FLOOR, eligible, fit_shrink,          # noqa: E402
-                     shots_drug_mean, shots_mean, split_gene, take_shots)
+                     pooled_drug_mean, shots_drug_mean, shots_mean,
+                     split_gene, take_shots)
 from logo import jackknife_t, metrics, paired_t           # noqa: E402
 
 HERE = pathlib.Path(__file__).resolve().parent
@@ -57,6 +58,8 @@ GATE_T = 2.0
 # hai, ek nahi - aur khareedaar ke saamne wo nahi tikta. Dono ke number
 # report me likhe jate hain taaki kuch chhupa na rahe.
 GATE_MODEL = os.environ.get("GATE_MODEL", "XGB (+shots, cal)")
+
+HARD = "pooled: apna maap + doosre genes"
 
 MAIN = "XGB (+shots)"
 CAL = "XGB (+shots, cal)"
@@ -151,6 +154,14 @@ def main():
                     "shots ka ausat": np.full(
                         len(te), shots_mean(sh.ddG.to_numpy(dtype=float),
                                             ytr)),
+                    # Gate ISPE hai. Purana "shots se har dawa ka
+                    # ausat" k ke saath BIGADTA tha (k=0 pe poora
+                    # training data, k=20 pe sirf 20 shots), to gate ke
+                    # bindu pe hi sabse kamzor ho jata aur model ki jeet
+                    # bada-chadha kar dikhti thi - top-3 run me ye pakda
+                    # gaya (+0.150 t=3.38 ghatkar +0.080 t=1.97 ho gaya).
+                    HARD: pooled_drug_mean(sh, te, df.loc[other]),
+                    # purana, sirf tulna ke liye - gate ispe NAHI
                     "shots se har dawa ka ausat": shots_drug_mean(
                         sh, te, df.loc[other]),
                     MAIN: main,
@@ -190,7 +201,7 @@ def main():
              if floor else ""))
 
     # Gate
-    hard = "shots se har dawa ka ausat"
+    hard = HARD
     gk = per[per.k == GATE_K]
     A = gk[gk.model == GATE_MODEL].set_index("gene")
     if A.empty:
