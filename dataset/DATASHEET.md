@@ -204,14 +204,48 @@ as skill; clinical or dosing decisions of any kind; pooling assay types.
 
 ## Licence and citation
 
-**No licence is attached to this repository.** Default copyright therefore
-applies and all rights are reserved — the data is readable but not licensed for
-reuse. Contact the author for terms.
+**This dataset is released under [Creative Commons
+Attribution–ShareAlike 3.0 Unported (CC BY-SA 3.0)](https://creativecommons.org/licenses/by-sa/3.0/),
+because it has to be.**
 
-The underlying measurements are owned by their original sources (ChEMBL, under
-its own licence; Davis et al.) and by the publications they come from. This file
-is a derived compilation; anyone redistributing it is responsible for complying
-with those upstream terms.
+11,895 of the 14,391 rows derive from **ChEMBL**, which is itself licensed
+CC BY-SA 3.0. That licence requires attribution and is **share-alike**:
+adaptations must be redistributed under the same terms. This file is an
+adaptation of ChEMBL, so no other licence is available for it — including "all
+rights reserved", which an earlier version of this document incorrectly claimed.
+
+What that means in practice:
+
+- You may use, redistribute and adapt this file, including commercially.
+- You must attribute ChEMBL (and this compilation) and keep the same licence on
+  anything derived from it.
+- **The compiler cannot grant anyone exclusive rights to this data**, and cannot
+  stop a recipient from redistributing it.
+
+Attribution for ChEMBL, as its documentation asks:
+
+> Zdrazil B. et al., *The ChEMBL Database in 2023: a drug discovery platform
+> spanning multiple bioactivity data types and time periods*, Nucleic Acids
+> Research, 2024, 52(D1), D1180–D1192.
+
+The 2,496 Davis-derived rows come from Davis M.I. et al., *Comprehensive
+analysis of kinase inhibitor selectivity*, Nature Biotechnology, 2011 — cite it
+alongside. Both sources' measurements originate in the publications they index,
+and ChEMBL notes separately that bundled **commercial** property calculations
+should not be extracted to train models replicating the commercial process; this
+compilation contains no such calculated properties, only measured affinities,
+identifiers and SMILES.
+
+**The code in this repository is a separate work** and is not covered by the
+above; no licence is attached to it.
+
+**No dataset DOI has been issued yet.** Until one is, cite the repository and the
+commit:
+
+```
+A. Kumar, kinase mutation–affinity (ΔΔG) dataset v1.0, CC BY-SA 3.0,
+https://github.com/avinashchaudhary28/ai-drug-discovery, commit <sha>.
+```
 
 **No dataset DOI has been issued yet.** Until one is, cite the repository and the
 commit:
