@@ -1,0 +1,92 @@
+name: Phase 3 - resistance classification + interaction features
+
+on:
+  workflow_dispatch:
+    inputs:
+      thresh:
+        description: "Resistance ki rekha, ddG <= is se (default -1.0)"
+        required: false
+        default: "-1.0"
+      seeds:
+        description: "Seeds, comma se"
+        required: false
+        default: "0,1,2"
+      min_pairs:
+        description: "Fold banne ke liye kam se kam jode"
+        required: false
+        default: "20"
+      tag:
+        description: "Output files ka suffix, jaise _t1"
+        required: false
+        default: ""
+
+permissions:
+  contents: write
+
+concurrency:
+  # Tag group me hona chahiye - warna ek group me do pending run hon to
+  # purana CANCEL ho jata hai (few-shot me yahi hua tha)
+  group: phase3-resist-${{ inputs.tag }}
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q "numpy<2.3" pandas scipy scikit-learn rdkit xgboost tabulate
+
+      # Ye pehle. Cross features do tarah se chup-chaap leak kar sakte
+      # hain: row ko apna label mil jaye, ya cluster test pe fit ho jaye.
+      - name: Selftest (cross features ka leakage)
+        run: python -u experiments/phase3/selftest_crossfeat.py
+
+      - name: Selftest (batwara aur farsh)
+        run: python -u experiments/phase3/selftest_logo.py
+
+      - name: Dry run (nakli model, poora raasta, dono gate)
+        run: python -u experiments/phase3/dryrun_resist.py
+
+      - name: Zaroori input maujood hain?
+        run: |
+          set -e
+          for f in experiments/phase2/results/mutation_ddg_merged.csv \
+                   experiments/phase3/results/klifs_map.json; do
+            test -s "$f" || { echo "::error::$f nahi mila"; exit 1; }
+            echo "✓ $f"
+          done
+
+      - name: Resistance classification
+        env:
+          THRESH: ${{ inputs.thresh }}
+          SEEDS: ${{ inputs.seeds }}
+          MIN_PAIRS: ${{ inputs.min_pairs }}
+          TAG: ${{ inputs.tag }}
+        run: |
+          set -o pipefail
+          python -u experiments/phase3/run_resist.py 2>&1 | tee resist.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Phase 3 - resistance classification" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -70 resist.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/phase3/results
+          tail -c 200000 resist.log \
+            > "experiments/phase3/results/resist_run${{ inputs.tag }}.log" || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "phase3: resistance classification${{ inputs.tag }} (run ${{ github.run_number }})" \
+            experiments/phase3/results
