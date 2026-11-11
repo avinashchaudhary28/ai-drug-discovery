@@ -1,0 +1,62 @@
+[1/4] features
+  8,110 jode | 56 genes | resistance (ddG <= -1.0): 1230 (15.2%)
+  pocket position mili: 4992/8110 (62%)
+  folds: 17  (ek-class hone se chhoote: ACVR1, GRK2, RAF1, RPS6KB1, TGFBR1)
+
+[2/4] LOGO: 17 folds x 3 seeds x 2 arms
+  ABL1       n=1,181 pos= 250  (17s)
+  ALK        n=  815 pos= 105  (31s)
+  BRAF       n=  431 pos=   6  (45s)
+  BTK        n=   74 pos=  25  (60s)
+  DDR2       n=   26 pos=   6  (75s)
+  EGFR       n=2,376 pos= 247  (86s)
+  FGFR2      n=   74 pos=  17  (101s)
+  FGFR3      n=  133 pos=  40  (117s)
+  FGFR4      n=   38 pos=  14  (132s)
+  FLT3       n=  531 pos=  61  (147s)
+  JAK2       n=   66 pos=  32  (162s)
+  KIT        n=  449 pos= 145  (176s)
+  LRRK2      n=  677 pos=   9  (190s)
+  MET        n=  204 pos=  57  (206s)
+  NTRK1      n=  245 pos=  75  (220s)
+  PDGFRA     n=   40 pos=  34  (235s)
+  RET        n=  461 pos=  64  (249s)
+
+========================================================================
+RESISTANCE CLASSIFICATION (17 folds, gene hi ikai)
+========================================================================
+
+                             auroc  auprc
+model                                    
+XGB (+cross)                 0.616  0.382
+XGB (bina cross)             0.596  0.360
+pocket jagah ka rate         0.583  0.314
+har dawa ka resistance rate  0.556  0.312
+AA badlav ka rate            0.543  0.313
+ek hi rate (farsh)           0.500  0.261
+
+  (base rate 0.152; AUROC 0.5 = mauka)
+
+========================================================================
+GATE 1 - sawaal badalne se faida? (ARM A)
+========================================================================
+
+  (a) ausat AUROC 0.596  (chahiye >= 0.65)   FAIL
+  (b) vs har dawa ka resistance rate: +0.040  t=+1.97  jeeta 11/17   FAIL
+  (c) jackknife: RET hatane pe t=+1.60   FAIL
+
+========================================================================
+GATE 2 - interaction features ne kuch joda? (ARM B vs ARM A)
+========================================================================
+
+  ARM B ka AUROC 0.616 vs ARM A ka 0.596
+  (a) dAUROC +0.0206  t=+1.29  jeeta 11/17   FAIL
+  (b) jackknife: BTK hatane pe t=+0.89   FAIL
+
+========================================================================
+FAISLA
+========================================================================
+  DONO FAIL. Chhathi aur saatvi koshish bhi nahi chali.
+  Diagnosis wahi rehta hai: interaction GEOMETRY chahiye, aur wo in features me nahi aati.
+
+  files: /home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/phase3/results/resist_t1.csv, resist_report_t1.json (249s)

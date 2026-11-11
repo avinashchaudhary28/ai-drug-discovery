@@ -1,0 +1,137 @@
+{
+  "folds": [
+    "ABL1",
+    "ALK",
+    "BRAF",
+    "BTK",
+    "DDR2",
+    "EGFR",
+    "FGFR2",
+    "FGFR3",
+    "FGFR4",
+    "FLT3",
+    "JAK2",
+    "KIT",
+    "LRRK2",
+    "MET",
+    "NTRK1",
+    "PDGFRA",
+    "RET"
+  ],
+  "dropped_one_class": [
+    "ACVR1",
+    "GRK2",
+    "RAF1",
+    "RPS6KB1",
+    "TGFBR1"
+  ],
+  "n_folds": 17,
+  "threshold": -1.0,
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "base_rate": 0.15166461159062886,
+  "gate": {
+    "auroc": 0.65,
+    "t": 2.0,
+    "hard_baseline": "har dawa ka resistance rate"
+  },
+  "summary": {
+    "auroc": {
+      "XGB (+cross)": 0.61610667,
+      "XGB (bina cross)": 0.5955311284,
+      "pocket jagah ka rate": 0.5834646696,
+      "har dawa ka resistance rate": 0.5556226122,
+      "AA badlav ka rate": 0.5427498152,
+      "ek hi rate (farsh)": 0.5
+    },
+    "auprc": {
+      "XGB (+cross)": 0.3822922238,
+      "XGB (bina cross)": 0.3597630124,
+      "pocket jagah ka rate": 0.3139046993,
+      "har dawa ka resistance rate": 0.3122348834,
+      "AA badlav ka rate": 0.3127971464,
+      "ek hi rate (farsh)": 0.2609546573
+    }
+  },
+  "gate1": {
+    "auroc": 0.5955311283525964,
+    "vs_hard": {
+      "n": 17,
+      "mean": 0.03990851613317464,
+      "t": 1.973526452398829,
+      "wins": 11
+    },
+    "jackknife": {
+      "min_t": 1.6037085353552933,
+      "worst_gene": "RET",
+      "fragile": false,
+      "per_gene": {
+        "ABL1": 1.870777784034672,
+        "ALK": 1.8108447752169405,
+        "BRAF": 2.1518553790858475,
+        "BTK": 2.498482730242279,
+        "DDR2": 1.9309166983719646,
+        "EGFR": 2.152320388824816,
+        "FGFR2": 1.915390710412522,
+        "FGFR3": 1.612757963076352,
+        "FGFR4": 1.7778684335534938,
+        "FLT3": 2.089871993988332,
+        "JAK2": 1.688301783414502,
+        "KIT": 1.7968292669252839,
+        "LRRK2": 1.7827571394385138,
+        "MET": 2.078410393181876,
+        "NTRK1": 1.6738101080602694,
+        "PDGFRA": 2.1372823053660728,
+        "RET": 1.6037085353552933
+      }
+    },
+    "checks": {
+      "auroc": false,
+      "t": false,
+      "jk": false
+    },
+    "passed": false
+  },
+  "gate2": {
+    "auroc_b": 0.616106669976261,
+    "vs_arm_a": {
+      "n": 17,
+      "mean": 0.020575541623664675,
+      "t": 1.2929204445336064,
+      "wins": 11
+    },
+    "jackknife": {
+      "min_t": 0.8870426046151234,
+      "worst_gene": "BTK",
+      "fragile": false,
+      "per_gene": {
+        "ABL1": 1.2910404995502291,
+        "ALK": 1.5766137905343693,
+        "BRAF": 1.7883358418971853,
+        "BTK": 0.8870426046151234,
+        "DDR2": 1.250266615224947,
+        "EGFR": 0.9633645019517761,
+        "FGFR2": 1.2387621183807445,
+        "FGFR3": 1.2975820739381745,
+        "FGFR4": 1.0508904343587055,
+        "FLT3": 1.7878523291184452,
+        "JAK2": 1.0508051948434862,
+        "KIT": 1.1477072194036535,
+        "LRRK2": 0.9765423860990663,
+        "MET": 1.0635104164907463,
+        "NTRK1": 1.4953318123940371,
+        "PDGFRA": 1.182601793962521,
+        "RET": 1.3364872458381984
+      }
+    },
+    "checks": {
+      "t": false,
+      "jk": false
+    },
+    "passed": false
+  },
+  "both_passed": false
+}
