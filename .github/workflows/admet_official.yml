@@ -15,12 +15,22 @@ on:
         description: "XGBoost trees"
         required: false
         default: "600"
+      train_on:
+        description: "train (conservative) ya train_val (notebook jaisa)"
+        required: false
+        default: "train"
+      tag:
+        description: "Output files ka suffix, jaise _tv"
+        required: false
+        default: ""
 
 permissions:
   contents: write
 
 concurrency:
-  group: admet-official
+  # Tag group me hona chahiye - warna do pending run me purana cancel
+  # ho jata hai
+  group: admet-official-${{ inputs.tag }}
   cancel-in-progress: false
 
 jobs:
@@ -62,6 +72,8 @@ jobs:
           SEEDS: ${{ inputs.seeds }}
           ONLY: ${{ inputs.only }}
           N_TREES: ${{ inputs.n_trees }}
+          TRAIN_ON: ${{ inputs.train_on }}
+          TAG: ${{ inputs.tag }}
         run: |
           set -o pipefail
           python -u experiments/admet/run_admet.py 2>&1 | tee admet.log
@@ -78,7 +90,8 @@ jobs:
         if: always()
         run: |
           mkdir -p experiments/admet/results
-          tail -c 200000 admet.log > experiments/admet/results/admet_run.log || true
+          tail -c 200000 admet.log \
+            > "experiments/admet/results/admet_run${{ inputs.tag }}.log" || true
           bash .github/commit_results.sh "${{ github.ref_name }}" \
-            "admet: TDC evaluator se official numbers (run ${{ github.run_number }})" \
+            "admet: TDC evaluator${{ inputs.tag }} (run ${{ github.run_number }})" \
             experiments/admet/results

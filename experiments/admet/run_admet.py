@@ -45,6 +45,12 @@ DATA = HERE / "tdc_data"
 SEEDS = [int(x) for x in os.environ.get("SEEDS", "1,2,3,4,5").split(",")]
 N_TREES = int(os.environ.get("N_TREES", "600"))
 ONLY = [s for s in os.environ.get("ONLY", "").split(",") if s]
+# "train" = sirf train split (conservative). "train_val" = train+valid,
+# jo notebook use karta tha. DONO vaajib hain - par ek chalakar, number
+# dekhkar, phir doosra chun lena goalpost khiskana hai. Isliye dono
+# chalte hain aur DONO report hote hain, alag TAG ke saath.
+TRAIN_ON = os.environ.get("TRAIN_ON", "train")
+assert TRAIN_ON in ("train", "train_val"), TRAIN_ON
 CHEM_NAME = "DeepChem/ChemBERTa-77M-MTR"
 CHEM_BATCH = int(os.environ.get("CHEM_BATCH", "64"))
 
@@ -190,7 +196,8 @@ def main():
     names = list(group.dataset_names)
     if ONLY:
         names = [n for n in names if n in ONLY]
-    print(f"[1/3] {len(names)} datasets: {', '.join(names)}")
+    print(f"[1/3] {len(names)} datasets | training data: {TRAIN_ON}")
+    print(f"      {', '.join(names)}")
 
     # saare SMILES ek saath, taaki featurization ek hi baar ho
     pool, kinds, how = [], {}, {}
@@ -216,9 +223,12 @@ def main():
         one = {}
         for n in names:
             b = group.get(n)
-            tr, _ = group.get_train_valid_split(benchmark=n,
-                                                split_type="default",
-                                                seed=seed)
+            if TRAIN_ON == "train_val":
+                tr = b["train_val"]
+            else:
+                tr, _ = group.get_train_valid_split(benchmark=n,
+                                                    split_type="default",
+                                                    seed=seed)
             te = b["test"]
             Xtr = rows(list(tr["Drug"]), table, dim)
             Xte = rows(list(te["Drug"]), table, dim)
@@ -244,13 +254,14 @@ def main():
           "n_train": notes[k]["n_train"], "n_test": notes[k]["n_test"]}
          for k, v in official.items()]).sort_values("dataset")
     print(t.to_string(index=False))
-    t.to_csv(RES / "admet_official.csv", index=False)
-    (RES / "admet_official.json").write_text(json.dumps({
+    t.to_csv(RES / f"admet_official{TAG}.csv", index=False)
+    (RES / f"admet_official{TAG}.json").write_text(json.dumps({
         "evaluator": "tdc.benchmark_group.admet_group.evaluate_many",
         "seeds": SEEDS, "n_trees": N_TREES,
         "features": "Morgan count 2048 + MACCS 167 + RDKit descriptors "
                     "+ ChemBERTa-77M-MTR",
-        "trained_on": "train split only (not train+valid)",
+        "trained_on": ("train+valid" if TRAIN_ON == "train_val"
+                       else "train split only"),
         "unparseable_smiles": int(bad),
         "results": {k: [float(v[0]), float(v[1])]
                     for k, v in official.items()},
