@@ -58,7 +58,7 @@ no dataset.
 | Setting | Result |
 |---|---|
 | Random split (gene on both sides) | Spearman **0.752** — and meaningless |
-| Leave-one-gene-out, zero measurements on the target | Spearman **0.067**; four representations all failed a pre-registered gate |
+| Leave-one-gene-out, zero measurements on the target | Spearman **0.067**; six attempts all failed a pre-registered gate |
 | 20 measurements on the target, ranking | **+0.255** Spearman over the best no-model estimate (t = 4.07, 15/16 genes) — a real statistical result |
 | The same, as a decision (top-3 shortlist) | **34%** hit rate vs **26%** with no model — margin not established (t = 1.97) |
 | Magnitude ("by how much") | Does not work |

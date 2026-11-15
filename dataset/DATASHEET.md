@@ -167,9 +167,11 @@ metrics alongside regression error.
 Stated here because a dataset that implies an unearned capability is worse than
 no dataset. Full detail in `claude/phase3_results.md`; headline:
 
-- **Zero measurements on the target gene: nothing works.** Four representations
-  (amino-acid properties; KLIFS pocket position; ligand contact frequency; ESM-2
-  on the mutated pocket) all failed a pre-registered gate under
+- **Zero measurements on the target gene: nothing works.** Six attempts — four
+  representations under ΔΔG regression (amino-acid properties; KLIFS pocket
+  position; ligand contact frequency; ESM-2 on the mutated pocket), plus a
+  reframing of the target to resistance classification (ΔΔG ≤ −1), plus explicit
+  drug × mutation interaction features — all failed a pre-registered gate under
   leave-one-gene-out. The same model reaches Spearman **0.75** when the gene is
   in training and **0.067** when it is removed — it memorises genes.
 - **Twenty measurements on the target gene: ranking works, statistically.** The
@@ -181,12 +183,20 @@ no dataset. Full detail in `claude/phase3_results.md`; headline:
   against **26%** with no model and 19% by chance. That +0.080 margin is not
   statistically established (t = 1.97) and is fragile.
 - **Magnitude prediction — "by how much" — does not work** in any variant.
+- **One thing does hold, and it is a single bit.** Whether the mutation falls
+  inside the ATP pocket at all predicts resistance at AUROC 0.545, t = 2.51,
+  jackknife-robust — with no model. Fine-grained 85-position resolution on top
+  of that is **not** established (t = 1.70 on 12 genes). The per-position
+  propensities are documented as a lookup table in
+  `experiments/phase3/results/hotspot_table.md`, with that status stated.
 
-The pre-registered gate was evaluated **nine times** across gene sets, model
-variants and two baselines. One row passed, fragilely. The first version of the
-"hardest" baseline was wrong in a way that flattered the result — it degraded as
-more measurements were supplied — and correcting it roughly halved the headline
-margin.
+The pre-registered gate was evaluated **eleven times** across gene sets, model
+variants, targets and baseline definitions. One row passed, fragilely. The first
+version of the "hardest" baseline was wrong in a way that flattered the result —
+it degraded as more measurements were supplied — and correcting it roughly
+halved the headline margin. In the sixth attempt one *unregistered* comparison
+would have cleared its criteria; it is reported and explicitly not counted as a
+pass.
 
 **The 0.752-versus-0.067 contrast is the most useful single number here for
 anyone else attempting this task:** it shows how easily this problem can be made

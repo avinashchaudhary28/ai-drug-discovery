@@ -40,10 +40,11 @@ A gradient-boosted model on drug + mutation features, same 22 folds:
 |---|---|---|
 | XGBoost (drug + mutation) | 0.771 | +0.067 |
 
-**Worse than the floor.** Four successive representations were tried — amino-acid
+**Worse than the floor.** Six successive attempts were made — amino-acid
 property changes; KLIFS-aligned pocket position; ligand contact frequency from
-crystal structures; ESM-2 embeddings of the mutated pocket — and none cleared a
-pre-registered gate. The closest (ESM-2) reached ΔMAE +0.0748 against the floor
+crystal structures; ESM-2 embeddings of the mutated pocket; reframing the target
+as resistance classification; and explicit drug × mutation interaction features
+— and none cleared a pre-registered gate. The closest (ESM-2) reached ΔMAE +0.0748 against the floor
 at t = +1.12, 8 of 14 folds, with Spearman unmoved (−0.004).
 
 ## The number that matters most
@@ -92,7 +93,7 @@ Magnitude prediction ("by how much") fails or is fragile in every variant tried.
 
 ## Honest accounting
 
-The pre-registered few-shot gate was evaluated **nine times** across gene sets,
+The pre-registered gate was evaluated **eleven times** across gene sets,
 model variants and two baseline definitions. One configuration passed, and
 fragilely. The first version of the "hardest" baseline was wrong in a way that
 flattered the result — it used only the *k* supplied measurements and therefore
