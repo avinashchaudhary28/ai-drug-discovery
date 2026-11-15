@@ -75,7 +75,7 @@ the claims withdrawn are all in [`claude/phase3_results.md`](claude/).
 | Module | Model | Data | Result |
 |---|---|---|---|
 | Binding v2 | Morgan FP + RDKit descriptors + ChemBERTa + ESM-2 → XGBoost | Davis + KIBA | Davis CI 0.888 (random), 0.675 (new drug) · KIBA CI 0.856 |
-| ADMET v2 | Morgan count FP + MACCS + descriptors + ChemBERTa → XGBoost | TDC ADMET Benchmark Group (22 datasets) | 17/22 within 5% of a top leaderboard model, 5 seeds, official splits |
+| ADMET v2 | Morgan count FP + MACCS + descriptors + ChemBERTa → XGBoost | TDC ADMET Benchmark Group (22 datasets) | Re-scored with TDC's own `evaluate_many`, 5 seeds. 20 of 22 reproduce the earlier self-computed numbers (median 0.66% apart); `vdss_lombardo` and `half_life_obach` do **not** and the earlier values for those two should not be used |
 | Toxicity | Morgan FP + descriptors → XGBoost | Tox21 (12 assays) | mean ROC-AUC 0.852 (random), 0.772 (scaffold) |
 | Solubility | same | ESOL | RMSE 0.666 (random), 0.880 (scaffold) |
 
