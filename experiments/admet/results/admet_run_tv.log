@@ -1,0 +1,95 @@
+Downloading Benchmark Group...
+  0%|          | 0.00/1.47M [00:00<?, ?iB/s]100%|██████████| 1.47M/1.47M [00:00<00:00, 28.1MiB/s]
+Extracting zip file...
+Done!
+[1/3] 22 datasets | training data: train_val
+      caco2_wang, hia_hou, pgp_broccatelli, bioavailability_ma, lipophilicity_astrazeneca, solubility_aqsoldb, bbb_martins, ppbr_az, vdss_lombardo, cyp2d6_veith, cyp3a4_veith, cyp2c9_veith, cyp2d6_substrate_carbonmangels, cyp3a4_substrate_carbonmangels, cyp2c9_substrate_carbonmangels, half_life_obach, clearance_microsome_az, clearance_hepatocyte_az, herg, ames, dili, ld50_zhu
+  classification/regression: 0 TDC ke metric se, 22 labels se andaza
+    caco2_wang                         REG  (labels se andaza)
+    hia_hou                            CLS  (labels se andaza)
+    pgp_broccatelli                    CLS  (labels se andaza)
+    bioavailability_ma                 CLS  (labels se andaza)
+    lipophilicity_astrazeneca          REG  (labels se andaza)
+    solubility_aqsoldb                 REG  (labels se andaza)
+    bbb_martins                        CLS  (labels se andaza)
+    ppbr_az                            REG  (labels se andaza)
+    vdss_lombardo                      REG  (labels se andaza)
+    cyp2d6_veith                       CLS  (labels se andaza)
+    cyp3a4_veith                       CLS  (labels se andaza)
+    cyp2c9_veith                       CLS  (labels se andaza)
+    cyp2d6_substrate_carbonmangels     CLS  (labels se andaza)
+    cyp3a4_substrate_carbonmangels     CLS  (labels se andaza)
+    cyp2c9_substrate_carbonmangels     CLS  (labels se andaza)
+    half_life_obach                    REG  (labels se andaza)
+    clearance_microsome_az             REG  (labels se andaza)
+    clearance_hepatocyte_az            REG  (labels se andaza)
+    herg                               CLS  (labels se andaza)
+    ames                               CLS  (labels se andaza)
+    dili                               CLS  (labels se andaza)
+    ld50_zhu                           REG  (labels se andaza)
+
+[2/3] features
+  46,202 alag SMILES featurize kar raha hoon
+  RDKit done (367s), parse fail: 2
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/53 [00:00<?, ?it/s]Loading weights: 100%|██████████| 53/53 [00:00<00:00, 12349.21it/s]
+[transformers] [1mRobertaModel LOAD REPORT[0m from: DeepChem/ChemBERTa-77M-MTR
+Key                        | Status     | 
+---------------------------+------------+-
+norm_std                   | UNEXPECTED | 
+regression.dense.weight    | UNEXPECTED | 
+regression.dense.bias      | UNEXPECTED | 
+regression.out_proj.weight | UNEXPECTED | 
+norm_mean                  | UNEXPECTED | 
+regression.out_proj.bias   | UNEXPECTED | 
+pooler.dense.weight        | MISSING    | 
+pooler.dense.bias          | MISSING    | 
+
+Notes:
+- UNEXPECTED:	can be ignored when loading from different task/architecture; not ok if you expect identical arch.
+- MISSING:	those params were newly initialized because missing from the checkpoint. Consider training on your downstream task.
+  ChemBERTa done (195s)
+  feature width 2816
+
+[3/3] 5 seeds x 22 datasets
+  seed 1 done (984s)
+  seed 2 done (1404s)
+  seed 3 done (1824s)
+  seed 4 done (2244s)
+  seed 5 done (2663s)
+
+================================================================
+TDC KE APNE EVALUATOR SE (5 seeds)
+================================================================
+
+                       dataset  metric_mean  metric_std  classification  n_train  n_test
+                          ames        0.862       0.001            True     5821    1457
+                   bbb_martins        0.915       0.003            True     1624     406
+            bioavailability_ma        0.754       0.008            True      512     128
+                    caco2_wang        0.306       0.009           False      728     182
+       clearance_hepatocyte_az        0.450       0.035           False      970     243
+        clearance_microsome_az        0.561       0.022           False      881     221
+cyp2c9_substrate_carbonmangels        0.398       0.007            True      534     135
+                  cyp2c9_veith        0.791       0.004            True     9673    2419
+cyp2d6_substrate_carbonmangels        0.681       0.008            True      532     135
+                  cyp2d6_veith        0.697       0.003            True    10504    2626
+cyp3a4_substrate_carbonmangels        0.653       0.013            True      535     135
+                  cyp3a4_veith        0.877       0.002            True     9861    2467
+                          dili        0.873       0.008            True      379      96
+               half_life_obach        0.374       0.049           False      532     135
+                          herg        0.836       0.005            True      523     132
+                       hia_hou        0.975       0.003            True      461     117
+                      ld50_zhu        0.611       0.004           False     5907    1478
+     lipophilicity_astrazeneca        0.560       0.003           False     3360     840
+               pgp_broccatelli        0.926       0.002            True      973     245
+                       ppbr_az        8.250       0.056           False     2231     559
+            solubility_aqsoldb        0.761       0.005           False     7985    1997
+                 vdss_lombardo        0.446       0.023           False      904     226
+Traceback (most recent call last):
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/admet/run_admet.py", line 277, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/home/runner/work/ai-drug-discovery/ai-drug-discovery/experiments/admet/run_admet.py", line 257, in main
+    t.to_csv(RES / f"admet_official{TAG}.csv", index=False)
+                                    ^^^
+NameError: name 'TAG' is not defined
