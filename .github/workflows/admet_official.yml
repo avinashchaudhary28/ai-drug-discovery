@@ -1,0 +1,84 @@
+name: ADMET - TDC ke apne evaluator se
+
+on:
+  workflow_dispatch:
+    inputs:
+      seeds:
+        description: "Seeds, comma se (TDC 1-5 maangta hai)"
+        required: false
+        default: "1,2,3,4,5"
+      only:
+        description: "Sirf ye datasets (comma se). Khali = saare 22"
+        required: false
+        default: ""
+      n_trees:
+        description: "XGBoost trees"
+        required: false
+        default: "600"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: admet-official
+  cancel-in-progress: false
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    timeout-minutes: 345
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          python -m pip install -q --upgrade pip
+          python -m pip install -q torch --index-url https://download.pytorch.org/whl/cpu
+          python -m pip install -q "numpy<2.3" pandas scipy scikit-learn rdkit xgboost \
+                                   transformers PyTDC tabulate
+
+      # Pehle ye: classification/regression ka faisla, NaN bharna, aur
+      # classifier se probability - teeno chup-chaap galat ho sakte hain
+      - name: Selftest
+        run: python -u experiments/admet/selftest_admet.py
+
+      - name: Smoke test (object banta hai, sirf import nahi)
+        run: |
+          python - <<'PY'
+          import xgboost as xgb
+          m = xgb.XGBClassifier(n_estimators=5, tree_method="hist")
+          import numpy as np
+          m.fit(np.random.rand(40, 3), (np.random.rand(40) > .5).astype(int))
+          assert m.predict_proba(np.random.rand(5, 3)).shape == (5, 2)
+          from tdc.benchmark_group import admet_group
+          print("ok - xgboost object bana aur tdc import hua")
+          PY
+
+      - name: ADMET re-run
+        env:
+          SEEDS: ${{ inputs.seeds }}
+          ONLY: ${{ inputs.only }}
+          N_TREES: ${{ inputs.n_trees }}
+        run: |
+          set -o pipefail
+          python -u experiments/admet/run_admet.py 2>&1 | tee admet.log
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### ADMET - TDC evaluator" >> $GITHUB_STEP_SUMMARY
+          echo '```' >> $GITHUB_STEP_SUMMARY
+          tail -60 admet.log >> $GITHUB_STEP_SUMMARY || true
+          echo '```' >> $GITHUB_STEP_SUMMARY
+
+      - name: Nateeja commit karo
+        if: always()
+        run: |
+          mkdir -p experiments/admet/results
+          tail -c 200000 admet.log > experiments/admet/results/admet_run.log || true
+          bash .github/commit_results.sh "${{ github.ref_name }}" \
+            "admet: TDC evaluator se official numbers (run ${{ github.run_number }})" \
+            experiments/admet/results
