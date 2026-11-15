@@ -55,6 +55,13 @@ jobs:
       - name: Selftest
         run: python -u experiments/admet/selftest_admet.py
 
+      # Poora raasta nakli TDC/xgboost se. Ye isliye hai kyunki pehle
+      # ADMET ke liye dryrun NAHI tha, aur train_val run 27 minute
+      # chalkar aakhri line pe NameError pe foota - artifacts likhe hi
+      # nahi gaye.
+      - name: Dry run (nakli TDC, poora raasta, dono TRAIN_ON)
+        run: python -u experiments/admet/dryrun_admet.py
+
       - name: Smoke test (object banta hai, sirf import nahi)
         run: |
           python - <<'PY'

@@ -49,6 +49,7 @@ ONLY = [s for s in os.environ.get("ONLY", "").split(",") if s]
 # jo notebook use karta tha. DONO vaajib hain - par ek chalakar, number
 # dekhkar, phir doosra chun lena goalpost khiskana hai. Isliye dono
 # chalte hain aur DONO report hote hain, alag TAG ke saath.
+TAG = os.environ.get("TAG", "")
 TRAIN_ON = os.environ.get("TRAIN_ON", "train")
 assert TRAIN_ON in ("train", "train_val"), TRAIN_ON
 CHEM_NAME = "DeepChem/ChemBERTa-77M-MTR"
@@ -268,8 +269,8 @@ def main():
         "per_dataset": notes}, indent=2))
     print(f"\n  parse na hone wale SMILES: {bad} "
           f"(training median se bhare, drop nahi kiye)")
-    print(f"  files: {RES}/admet_official.json, admet_official.csv "
-          f"({time.time()-t0:.0f}s)")
+    print(f"  files: {RES}/admet_official{TAG}.json, "
+          f"admet_official{TAG}.csv ({time.time()-t0:.0f}s)")
     return 0
 
 
