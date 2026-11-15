@@ -1,0 +1,216 @@
+{
+  "evaluator": "tdc.benchmark_group.admet_group.evaluate_many",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "n_trees": 600,
+  "features": "Morgan count 2048 + MACCS 167 + RDKit descriptors + ChemBERTa-77M-MTR",
+  "trained_on": "train+valid",
+  "unparseable_smiles": 2,
+  "results": {
+    "caco2_wang": [
+      0.301,
+      0.006
+    ],
+    "hia_hou": [
+      0.975,
+      0.003
+    ],
+    "pgp_broccatelli": [
+      0.926,
+      0.002
+    ],
+    "bioavailability_ma": [
+      0.753,
+      0.008
+    ],
+    "lipophilicity_astrazeneca": [
+      0.56,
+      0.003
+    ],
+    "solubility_aqsoldb": [
+      0.763,
+      0.004
+    ],
+    "bbb_martins": [
+      0.912,
+      0.004
+    ],
+    "ppbr_az": [
+      8.272,
+      0.056
+    ],
+    "vdss_lombardo": [
+      0.445,
+      0.024
+    ],
+    "cyp2d6_veith": [
+      0.7,
+      0.002
+    ],
+    "cyp3a4_veith": [
+      0.877,
+      0.002
+    ],
+    "cyp2c9_veith": [
+      0.792,
+      0.004
+    ],
+    "cyp2d6_substrate_carbonmangels": [
+      0.681,
+      0.008
+    ],
+    "cyp3a4_substrate_carbonmangels": [
+      0.653,
+      0.013
+    ],
+    "cyp2c9_substrate_carbonmangels": [
+      0.398,
+      0.007
+    ],
+    "half_life_obach": [
+      0.373,
+      0.048
+    ],
+    "clearance_microsome_az": [
+      0.563,
+      0.021
+    ],
+    "clearance_hepatocyte_az": [
+      0.45,
+      0.035
+    ],
+    "herg": [
+      0.836,
+      0.005
+    ],
+    "ames": [
+      0.862,
+      0.001
+    ],
+    "dili": [
+      0.874,
+      0.008
+    ],
+    "ld50_zhu": [
+      0.612,
+      0.004
+    ]
+  },
+  "per_dataset": {
+    "caco2_wang": {
+      "n_train": 728,
+      "n_test": 182,
+      "classification": false
+    },
+    "hia_hou": {
+      "n_train": 461,
+      "n_test": 117,
+      "classification": true
+    },
+    "pgp_broccatelli": {
+      "n_train": 973,
+      "n_test": 245,
+      "classification": true
+    },
+    "bioavailability_ma": {
+      "n_train": 512,
+      "n_test": 128,
+      "classification": true
+    },
+    "lipophilicity_astrazeneca": {
+      "n_train": 3360,
+      "n_test": 840,
+      "classification": false
+    },
+    "solubility_aqsoldb": {
+      "n_train": 7985,
+      "n_test": 1997,
+      "classification": false
+    },
+    "bbb_martins": {
+      "n_train": 1624,
+      "n_test": 406,
+      "classification": true
+    },
+    "ppbr_az": {
+      "n_train": 2231,
+      "n_test": 559,
+      "classification": false
+    },
+    "vdss_lombardo": {
+      "n_train": 904,
+      "n_test": 226,
+      "classification": false
+    },
+    "cyp2d6_veith": {
+      "n_train": 10504,
+      "n_test": 2626,
+      "classification": true
+    },
+    "cyp3a4_veith": {
+      "n_train": 9861,
+      "n_test": 2467,
+      "classification": true
+    },
+    "cyp2c9_veith": {
+      "n_train": 9673,
+      "n_test": 2419,
+      "classification": true
+    },
+    "cyp2d6_substrate_carbonmangels": {
+      "n_train": 532,
+      "n_test": 135,
+      "classification": true
+    },
+    "cyp3a4_substrate_carbonmangels": {
+      "n_train": 535,
+      "n_test": 135,
+      "classification": true
+    },
+    "cyp2c9_substrate_carbonmangels": {
+      "n_train": 534,
+      "n_test": 135,
+      "classification": true
+    },
+    "half_life_obach": {
+      "n_train": 532,
+      "n_test": 135,
+      "classification": false
+    },
+    "clearance_microsome_az": {
+      "n_train": 881,
+      "n_test": 221,
+      "classification": false
+    },
+    "clearance_hepatocyte_az": {
+      "n_train": 970,
+      "n_test": 243,
+      "classification": false
+    },
+    "herg": {
+      "n_train": 523,
+      "n_test": 132,
+      "classification": true
+    },
+    "ames": {
+      "n_train": 5821,
+      "n_test": 1457,
+      "classification": true
+    },
+    "dili": {
+      "n_train": 379,
+      "n_test": 96,
+      "classification": true
+    },
+    "ld50_zhu": {
+      "n_train": 5907,
+      "n_test": 1478,
+      "classification": false
+    }
+  }
+}
